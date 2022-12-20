@@ -11,7 +11,7 @@ Actions
 Projects
 Security
 Insights
-jepthon/sample_config.py
+IQerenn/sample_config.py
 @IQerenn
 IQerenn Update sample_config.py
  2 contributors
