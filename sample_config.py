@@ -12,8 +12,8 @@ Projects
 Security
 Insights
 jepthon/sample_config.py
-@jepthoniq
-jepthoniq Update sample_config.py
+@IQerenn
+IQerenn Update sample_config.py
  2 contributors
 211 lines (199 sloc)  10.2 KB
 import os
@@ -47,14 +47,14 @@ class Config(object):
     TZ = os.environ.get("TZ", "Asia/Baghdad")
     # set this with required cat repo link
     UPSTREAM_REPO = os.environ.get(
-        "UPSTREAM_REPO", "https://github.com/jepthoniq/jepthon.git"
+        "UPSTREAM_REPO", "https://github.com/IQerenn/iquser.git"
     )
 
     # BASIC and MAIN CONFIG VARS
     # for profile default name
     AUTONAME = os.environ.get("AUTONAME", None)
 
-    # تعديلي
+    # دەستکاری
     PING_PIC = os.environ.get("PING_PIC")
     TIME_JEP = os.environ.get("TIME_JEP", None)
     JP_FN = os.environ.get("JP_FN", None)
@@ -76,7 +76,7 @@ class Config(object):
     BIO_ET = os.environ.get("BIO_ET", None)
     PHOTO_ET = os.environ.get("PHOTO_ET", None)    
     LOAD_MYBOT = os.environ.get("LOAD_MYBOT", "True")
-    JMTHON_START = os.environ.get("JMTHON_START", None)
+    IQUSER_START = os.environ.get("IQUSER_START", None)
     PMPERMIT_TEXT_Jepthon = os.environ.get("PMPERMIT_TEXT_Jepthon", None)
     UB_BLACK_LIST_CHAT = {
         int(x) for x in os.environ.get("UB_BLACK_LIST_CHAT", "").split()
@@ -109,19 +109,19 @@ class Config(object):
         or 0
     )
 
-    # Custom vars for jepthon
+    # Custom vars for IQUSER
     # set this will channel id of your custom plugins
     PLUGIN_CHANNEL = int(os.environ.get("PLUGIN_CHANNEL") or 0)
     # set this value with your required name for telegraph plugin
     TELEGRAPH_SHORT_NAME = os.environ.get("TELEGRAPH_SHORT_NAME", "catuserbot")
     # for custom thumb image set this with your required thumb telegraoh link
     THUMB_IMAGE = os.environ.get(
-        "THUMB_IMAGE", "https://telegra.ph/file/ca95524e4734b0d5461b5.jpg"
+        "THUMB_IMAGE", "https://telegra.ph/file/3851323764f1629e16ce8.jpg"
     )
     # specify NO_LOAD with plugin names for not loading in jepthon
     NO_LOAD = [x for x in os.environ.get("NO_LOAD", "").split()]
     # for custom pic for .digitalpfp
-    DIGITAL_PIC = os.environ.get("DIGITAL_PIC", None)
+    DIGITAL_PIC = os.environ.get(DIGITAL_PIC", None)
     DIGITAL_PIC_COLOR = os.environ.get("DIGITAL_PIC_COLOR", None)
     DIGITAL_GROUP_PIC = os.environ.get("DIGITAL_GROUP_PIC", None)
     DIGITAL_GROUP_PIC_COLOR = os.environ.get("DIGITAL_GROUP_PIC_COLOR", None)
@@ -150,7 +150,7 @@ class Config(object):
     FINISHED_PROGRESS_STR = os.environ.get("FINISHED_PROGRESS_STR", "▰")
     UNFINISHED_PROGRESS_STR = os.environ.get("UNFINISHED_PROGRESS_STR", "▱")
 
-    # API VARS FOR jepthon
+    # API VARS FOR IQUSER
     # Get your own ACCESS_KEY from http://api.screenshotlayer.com/api/capture for screen shot
     SCREEN_SHOT_LAYER_ACCESS_KEY = os.environ.get("SCREEN_SHOT_LAYER_ACCESS_KEY", None)
     # Get your own APPID from https://api.openweathermap.org/data/2.5/weather
