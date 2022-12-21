@@ -1,7 +1,7 @@
 
-jepthoniq
+vtvit
 /
-jepthon
+iquser
 Public
 Code
 Issues
@@ -11,9 +11,9 @@ Actions
 Projects
 Security
 Insights
-IQerenn/sample_config.py
-@IQerenn
-IQerenn Update sample_config.py
+vtvit/sample_config.py
+@vtvit
+vtvit Update sample_config.py
  2 contributors
 211 lines (199 sloc)  10.2 KB
 import os
@@ -47,7 +47,7 @@ class Config(object):
     TZ = os.environ.get("TZ", "Asia/Baghdad")
     # set this with required cat repo link
     UPSTREAM_REPO = os.environ.get(
-        "UPSTREAM_REPO", "https://github.com/IQerenn/iquser.git"
+        "UPSTREAM_REPO", "https://github.com/vtvit/iquser.git"
     )
 
     # BASIC and MAIN CONFIG VARS
