@@ -1,7 +1,7 @@
-FROM IQerenn/iquser:slim-buster
+FROM vtvit/iquser:slim-buster
 
 #clonning repo 
-RUN git clone https://github.com/IQerenn/iquser /root/iquser
+RUN git clone https://github.com/vtvit/iquser /root/iquser
 #working directory 
 WORKDIR /root/iquser
 RUN apk add --update --no-cache p7zip
