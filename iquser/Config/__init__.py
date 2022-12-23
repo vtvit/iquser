@@ -1,1 +1,1 @@
-from .roza_config import Config
+from .iqub_config import Config
