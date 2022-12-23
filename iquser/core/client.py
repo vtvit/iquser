@@ -1,3 +1,4 @@
+import asyncio
 import datetime
 import inspect
 import re
@@ -7,7 +8,17 @@ from pathlib import Path
 from typing import Dict, List, Union
 
 from telethon import TelegramClient, events
-from telethon.errors import MessageIdInvalidError, MessageNotModifiedError
+from telethon.errors import (
+    AlreadyInConversationError,
+    BotInlineDisabledError,
+    BotResponseTimeoutError,
+    ChatSendInlineForbiddenError,
+    ChatSendMediaForbiddenError,
+    ChatSendStickersForbiddenError,
+    FloodWaitError,
+    MessageIdInvalidError,
+    MessageNotModifiedError,
+)
 
 from ..Config import Config
 from ..helpers.utils.events import checking
@@ -37,8 +48,8 @@ REGEX_ = REGEX()
 sudo_enabledcmds = sudo_enabled_cmds()
 
 
-class vtvitClient(TelegramClient):
-    def ar_cmd(
+class IQUserBotClient(TelegramClient):
+    def iq_cmd(
         self: TelegramClient,
         pattern: str or tuple = None,
         info: Union[str, Dict[str, Union[str, List[str], Dict[str, str]]]]
@@ -91,66 +102,98 @@ class vtvitClient(TelegramClient):
                 REGEX_.regex2 = re.compile(reg2 + pattern)
 
         def decorator(func):  # sourcery no-metrics
-            async def wrapper(check):
+            async def wrapper(check):  # sourcery no-metrics
                 if groups_only and not check.is_group:
-                    await edit_delete(check, "`پێموانییە ئەمە گفتوگۆیەکی تاکەکەسی بێت، لە تایبەت تاقی بکەرەوە، ئازیزم.)
-                    return
-                if private_only and not check.is_private:
-                    await edit_delete(
-                        check, "`پێموانییە ئەمە گفتوگۆیەکی تاکەکەسی بێت، لە تایبەت تاقی بکەرەوە، ئازیزم.
+                    return await edit_delete(
+                        check, "**⪼ ببوورە، بەکارهێنانی ئەم فەرمانە تەنھا لە گرووپدایە.  𓆰،**", 10
                     )
-                    return
+                if private_only and not check.is_private:
+                    return await edit_delete(
+                        check, "**⪼ ئەم بەکارھێنانی ئەم فەرمانە تەنھا لە چاتی تایبەتدایە  𓆰،**", 10
+                    )
                 try:
                     await func(check)
-                except events.StopPropagation:
-                    raise events.StopPropagation
+                except events.StopPropagation as e:
+                    raise events.StopPropagation from e
                 except KeyboardInterrupt:
                     pass
                 except MessageNotModifiedError:
-                    LOGS.error("Message was same as previous message")
+                    LOGS.error("نامەکە هاوشێوەی نامەی پێشوو بوو")
                 except MessageIdInvalidError:
-                    LOGS.error("Message was deleted or cant be found")
+                    LOGS.error("نامە سڕاوەتەوە یان نەدۆزرایەوە")
+                except BotInlineDisabledError:
+                    await edit_delete(check, "**⌔∮ پێویستە سەرەتا دۆخی ئۆنلاین چالاک بکەیت)
+                except ChatSendStickersForbiddenError:
+                    await edit_delete(
+                        check, "**- 10 ,"** ئەم گرووپە ڕێگە بە ناردنی ستەیکەر نادات بۆ ئێرە
+                    )
+                except BotResponseTimeoutError:
+                    await edit_delete(
+                        check, "⪼ ئەم تایبەتمەندیە بەکاربھێنە پاش ماوەیەکی کەم ناتوانیت ئێستا وەڵام بدەیتەوە ", 10
+                    )
+                except ChatSendMediaForbiddenError:
+                    await edit_delete(check, "**⪼ ئەم گرووپە ڕێگە بە ناردنی میدیا نادات بۆ ئێرە 𓆰،**", 10)
+                except AlreadyInConversationError:
+                    await edit_delete(
+                        check,
+                        "**- گفتووگۆکە هەر ئێستا لەگەڵ چاتێکی دیاریکراودا بەڕێوەدەچێت .. دووبارە هەوڵ بدەوە کەمێکی تر**",
+                        10,
+                    )
+                except ChatSendInlineForbiddenError:
+                    await edit_delete(
+                        check, "**- ببوورە .. ئۆنلاین لەم گروپەدا داخراوە **", 10
+                    )
+                except FloodWaitError as e:
+                    LOGS.error(
+                        f"وەستانی کاتی بەهۆی دووبارەبوونەوە {e.seconds} ڕوداو. چاوەڕێکە {e.seconds} دووەم و دووبارە هەوڵ بدە"
+                    )
+                    await check.delete()
+                    await asyncio.sleep(e.seconds + 5)
                 except BaseException as e:
                     LOGS.exception(e)
                     if not disable_errors:
                         if Config.PRIVATE_GROUP_BOT_API_ID == 0:
                             return
                         date = (datetime.datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-                        ftext = f"\nDisclaimer:\nThis file is pasted only here ONLY here,\
-                                  \nwe logged only fact of error and date,\nwe respect your privacy,\
-                                  \nyou may not report this error if you've\
-                                  \nany confidential data here, no one will see your data\
-                                  \n\n--------BEGIN iquser TRACEBACK LOG--------\
-                                  \nDate: {date}\nGroup ID: {str(check.chat_id)}\
-                                  \nSender ID: {str(check.sender_id)}\
-                                  \nMessage Link: {await check.client.get_msg_link(check)}\
-                                  \n\nEvent Trigger:\n{str(check.text)}\
-                                  \n\nTraceback info:\n{str(traceback.format_exc())}\
-                                  \n\nError text:\n{str(sys.exc_info()[1])}"
+                        ftext = f"\nدادەبەزێت تەنھا لێرە ،\
+                                  \n\nنسجل فقـط تقريـر الإشعـار وتـاريخـه ،\
+                                  \n\nئێمە ڕێز لە تایبەتمەندیەکەت دەگرین.\
+                                  \n\nناردنی ئەم نامەیە تەنھا بۆ گەشەپێدەری سەرچاوەیە @VTVIT\
+                                  \n\n--------دەستپێکردنی تۆماری بە دواکەوتنی بۆتی زیرەك 𝙄𝙌𝙐𝙎𝙀𝙍 メ--------\
+                                  \n- بەروار : {date}\n- ناسنامەی گرووپ  : {str(check.chat_id)}\
+                                  \n- ناسنامەی کەسەکە : {str(check.sender_id)}\
+                                  \n- بەستەری نامەکە : {await check.client.get_msg_link(check)}\
+                                  \n\n- ڕاپۆرت :\n{str(check.text)}\
+                                  \n\n- وردەکاریەکان :\n{str(traceback.format_exc())}\
+                                  \n\n- دەقی ئاگاداری :\n{str(sys.exc_info()[1])}"
                         new = {
                             "error": str(sys.exc_info()[1]),
                             "date": datetime.datetime.now(),
                         }
-                        ftext += "\n\n--------END iquser TRACEBACK LOG--------"
+                        ftext += "\n\n--------کۆتا تۆماری بە دواکەوتنی بۆتی زیرەك 𝙄𝙌𝙐𝙎𝙀𝙍 メ--------"
+                        ftext += "\n\n\n- دوا 5 فایل نوێکرایەوە :\n"
                         command = 'git log --pretty=format:"%an: %s" -5'
-                        ftext += "\n\n\nLast 5 commits:\n"
                         output = (await runcmd(command))[:2]
                         result = output[0] + output[1]
                         ftext += result
                         pastelink = await paste_message(
                             ftext, pastetype="s", markdown=False
                         )
-                        text = "**ڕاپۆرتی هەڵەیی بۆتی زیرەك**\n\n"
-                        link = "[هنا](https://t.me/IQUSER0)"
-                        text += "ئەگەر دەتەوێت دەتوانیت راپۆرت بدەیت"
-                        text += f"- تەنھا بە ناردنی ئەم نامەیە {link}.\n"
-                        text += "هیچ هەڵەیەك تۆمار نەکراوە تەنھا بەروار و کات \n\n"
-                        text += f"**⌯︙ڕاپۆرتی هەڵە  : ** [{new['error']}]({pastelink})"
+                        link = "[𐇮 𝙑𝙏𝙑𝙄𝙏 𝞝 بۆتی زیرەك 𐇮](https://t.me/VTVIT)"
+                        text = (
+                            "**✘ ڕاپۆرتی ئاگاداری بۆتی زیرەك  𝙄𝙌 ✘**\n\n"
+                            + "- دەتوانیت ڕاپۆرتی ئەم تێبینیە بدەیت .. "
+                        )
+                        text += f"- ناردنی ئەم نامەیە تەنھا بۆ گەشەپێدەری سەرچاوەیە{link}.\n\n"
+                        text += (
+                            "-بۆ ئاگادارکردنەوەی گەشەپێدەرەکە لە ئاگاداریەکە .. تا ئەو کاتەی ئاگاداری  دەکەیتەوە\n\n"
+                        )
+                        text += f"**- نامەی ئاگاداری :** [{new['error']}]({pastelink})"
                         await check.client.send_message(
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
                         )
 
-            from .session import iquser
+            from .session import iqub
 
             if not func.__doc__ is None:
                 CMD_INFO[command[0]].append((func.__doc__).strip())
@@ -163,18 +206,18 @@ class vtvitClient(TelegramClient):
                     except BaseException:
                         LOADED_CMDS.update({command[0]: [wrapper]})
                 if edited:
-                    iquser.add_event_handler(
+                    iqub.add_event_handler(
                         wrapper,
                         MessageEdited(pattern=REGEX_.regex1, outgoing=True, **kwargs),
                     )
-                iquser.add_event_handler(
+                iqub.add_event_handler(
                     wrapper,
                     NewMessage(pattern=REGEX_.regex1, outgoing=True, **kwargs),
                 )
                 if allow_sudo and gvarstatus("sudoenable") is not None:
                     if command is None or command[0] in sudo_enabledcmds:
                         if edited:
-                            iquser.add_event_handler(
+                            iqub.add_event_handler(
                                 wrapper,
                                 MessageEdited(
                                     pattern=REGEX_.regex2,
@@ -182,7 +225,7 @@ class vtvitClient(TelegramClient):
                                     **kwargs,
                                 ),
                             )
-                        iquser.add_event_handler(
+                        iqub.add_event_handler(
                             wrapper,
                             NewMessage(
                                 pattern=REGEX_.regex2,
@@ -198,8 +241,8 @@ class vtvitClient(TelegramClient):
                 except BaseException:
                     LOADED_CMDS.update({file_test: [func]})
                 if edited:
-                    iquser.add_event_handler(func, events.MessageEdited(**kwargs))
-                iquser.add_event_handler(func, events.NewMessage(**kwargs))
+                    iqub.add_event_handler(func, events.MessageEdited(**kwargs))
+                iqub.add_event_handler(func, events.NewMessage(**kwargs))
             return wrapper
 
         return decorator
@@ -208,16 +251,18 @@ class vtvitClient(TelegramClient):
         self: TelegramClient,
         disable_errors: bool = False,
         edited: bool = False,
+        forword=False,
         **kwargs,
     ) -> callable:  # sourcery no-metrics
         kwargs["func"] = kwargs.get("func", lambda e: e.via_bot_id is None)
+        kwargs.setdefault("forwards", forword)
 
         def decorator(func):
             async def wrapper(check):
                 try:
                     await func(check)
-                except events.StopPropagation:
-                    raise events.StopPropagation
+                except events.StopPropagation as e:
+                    raise events.StopPropagation from e
                 except KeyboardInterrupt:
                     pass
                 except MessageNotModifiedError:
@@ -231,46 +276,48 @@ class vtvitClient(TelegramClient):
                         if Config.PRIVATE_GROUP_BOT_API_ID == 0:
                             return
                         date = (datetime.datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
-                        ftext = f"\nDisclaimer:\nThis file is pasted only here ONLY here,\
-                                    \nwe logged only fact of error and date,\nwe respect your privacy,\
-                                    \nyou may not report this error if you've\
-                                    \nany confidential data here, no one will see your data\
-                                    \n\n--------BEGIN iquser TRACEBACK LOG--------\
-                                    \nDate: {date}\nGroup ID: {str(check.chat_id)}\
-                                    \nSender ID: {str(check.sender_id)}\
-                                    \nMessage Link: {await check.client.get_msg_link(check)}\
-                                    \n\nEvent Trigger:\n{str(check.text)}\
-                                    \n\nTraceback info:\n{str(traceback.format_exc())}\
-                                    \n\nError text:\n{str(sys.exc_info()[1])}"
+                        ftext = f"\nفایلەکە دادەبەزێت تەنھا لێرە ،\
+                                  \n\nئێمە تەنھا ڕاپۆرتی ئاگاداریەکان و بەروارەکە تۆمار دەکەین ،\
+                                  \n\nئێمە ڕێز لە تایبەتمەندیەکەت دەگرین.\
+                                  \n\nناردنی ئەم نامەیە تەنھا بۆ گەشەپێدەری سەرچاوەیە @IQ7amo\
+                                  \n\n--------دەستپێکردنی تۆماری بەدواکەوتنی بۆتی زیرەك 𝙄𝙌𝙐𝙎𝙀𝙍 メ--------\
+                                  \n- بەروار : {date}\n- ناسنامەی گرووپ : {str(check.chat_id)}\
+                                  \n- ناسنامەی کەسەکە : {str(check.sender_id)}\
+                                  \n- بەستەری نامەکە : {await check.client.get_msg_link(check)}\
+                                  \n\n- ڕاپۆرت :\n{str(check.text)}\
+                                  \n\n- وردەکاریەکان :\n{str(traceback.format_exc())}\
+                                  \n\n- دەقی ئاگاداری :\n{str(sys.exc_info()[1])}"
                         new = {
                             "error": str(sys.exc_info()[1]),
                             "date": datetime.datetime.now(),
                         }
-                        ftext += "\n\n--------END iquser TRACEBACK LOG--------"
+                        ftext += "\n\n--------کۆتا تۆماری بەدواکەوتنی بۆتی زیرەك 𝙄𝙌𝙐𝙎𝙀𝙍 メ--------"
                         command = 'git log --pretty=format:"%an: %s" -5'
-                        ftext += "\n\n\nLast 5 commits:\n"
+                        ftext += "\n\n\n- دوا 5 فایل نوێکرایەوە :\n"
                         output = (await runcmd(command))[:2]
                         result = output[0] + output[1]
                         ftext += result
                         pastelink = await paste_message(
                             ftext, pastetype="s", markdown=False
                         )
-                        text = "**ڕاپۆرتی هەڵەیی بۆتی زیرەك**\n\n"
-                        link = "[هنا](https://t.me/GroupIQuser)"
-                        text += "ئەگەر دەتەوێت دەتوانیت راپۆرت بدەیت"
-                        text += f"- تەنھا به ناردنی ئەم نامەیە {link}.\n"
-                        text += "لا هیچ هەڵەیەك تۆمار نەکراوە تەنھا بەروار و کات\n\n"
-                        text += f"**⌯︙ڕاپۆرتی هەڵە : ** [{new['error']}]({pastelink})"
+                        text = "**✘ ڕاپۆرتی ئاگاداری بۆتی زیرەك 𝙄𝙌 ✘**\n\n "
+                        link = "[𐇮 𝙑𝙏𝙑𝙄𝙏 𝞝 بۆتی زیرەك 𐇮](https://t.me/IQUSER0)"
+                        text += "- دەتوانیت راپۆرتی ئەم تێبینیە بدەیت .. "
+                        text += f"- ناردنی ئەم نامەیە تەنھا بۆ گەشەپێدەری سەرچاوەیە {link}.\n"
+                        text += (
+                            "- بۆ ئاگادارکردنەوەی گەشەپێدەرەکە لە ئاگاداریەکە .. تا ئەو کاتەی ئاگاداری دەکەیتەوە\n\n"
+                        )
+                        text += f"**- نامەی ئاگاداری :** [{new['error']}]({pastelink})"
                         await check.client.send_message(
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
                         )
 
-            from .session import jepiq
+            from .session import zedub
 
             if edited is True:
-                iquser.tgbot.add_event_handler(func, events.MessageEdited(**kwargs))
+                iqubub.tgbot.add_event_handler(func, events.MessageEdited(**kwargs))
             else:
-                iquser.tgbot.add_event_handler(func, events.NewMessage(**kwargs))
+                iqub.tgbot.add_event_handler(func, events.NewMessage(**kwargs))
 
             return wrapper
 
@@ -292,14 +339,14 @@ class vtvitClient(TelegramClient):
         self.running_processes.clear()
 
 
-vtvitClient.fast_download_file = download_file
-vtvitClient.fast_upload_file = upload_file
-vtvitClient.reload = restart_script
-vtvitClient.get_msg_link = get_message_link
-vtvitClient.check_testcases = checking
+IQUserBotClient.fast_download_file = download_file
+IQUserBotClient.fast_upload_file = upload_file
+IQUserBotClient.reload = restart_script
+IQUserBotClient.get_msg_link = get_message_link
+IQUserBotClient.check_testcases = checking
 try:
     send_message_check = TelegramClient.send_message
 except AttributeError:
-    vtvitClient.send_message = send_message
-    vtvitClient.send_file = send_file
-    vtvitClient.edit_message = edit_message
+    IQUserBotClient.send_message = send_message
+    IQUserBotClient.send_file = send_file
+    IQUserBotClient.edit_message = edit_message
