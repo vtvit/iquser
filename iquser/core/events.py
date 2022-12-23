@@ -62,7 +62,7 @@ class NewMessage(events.NewMessage):
                 is_admin = event.chat.admin_rights
 
             if not is_creator and not is_admin:
-                text = "`أحتاج إلى صلاحيات الاشراف حتى أتمكن من استخدام هذا الأمر!`"
+                text = "`پێویستم بە ڕێپێدان(ڕۆڵ) بەڕێوبەریە بۆ ئەوەی بتوانم ئەم فەرمانە بەکار بهێنم!`"
 
                 event._client.loop.create_task(edit_or_reply(event, text))
                 return
