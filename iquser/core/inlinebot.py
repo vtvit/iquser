@@ -11,8 +11,9 @@ from telethon.errors import QueryIdInvalidError
 from telethon.events import CallbackQuery, InlineQuery
 from youtubesearchpython import VideosSearch
 
-from jepthon import jepiq
+from iquser import iqub
 
+from ..assistant.inlinefm import get_manager
 from ..Config import Config
 from ..helpers.functions import rand_key
 from ..helpers.functions.utube import (
@@ -30,7 +31,9 @@ from .logger import logging
 LOGS = logging.getLogger(__name__)
 
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
-ROZLOGO = "https://telegra.ph/file/e76bb41ff12a7e8b71e3c.mp4"
+MEDIA_PATH_REGEX = re.compile(r"(:?\<\bmedia:(:?(?:.*?)+)\>)")
+IQLOGO = "https://telegra.ph/file/3851323764f1629e16ce8.jpg"
+MALATH_PIC = "https://telegra.ph/file/3851323764f1629e16ce8.jpg"
 tr = Config.COMMAND_HAND_LER
 
 
@@ -53,26 +56,54 @@ def ibuild_keyboard(buttons):
 
 
 def main_menu():
-    text = f"**▾∮ بەخێربێی ئەزیزم🖤. {mention}**\n**▾لێرەدا لیستی دوگمەکانی چەسپێنراوە بۆ فەرمانەکان ↫**⍣ⵧⵧⵧⵧⵧᴊᴍᴛʜᴏɴⵧⵧⵧⵧⵧ⍣**\n[𝙄𝙌 𝙐𝙎𝙀𝙍𝘽𝙊𝙏 🕷️🖤](https://t.me/IQUSER0)\n\n"
-    buttons
-        (Button.inline("ℹ️ • پشکنین •", data="check"),),
-        (
-            Button.inline(f"👮‍♂️ • فەرمانی بەڕێوبەر • ({len(GRP_INFO['admin'])})", data="admin_menu"),
-            Button.inline(f"🤖 • فەرمانی بۆت • ({len(GRP_INFO['bot'])})", data="bot_menu"),
-        ),
-        (
-            Button.inline(f"🎨 • فەرمانی ڕابواردن • ({len(GRP_INFO['fun'])})", data="fun_menu"),
-            Button.inline(f"🎈 • فەرمانی هاوکێشەکان و گەڕان • ({len(GRP_INFO['misc'])})", data="misc_menu"),
-        ),
-        (
-            Button.inline(f"🧰 • ئامێرەکان • ({len(GRP_INFO['tools'])})", data="tools_menu"),
-            Button.inline(f"🗂 • فایلەکان • ({len(GRP_INFO['utils'])})", data="utils_menu"),
-        ),
-        (
-            Button.inline(f"🧸 • فەرمانی چێژبەخش • ({len(GRP_INFO['extra'])})", data="extra_menu"),
-            Button.inline("🔒 • داخستنی لیستەکە  •", data="close"),
-        ),
-    ]
+    malathy = f"**🧑🏻‍💻┊بەخێربێی ئەزیزم {mention}**\n**🛂┊بۆ لیستی فەرمانەکانی یارمەتیدەر \n**⋆─┄─┄─┄─ ɪǫᴜsᴇʀ ─┄─┄─┄─⋆**\n[ᯓ 𝙄𝙌𝙐𝙎𝙀𝙍 メ 🦾♥️](https://t.me/IQUSER0)\n\n"
+    if Config.iqub:
+        buttons = [
+            (Button.inline("ℹ️ زانیاری فایلەکان", data="check"),),
+            (
+                Button.inline(
+                    f"فەرمانی بەڕێوبەر 👮‍ ", data="admin_menu"
+                ),
+                Button.inline(f"فەرمانی بۆت 🤖", data="bot_menu"),
+            ),
+            (
+                Button.inline(f"فەرمانی ڕابواردن 🎮", data="fun_menu"),
+                Button.inline(f"فەرمانی خزمەتگوزاریەکان 🧩", data="misc_menu"),
+            ),
+            (
+                Button.inline(f"ئامێرەکان 💡", data="tools_menu"),
+                Button.inline(f"هاوپێچەکان 🖥", data="utils_menu"),
+            ),
+            (
+                Button.inline(f"گەڕان و داگرتن 🪄", data="extra_menu"),
+                Button.inline(
+                    f"ئەوانی تر 🖨", data="useless_menu"
+                ),
+            ),
+            (Button.inline("🔒 داخستن", data="close"),),
+        ]
+    else:
+        buttons = [
+            (Button.inline("ℹ️ زانیاری فایلەکان", data="check"),),
+            (
+                Button.inline(
+                    f"فەرمانی بەڕێوبەر 👮‍ ", data="admin_menu"
+                ),
+                Button.inline(f"فەرمانی بۆت  🤖", data="bot_menu"),
+            ),
+            (
+                Button.inline(f"فەرمانی ڕابواردن 🎮", data="fun_menu"),
+                Button.inline(f"فەرمانی خزمەتگوزاریەکان 🧩", data="misc_menu"),
+            ),
+            (
+                Button.inline(f"ئامێرەکان 💡", data="tools_menu"),
+                Button.inline(f"هاوپێچەکان 🖥", data="utils_menu"),
+            ),
+            (
+                Button.inline(f"گەڕان و داگرتن 🪄", data="extra_menu"),
+                Button.inline("🔒 داخستن ", data="close"),
+            ),
+        ]
 
     return text, buttons
 
@@ -163,12 +194,12 @@ def paginate_help(
             ] + [
                 (
                     Button.inline("⌫", data=f"{prefix}_prev({modulo_page})_plugin"),
-                    Button.inline("⚙️ پێڕستی سەرەکی ", data="mainmenu"),
+                    Button.inline("⚙️ سەرەکی", data="mainmenu"),
                     Button.inline("⌦", data=f"{prefix}_next({modulo_page})_plugin"),
                 )
             ]
         else:
-            pairs = pairs + [(Button.inline("⚙️ • لیستی سەرەکی •", data="mainmenu"),)]
+            pairs = pairs + [(Button.inline("⚙️ سەرەکی", data="mainmenu"),)]
     elif len(pairs) > number_of_rows:
         if category_pgno < 0:
             category_pgno = len(pairs) + category_pgno
@@ -181,7 +212,7 @@ def paginate_help(
                     data=f"{prefix}_prev({modulo_page})_command_{category_plugins}_{category_pgno}",
                 ),
                 Button.inline(
-                    "⬅️ • گەڕانەوە • ",
+                    "⬅️ گەڕانەوە ",
                     data=f"back_plugin_{category_plugins}_{category_pgno}",
                 ),
                 Button.inline(
@@ -196,7 +227,7 @@ def paginate_help(
         pairs = pairs + [
             (
                 Button.inline(
-                    "⬅️ • گەڕانەوە • ",
+                    "⬅️ گەڕانەوە ",
                     data=f"back_plugin_{category_plugins}_{category_pgno}",
                 ),
             )
@@ -204,7 +235,7 @@ def paginate_help(
     return pairs
 
 
-@jepiq.tgbot.on(InlineQuery)
+@iqub.tgbot.on(InlineQuery)
 async def inline_handler(event):  # sourcery no-metrics
     builder = event.builder
     result = None
@@ -217,30 +248,30 @@ async def inline_handler(event):  # sourcery no-metrics
     if query_user_id == Config.OWNER_ID or query_user_id in Config.SUDO_USERS:
         hmm = re.compile("troll (.*) (.*)")
         match = re.findall(hmm, query)
-        inf = re.compile("نھێنی (.*) (.*)")
+        inf = re.compile("secret (.*) (.*)")
         match2 = re.findall(inf, query)
-        hid = re.compile("شاردنەوە (.*)")
+        hid = re.compile("hide (.*)")
         match3 = re.findall(hid, query)
-        if query.startswith("iquser"):
+        if query.startswith("**iquser"):
             buttons = [
                 (
-                    Button.inline("دۆخ ⚒️", data="stats"),
-                    Button.url(" IQuser UsᴇʀBoᴛ", "https://t.me/IQUSER0"),
+                    Button.inline("Stats", data="stats"),
+                    Button.url("𝗜𝗤𝗨𝗦𝗘𝗥 𓅛", "https://t.me/IQUSER0"),
                 )
             ]
-            ALIVE_PIC = gvarstatus("ALIVE_PIC")
-            IALIVE_PIC = gvarstatus("IALIVE_PIC")
+            ALIVE_PIC = gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/3851323764f1629e16ce8.jpg"
+            IALIVE_PIC = gvarstatus("IALIVE_PIC") or "https://telegra.ph/file/3851323764f1629e16ce8.jpg"
             if IALIVE_PIC:
-                ROZE = [x for x in IALIVE_PIC.split()]
-                PIC = list(ROZE)
+                IQ = [x for x in IALIVE_PIC.split()]
+                PIC = list(IQ)
                 I_IMG = random.choice(PIC)
             if not IALIVE_PIC and ALIVE_PIC:
-                ROZE = [x for x in ALIVE_PIC.split()]
-                PIC = list(ROZE)
+                IQ = [x for x in ALIVE_PIC.split()]
+                PIC = list(IQ)
                 I_IMG = random.choice(PIC)
             elif not IALIVE_PIC:
                 I_IMG = None
-            if I_IMG and I_IMG.endswith((".jpg", ".png")):
+            if I_IMG and I_IMG.endswith((".jpg", ".png", ".mp4")):
                 result = builder.photo(
                     I_IMG,
                     text=query,
@@ -249,13 +280,13 @@ async def inline_handler(event):  # sourcery no-metrics
             elif I_IMG:
                 result = builder.document(
                     I_IMG,
-                    title="Alive BOT",
+                    title="Alive iquser",
                     text=query,
                     buttons=buttons,
                 )
             else:
                 result = builder.article(
-                    title="Alive BOT",
+                    title="Alive iquser",
                     text=query,
                     buttons=buttons,
                 )
@@ -265,6 +296,11 @@ async def inline_handler(event):  # sourcery no-metrics
             prev = 0
             note_data = ""
             buttons = []
+            media = None
+            zedmedia = MEDIA_PATH_REGEX.search(markdown_note)
+            if zedmedia:
+                media = zedmedia.group(2)
+                markdown_note = markdown_note.replace(zedmedia.group(0), "")
             for match in BTN_URL_REGEX.finditer(markdown_note):
                 n_escapes = 0
                 to_check = match.start(1) - 1
@@ -286,12 +322,26 @@ async def inline_handler(event):  # sourcery no-metrics
                 note_data += markdown_note[prev:]
             message_text = note_data.strip()
             tl_ib_buttons = ibuild_keyboard(buttons)
-            result = builder.article(
-                title="Inline creator",
-                text=message_text,
-                buttons=tl_ib_buttons,
-                link_preview=False,
-            )
+            if media and media.endswith((".jpg", ".png", ".mp4")):
+                result = builder.photo(
+                    media,
+                    text=message_text,
+                    buttons=tl_ib_buttons,
+                )
+            elif media:
+                result = builder.document(
+                    media,
+                    title="Inline creator",
+                    text=message_text,
+                    buttons=tl_ib_buttons,
+                )
+            else:
+                result = builder.article(
+                    title="Inline creator",
+                    text=message_text,
+                    buttons=tl_ib_buttons,
+                    link_preview=False,
+                )
             await event.answer([result] if result else None)
         elif match:
             query = query[7:]
@@ -308,13 +358,13 @@ async def inline_handler(event):  # sourcery no-metrics
                 try:
                     u = await event.client.get_entity(u)
                     if u.username:
-                        razan = f"@{u.username}"
+                        vtvit = f"[{u.first_name}](tg://user?id={u.id})"
                     else:
-                        razan = f"[{u.first_name}](tg://user?id={u.id})"
+                        vtvit = f"@{u.username}"
                     u = int(u.id)
                 except ValueError:
                     # ValueError: Could not find the input entity
-                    razan = f"[user](tg://user?id={u})"
+                    vtvit = f"[user](tg://user?id={u})"
             except ValueError:
                 # if u is username
                 try:
@@ -322,19 +372,19 @@ async def inline_handler(event):  # sourcery no-metrics
                 except ValueError:
                     return
                 if u.username:
-                    razan = f"@{u.username}"
+                    vtvit = f"[{u.first_name}](tg://user?id={u.id})"
                 else:
-                    razan = f"[{u.first_name}](tg://user?id={u.id})"
+                    vtvit = f"@{u.username}"
                 u = int(u.id)
             except Exception:
                 return
             timestamp = int(time.time() * 2)
             newtroll = {str(timestamp): {"userid": u, "text": txct}}
 
-            buttons = [Button.inline("پیشاندانی نامەکە 🔐", data=f"troll_{timestamp}")]
+            buttons = [Button.inline("کࢪدنِٰــۛــەوٰەی نِٰــۛــآمِٰــۛــە 𖡟 🧾", data=f"troll_{timestamp}")]
             result = builder.article(
-                title="نامەی troll لە سەرچاوەی بۆتی زیرەك 🧸♥",
-                text=f"تەنھا {razan} ئەو کەسە دەتوانێت سەیری بکات !",
+                title="نــٖ‌ـ‌ــآمــٖ‌ـ‌ـەی نــٖ‌ـ‌ــهہـێنــٖ‌ـ‌ــی",
+                text=f"ᯓ 𝗦𝗢𝗨𝗥𝗖𝗘 𝗜𝗤𝗨𝗦𝗘𝗥  **-نــٖ‌ـ‌ــآمــٖ‌ـ‌ــەی نــٖ‌ـ‌ــهہـێنــٖ‌ـ‌ــی 🗳**\n⋆┄─┄─┄─┄┄─┄─┄─┄─┄┄⋆\n\n**⌔╎نامەکە بۆ** {vtvit} \n**⌔╎تەڻھا ئەو دەتوانێت بیکاتەوە**",
                 buttons=buttons,
             )
             await event.answer([result] if result else None)
@@ -357,34 +407,34 @@ async def inline_handler(event):  # sourcery no-metrics
                 u = int(user)
                 try:
                     u = await event.client.get_entity(u)
-                    if u.username:
-                        razan = f"@{u.username}"
+                    if u.first_name:
+                        vtvit = f"[{u.first_name}](tg://user?id={u.id})"
                     else:
-                        razan = f"[{u.first_name}](tg://user?id={u.id})"
+                        vtvit = f"@{u.username}"
                     u = int(u.id)
                 except ValueError:
                     # ValueError: Could not find the input entity
-                    razan = f"[user](tg://user?id={u})"
+                    vtvit = f"[user](tg://user?id={u})"
             except ValueError:
                 # if u is username
                 try:
                     u = await event.client.get_entity(user)
                 except ValueError:
                     return
-                if u.username:
-                    razan = f"@{u.username}"
+                if u.first_name:
+                    vtvit = f"[{u.first_name}](tg://user?id={u.id})"
                 else:
-                    razan = f"[{u.first_name}](tg://user?id={u.id})"
+                    vtvit = f"@{u.username}"
                 u = int(u.id)
             except Exception:
                 return
             timestamp = int(time.time() * 2)
             newsecret = {str(timestamp): {"userid": u, "text": txct}}
 
-            buttons = [Button.inline("پیشاندانی نامەکە 🔐", data=f"rzan_{timestamp}")]
+            buttons = [Button.inline("کردنەوەی نامەی نهێنی 🗳", data=f"secret_{timestamp}")]
             result = builder.article(
-                title="نامەیەکی نھێنی لە سەرچاوە بۆتی زیرەك 🧸♥",
-                text=f"تەنھا {razan} ئەو کەسە دەتوانێت سەیری بکات !",
+                title="** نامەی نهێنی **",
+                text=f"ᯓ 𝗦𝗢𝗨𝗥𝗖𝗘 𝗜𝗤𝗨𝗦𝗘𝗥 **- نامەی نهێنی 📠**\n⋆┄─┄─┄─┄┄─┄─┄─┄─┄┄⋆\n\n**⌔╎نامەکە بۆ** {vtvit} \n**⌔╎تەنھا ئەو دەتوانێت بیکاتەوە**",
                 buttons=buttons,
             )
             await event.answer([result] if result else None)
@@ -404,10 +454,10 @@ async def inline_handler(event):  # sourcery no-metrics
             timestamp = int(time.time() * 2)
             newhide = {str(timestamp): {"text": query}}
 
-            buttons = [Button.inline("بخوێنەوە نامەکە ", data=f"hide_{timestamp}")]
+            buttons = [Button.inline("پیشاندانی نامەکە 📃", data=f"hide_{timestamp}")]
             result = builder.article(
-                title= "نامەیەکی شاراوە لە سەرچاوەی بۆتی زیرەکەوە 🧸♥",
-                text=f"✖✖✖",
+                title="**⌔╎نامەی شاراوە 📟**",
+                text=f"ᯓ 𝗦𝗢𝗨𝗥𝗖𝗘 𝗜𝗤𝗨𝗦𝗘𝗥   **- نامەی شاراوە 📟**\n⋆┄─┄─┄─┄┄─┄─┄─┄─┄┄⋆\n\n**⌔╎دەست بنێ بێرە بۆ پیشاندانی نامەکە**",
                 buttons=buttons,
             )
             await event.answer([result] if result else None)
@@ -444,7 +494,7 @@ async def inline_handler(event):  # sourcery no-metrics
                             data=f"ytdl_next_{key_}_1",
                         ),
                         Button.inline(
-                            "📜  پیشاندانی لیست ",
+                            "لیستەکان 📜",
                             data=f"ytdl_listall_{key_}_1",
                         ),
                         Button.inline(
@@ -469,7 +519,7 @@ async def inline_handler(event):  # sourcery no-metrics
                     id=str(uuid4()),
                     type="photo",
                     title=link,
-                    description="⬇️ کلیك بکە بۆ داگرتن",
+                    description="⬇️ کرتە بکە بۆ داگرتن",
                     thumb=photo,
                     content=photo,
                     send_message=types.InputBotInlineMessageMediaAuto(
@@ -478,9 +528,9 @@ async def inline_handler(event):  # sourcery no-metrics
                 )
             else:
                 result = builder.article(
-                    title="Not Found",
-                    text=f"No Results found for `{str_y[1]}`",
-                    description="INVALID",
+                    title="**- بوونی نییە  ✘**",
+                    text=f"**- هیچ ئەنجامێك نەدۆزرایەوە بۆ **`{str_y[1]}` ✘",
+                    description="نادروستە",
                 )
             try:
                 await event.answer([result] if result else None)
@@ -488,9 +538,9 @@ async def inline_handler(event):  # sourcery no-metrics
                 await event.answer(
                     [
                         builder.article(
-                            title="Not Found",
-                            text=f"No Results found for `{str_y[1]}`",
-                            description="INVALID",
+                            title="**- بوونی نییە  ✘**",
+                            text=f"**- لا هیچ ئەنجامێك نەدۆزرایەوە **`{str_y[1]}` ✘",
+                            description="نادروستە",
                         )
                     ]
                 )
@@ -522,33 +572,33 @@ async def inline_handler(event):  # sourcery no-metrics
             await event.answer([result] if result else None)
         elif string == "pmpermit":
             buttons = [
-                Button.inline(text="🪐 هەڵبژاردنەکان", data="show_pmpermit_options"),
+                Button.inline(text="پیشاندانی هەڵبژاردنەکان ", data="show_pmpermit_options"),
             ]
             PM_PIC = gvarstatus("pmpermit_pic")
             if PM_PIC:
-                ROZE = [x for x in PM_PIC.split()]
-                PIC = list(ROZE)
-                ROZE_IMG = random.choice(PIC)
+                CAT = [x for x in PM_PIC.split()]
+                PIC = list(CAT)
+                CAT_IMG = random.choice(PIC)
             else:
-                ROZE_IMG = None
+                CAT_IMG = None
             query = gvarstatus("pmpermit_text")
-            if ROZE_IMG and ROZE_IMG.endswith((".jpg", ".jpeg", ".png")):
+            if CAT_IMG and CAT_IMG.endswith((".jpg", ".jpeg", ".png")):
                 result = builder.photo(
-                    ROZE_IMG,
-                    # title="Alive ROZE",
+                    CAT_IMG,
+                    # title="Alive iquser",
                     text=query,
                     buttons=buttons,
                 )
-            elif ROZE_IMG:
+            elif CAT_IMG:
                 result = builder.document(
-                    ROZE_IMG,
-                    title="Alive BOT",
+                    CAT_IMG,
+                    title="Alive iquser",
                     text=query,
                     buttons=buttons,
                 )
             else:
                 result = builder.article(
-                    title="Alive BOT",
+                    title="Alive cat",
                     text=query,
                     buttons=buttons,
                 )
@@ -556,32 +606,26 @@ async def inline_handler(event):  # sourcery no-metrics
     else:
         buttons = [
             (
-                Button.url("چەناڵی سەرچاوەکە ⚒️", "https://t.me/IQUSER0"),
+                Button.url("چەناڵی سەرچاوە🕷️🖤", "https://t.me/IQUSER0"),
                 Button.url(
-                    "گرووپی یارمەتیدەر 📬",
-                    "https://t.me/Jepthon1",
+                    "گەشەپێدەری سەرچاوە🖤",
+                    "https://t.me/VTVIT",
                 ),
             )
         ]
         markup = event.client.build_reply_markup(buttons)
         photo = types.InputWebDocument(
-            url=ROZLOGO, size=0, mime_type="image/jpeg", attributes=[]
+            url=IQLOGO, size=0, mime_type="image/jpeg", attributes=[]
         )
         text, msg_entities = await event.client._parse_message_text(
-            "**[بۆتی زیرەك 🕷️🖤](https://t.me/IQUSER0)**\
-            \n\
-            \n❤ بۆتی زیرەك ئەوە بۆتێکی سادەیە کە دەچێتە ناو ئەکاونتەکەتەوە بۆ ئەوەی وا لە تۆ بکات کۆنتڕۆڵی بکەیت بە چەند فەرمانێک.\
-            \n\
-            \n**ئەگەر دەتەوێت سەرچاوەکە لەسەر ئەکاونتەکەت دابمەزرێنیت ,\
-            \n🐾 وەرە ئێرە  [گرووپی یارمەتیدەر](https://t.me/GroupIQuser)!**",
-            "md",
+            "- بۆ دامەزراندنی سەرچاوەی بۆتی زیرەك 𝗜𝗤𝗨𝗦𝗘𝗥", "md"
         )
         result = types.InputBotInlineResult(
             id=str(uuid4()),
             type="photo",
-            title="IQuser 🧸♥",
-            description="جۆینی گرووپی یارمەتیدەر بکە",
-            url="https://t.me/GroupIQuser",
+            title="𝗜𝗤𝗨𝗦𝗘𝗥𓅛",
+            description="بەستەری دامەزراندن",
+            url="https://t.me/IQUSER0",
             thumb=photo,
             content=photo,
             send_message=types.InputBotInlineMessageMediaAuto(
@@ -591,40 +635,36 @@ async def inline_handler(event):  # sourcery no-metrics
         await event.answer([result] if result else None)
 
 
-@iquser.tgbot.on(CallbackQuery(data=re.compile(b"close")))
+@iqub.tgbot.on(CallbackQuery(data=re.compile(b"close")))
 @check_owner
 async def on_plug_in_callback_query_handler(event):
     buttons = [
-        (Button.inline("Open Menu", data="mainmenu"),),
+        (Button.inline("کردنەوەی لیست📁", data="mainmenu"),),
     ]
-    await event.edit("Menu Closed", buttons=buttons)
+    await event.edit("داخستنی لیست 🔒", buttons=buttons)
 
 
-@iquser.tgbot.on(CallbackQuery(data=re.compile(b"check")))
+@iqub.tgbot.on(CallbackQuery(data=re.compile(b"check")))
 async def on_plugin_callback_query_handler(event):
-    text = f"𝙿𝚕𝚞𝚐𝚒𝚗𝚜: {len(PLG_INFO)}\
-        \n𝙲𝚘𝚖𝚖𝚊𝚗𝚍𝚜: {len(CMD_INFO)}\
-        \n\n{tr}𝚑𝚎𝚕𝚙 <𝚙𝚕𝚞𝚐𝚒𝚗> : 𝙵𝚘𝚛 𝚜𝚙𝚎𝚌𝚒𝚏𝚒𝚌 𝚙𝚕𝚞𝚐𝚒𝚗 𝚒𝚗𝚏𝚘.\
-        \n{tr}𝚑𝚎𝚕𝚙 -𝚌 <𝚌𝚘𝚖𝚖𝚊𝚗𝚍> : 𝙵𝚘𝚛 𝚊𝚗𝚢 𝚌𝚘𝚖𝚖𝚊𝚗𝚍 𝚒𝚗𝚏𝚘.\
-        \n{tr}𝚜 <𝚚𝚞𝚎𝚛𝚢> : 𝚃𝚘 𝚜𝚎𝚊𝚛𝚌𝚑 𝚊𝚗𝚢 𝚌𝚘𝚖𝚖𝚊𝚗𝚍𝚜.\
-        "
+    text = f"**⌔╎فایلەکان 🗃 :** {len(PLG_INFO)}\n**⌔╎ژمارەی فەرمانەکان 📑 :** {len(CMD_INFO)}\
+        \n\n**.یارمەتی + ناوی فایل :** بۆ زانیاری فایلی یارمەتیدەرە دیاریکراوەکە \n**.یارمەتی + فەرمان :** بۆ زانیاری بۆ ڕێکخستنی دیاریکراو .\n**.پرس + فەرمان :** بۆ گەڕان هەر فەرمانێك ."
     await event.answer(text, cache_time=0, alert=True)
 
 
-@iquser.tgbot.on(CallbackQuery(data=re.compile(b"(.*)_menu")))
+@iqub.tgbot.on(CallbackQuery(data=re.compile(b"(.*)_menu")))
 @check_owner
 async def on_plug_in_callback_query_handler(event):
     category = str(event.pattern_match.group(1).decode("UTF-8"))
     buttons = paginate_help(0, GRP_INFO[category], category)
-    text = f"**Category: **{category}\
-        \n**Total plugins :** {len(GRP_INFO[category])}\
-        \n**Total Commands:** {command_in_category(category)}"
+    text = f"**⌔╎بەش 🗄: **{category}\
+        \n**⌔╎هەموو فایلەکان  🗃 :** {len(GRP_INFO[category])}\
+        \n**⌔╎هەموو فەرمانەکان  🔍:** {command_in_category(category)}"
     await event.edit(text, buttons=buttons)
 
 
-@iquser.tgbot.on(
+@iqub.tgbot.on(
     CallbackQuery(
-        data=re.compile(b"back_([a-z]+)_([a-z1-9]+)_([0-9]+)_?([a-z1-9]+)?_?([0-9]+)?")
+        data=re.compile(b"back_([a-z]+)_([a-z_1-9]+)_([0-9]+)_?([a-z1-9]+)?_?([0-9]+)?")
     )
 )
 @check_owner
@@ -634,9 +674,9 @@ async def on_plug_in_callback_query_handler(event):
     pgno = int(event.pattern_match.group(3).decode("UTF-8"))
     if mtype == "plugin":
         buttons = paginate_help(pgno, GRP_INFO[category], category)
-        text = f"**Category: **`{category}`\
-            \n**Total plugins :** __{len(GRP_INFO[category])}__\
-            \n**Total Commands:** __{command_in_category(category)}__"
+        text = f"**⌔╎بەش 🗄: **{category}\
+            \n**⌔╎هەموو فایلەکان  🗃 :** {len(GRP_INFO[category])}\
+             \n**⌔╎هەموو فەرمانەکان  🔍:** {command_in_category(category)}"
     else:
         category_plugins = str(event.pattern_match.group(4).decode("UTF-8"))
         category_pgno = int(event.pattern_match.group(5).decode("UTF-8"))
@@ -648,20 +688,20 @@ async def on_plug_in_callback_query_handler(event):
             category_plugins=category_plugins,
             category_pgno=category_pgno,
         )
-        text = f"**Plugin: **`{category}`\
-                \n**Category: **__{getkey(category)}__\
-                \n**Total Commands:** __{len(PLG_INFO[category])}__"
+        text = f"**⌔╎فایل 📁: **`{category}`\
+                \n**⌔╎بەش 🗄: ** {getkey(category)} \
+                \n**⌔╎هەموو فەرمانەکان 🔍 :** {len(PLG_INFO[category])}"
     await event.edit(text, buttons=buttons)
 
 
-@iquser.tgbot.on(CallbackQuery(data=re.compile(rb"mainmenu")))
+@iqub.tgbot.on(CallbackQuery(data=re.compile(rb"mainmenu")))
 @check_owner
 async def on_plug_in_callback_query_handler(event):
     _result = main_menu()
     await event.edit(_result[0], buttons=_result[1])
 
 
-@iquser.tgbot.on(
+@iqub.tgbot.on(
     CallbackQuery(data=re.compile(rb"(.*)_prev\((.+?)\)_([a-z]+)_?([a-z]+)?_?(.*)?"))
 )
 @check_owner
@@ -682,9 +722,9 @@ async def on_plug_in_callback_query_handler(event):
             category_plugins=category_plugins,
             category_pgno=category_pgno,
         )
-        text = f"**Plugin: **`{category}`\
-                \n**Category: **__{getkey(category)}__\
-                \n**Total Commands:** __{len(PLG_INFO[category])}__"
+        text = f"**⌔╎فایل 📁: **`{category}`\
+                \n**⌔╎بەش 🗄: ** {getkey(category)} \
+                \n**⌔╎هەموو فەرمانەکان 🔍 :** {len(PLG_INFO[category])}"
         try:
             return await event.edit(text, buttons=buttons)
         except Exception as e:
@@ -692,7 +732,7 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(buttons=buttons)
 
 
-@iquser.tgbot.on(
+@iqub.tgbot.on(
     CallbackQuery(data=re.compile(rb"(.*)_next\((.+?)\)_([a-z]+)_?([a-z]+)?_?(.*)?"))
 )
 @check_owner
@@ -720,9 +760,9 @@ async def on_plug_in_callback_query_handler(event):
     await event.edit(buttons=buttons)
 
 
-@iquser.tgbot.on(
+@iqub.tgbot.on(
     CallbackQuery(
-        data=re.compile(b"(.*)_cmdhelp_([a-z1-9]+)_([0-9]+)_([a-z]+)_([0-9]+)")
+        data=re.compile(b"(.*)_cmdhelp_([a-z_1-9]+)_([0-9]+)_([a-z]+)_([0-9]+)")
     )
 )
 @check_owner
@@ -738,11 +778,8 @@ async def on_plug_in_callback_query_handler(event):
                 "⬅️ گەڕانەوە ",
                 data=f"back_command_{category}_{pgno}_{category_plugins}_{category_pgno}",
             ),
-            Button.inline("⚙️ پێڕستی سەرەکی", data="mainmenu"),
+            Button.inline("لیسەی سەرەکی ⚙️", data="mainmenu"),
         )
     ]
-    text = f"**Command :** `{tr}{cmd}`\
-        \n**Plugin :** `{category}`\
-        \n**Category :** `{category_plugins}`\
-        \n\n**✘ Intro :**\n{CMD_INFO[cmd][0]}"
+    text = f"**⌔╎فەرمان 🔍:** `{cmd}`\n**⌔╎ناوی فایل 📁:** `{category}`\n**⌔╎بەش 🗄:** `{category_plugins}`\n\n**⌔╎پێشەکی 📍 :**\n{CMD_INFO[cmd][0]}"
     await event.edit(text, buttons=buttons)
