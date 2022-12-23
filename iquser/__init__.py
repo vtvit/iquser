@@ -6,29 +6,29 @@ import heroku3
 
 from .Config import Config
 from .core.logger import logging
-from .core.session import iquser, tgbot
+from .core.session import iqub
 from .helpers.functions.converter import Convert
 from .helpers.functions.musictool import *
 from .helpers.utils.utils import runasync
 from .sql_helper.globals import addgvar, delgvar, gvarstatus
 
-__version__ = "3.2.0"
+__version__ = "3.1.1"
 __license__ = "GNU Affero General Public License v3.0"
-__author__ = "سەرچاوەی بۆتی زیرەك <https://github.com/vtvit/iquser>"
-__copyright__ = f" مافی سەرچاوەی بۆتی زیرەك (C) 2020 - 2022  {__author__}"
+__author__ = "IQUSER <https://github.com/vtvit/iquser>"
+__copyright__ = f"IQUSER Copyright (C) 2021 - 2022  {__author__}"
 
-iquser.version = __version__
-iquser.tgbot.version = __version__
-LOGS = logging.getLogger("سەرچاوەی بۆتی زیرەك")
-bot = iquser
-tbot = tgbot
+iqub.version = __version__
+iqub.tgbot.version = __version__
+LOGS = logging.getLogger("بـۆتـی زیـرەك")
+bot = iqub
+
 
 StartTime = time.time()
-iquserversion = "7.2.0"
+iqversion = "3.1.1"
 
 
 def close_connection(*_):
-    print("پەیوەندی بە سەرچاوەکەوە داخراوە")
+    print("پەیوەندی بە سەرەچاوەکە کوژاواتەوە")
     runasync(sbb_b.disconnect())
     sys.exit(143)
 
@@ -71,7 +71,7 @@ except Exception:
     HEROKU_APP = None
 
 
-# گرینگ
+# Global Configiables
 COUNT_MSG = 0
 USERS = {}
 COUNT_PM = {}
@@ -81,10 +81,11 @@ ISAFK = False
 AFKREASON = None
 CMD_LIST = {}
 SUDO_LIST = {}
+# for later purposes
 INT_PLUG = ""
 LOAD_PLUG = {}
 
-# دەستکاری کرا
+# Variables
 BOTLOG = Config.BOTLOG
 BOTLOG_CHATID = Config.BOTLOG_CHATID
 PM_LOGGER_GROUP_ID = Config.PM_LOGGER_GROUP_ID
