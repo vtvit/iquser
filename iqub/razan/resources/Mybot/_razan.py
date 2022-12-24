@@ -1,24 +1,6 @@
 
-vtvit
-/
-iquserbot
-Public
-Code
-Issues
-Pull requests
-1
-Projects
-Wiki
-Security
-Insights
-Settings
-iquserbot/iqub/razan/resources/mybot/_razan.py
-@vtvit
-vtvit Update _razan.py
- 2 contributors
-30 lines (29 sloc)  23.1 KB
-from jepthon.Config import Config
-from jepthon.plugins import mention
+from iquser.Config import Config
+from iquser.plugins import mention
 
 RAZAN = Config.TG_BOT_USERNAME
 # for alive
