@@ -90,14 +90,14 @@ async def song_download(url, event, quality="128k", video=False, title=True):
         stderr = (await runcmd(media_cmd))[1]
         media_name, stderr = (await runcmd(name_cmd))[:2]
         if stderr:
-            return await edit_or_reply(event, f"**خطأ ::** `{stderr}`")
+            return await edit_or_reply(event, f"**هەڵەیە ::** `{stderr}`")
         media_name = os.path.splitext(media_name)[0]
         media_file = Path(f"{media_name}.{media_ext[0]}")
     if not os.path.exists(media_file):
         media_file = Path(f"{media_name}.{media_ext[1]}")
     elif not os.path.exists(media_file):
-        return await edit_or_reply(event, f"**- عذرا لم استطع ايجاد الطلب الخاص بك--")
-    await edit_or_reply(event, f"**- جار الرفع انتظر قليلا**")
+        return await edit_or_reply(event, f"**- ببوورە نەمتوانی داواکەت بدۆزمەوە--")
+    await edit_or_reply(event, f"**- کەمێك چاوەڕێ کردن  **")
     media_thumb = Path(f"{media_name}.jpg")
     if not os.path.exists(media_thumb):
         media_thumb = Path(f"{media_name}.webp")
