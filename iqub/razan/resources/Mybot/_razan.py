@@ -12,7 +12,7 @@ Wiki
 Security
 Insights
 Settings
-iquserbot/JepIQ/razan/resources/mybot/_razan.py
+iquserbot/iqub/razan/resources/mybot/_razan.py
 @vtvit
 vtvit Update _razan.py
  2 contributors
