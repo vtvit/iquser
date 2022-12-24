@@ -12,7 +12,7 @@ from .helpers.functions.musictool import *
 from .helpers.utils.utils import runasync
 from .sql_helper.globals import addgvar, delgvar, gvarstatus
 
-__version__ = "3.1.1"
+__version__ = "3.2.1"
 __license__ = "GNU Affero General Public License v3.0"
 __author__ = "IQUSER <https://github.com/vtvit/iquser>"
 __copyright__ = f"IQUSER Copyright (C) 2021 - 2022  {__author__}"
@@ -24,7 +24,7 @@ bot = iqub
 
 
 StartTime = time.time()
-iqversion = "3.1.1"
+iqversion = "3.2.1"
 
 
 def close_connection(*_):
