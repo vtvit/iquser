@@ -307,16 +307,16 @@ async def handler(event):
 async def bot_start(event):
     reply_to = await reply_id(event)
     if not reply_to:
-        return await event.reply("**- بالـرد على رسـالة الشخـص للحصول على المعلومات . . .**")
+        return await event.reply("**- بە وەڵامدانەوەی نامەی کەسەکە بۆ زانیاری . . .**")
     info_msg = await event.client.send_message(
         event.chat_id,
-        "**🔎 جـارِ البحث عن هـذا المستخـدم في قاعدة البيـانات الخاصـة بك ...**",
+        "**🔎 گەڕان بۆ ئەم بەکارهێنەرە لە بنکەی زانیاریەکەت ...**",
         reply_to=reply_to,
     )
     users = get_user_id(reply_to)
     if users is None:
         return await info_msg.edit(
-            "**- هنـالك خطـأ:** \n`عـذراً! ، لا يمكن العثور على هذا المستخدم في قاعدة البيانات الخاصة بك :(`"
+            "**- شتێکی هەڵە هەیە:** \n`ببوورە! ، ئەم بەکارهێنەرە ناتوانرێت لە بنکەی زانیاریەکەتدا بدۆزرێتەوە  :(`"
         )
     for usr in users:
         user_id = int(usr.chat_id)
@@ -324,11 +324,11 @@ async def bot_start(event):
         break
     if user_id is None:
         return await info_msg.edit(
-            "**- هنـالك خطـأ :** \n`عـذراً! ، لا يمكن العثور على هذا المستخدم في قاعدة البيانات الخاصة بك :(`"
+            "**- شتێکی هەڵە هەیە  :** \n`ببوورە! ، ئەم بەکارهێنەرە ناتوانرێت لە بنکەی زانیاریەکەتدا بدۆزرێتەوە :(`"
         )
-    uinfo = f"هـذه الرسالـة ارسلـت بواسـطة 👤 {_format.mentionuser(user_name , user_id)}\
-            \n**الاسـم:** {user_name}\
-            \n**الايـدي:** `{user_id}`"
+    uinfo = f"ئەم نامەیە نێردراوە لەلایەن 👤 {_format.mentionuser(user_name , user_id)}\
+            \n**ناو:** {user_name}\
+            \n**ناسنامە:** `{user_id}`"
     await info_msg.edit(uinfo)
 
 
@@ -336,9 +336,9 @@ async def send_flood_alert(user_) -> None:
     # sourcery no-metrics
     buttons = [
         (
-            Button.inline("🚫  حظـر", data=f"bot_pm_ban_{user_.id}"),
+            Button.inline("🚫  دەرکردن", data=f"bot_pm_ban_{user_.id}"),
             Button.inline(
-                "➖ تعطيـل مكـافح التكـرار",
+                "➖ ناچالاککردنی دژە دووبارە بەکارهێنانەوە",
                 data="toggle_bot-antiflood_off",
             ),
         )
@@ -353,9 +353,9 @@ async def send_flood_alert(user_) -> None:
             FloodConfig.ALERT[user_.id]["count"] = 1
         except Exception as e:
             if BOTLOG:
-                await zedub.tgbot.send_message(
+                await iqub.tgbot.send_message(
                     BOTLOG_CHATID,
-                    f"**- خطـأ :**\nعنـد تحديث عدد مرات التكرار\n`{e}`",
+                    f"**- هەڵە :**\nلەکاتی نوێکردنەوەی دووبارەبوونەوەکان\n`{e}`",
                 )
 
         flood_count = FloodConfig.ALERT[user_.id]["count"]
@@ -363,12 +363,12 @@ async def send_flood_alert(user_) -> None:
         flood_count = FloodConfig.ALERT[user_.id]["count"] = 1
 
     flood_msg = (
-        r"⚠️ **#تحذيـر_التكـرار**"
+        r"⚠️ **#ئاگادارکردنەوە دووبارە بکەوە**"
         "\n\n"
-        f"  الايدي: `{user_.id}`\n"
-        f"  الاسم: {get_display_name(user_)}\n"
-        f"  👤 الحساب: {_format.mentionuser(get_display_name(user_), user_.id)}"
-        f"\n\n**قام بالتكـرار بالبوت المساعد** ->  [ Flood rate ({flood_count}) ]\n"
+        f"  ناسنامەی: `{user_.id}`\n"
+        f"  ناو: {get_display_name(user_)}\n"
+        f"  👤 ئەکاونت: {_format.mentionuser(get_display_name(user_), user_.id)}"
+        f"\n\n**بە بۆتێکی یارمەتیدەری دووپاتی کردەوە** ->  [ Flood rate ({flood_count}) ]\n"
         "__Quick Action__: Ignored from bot for a while."
     )
 
@@ -376,15 +376,15 @@ async def send_flood_alert(user_) -> None:
         if flood_count >= FloodConfig.AUTOBAN:
             if user_.id in Config.SUDO_USERS:
                 sudo_spam = (
-                    f"**- المطـور المسـاعد :** {_format.mentionuser(user_.first_name , user_.id)}:\n**- ايدي المطـور:** {user_.id}\n\n"
-                    "**- قـام بالتكـرار في بوتك المسـاعد,لتنزيلـه استخـدم الامـر** تنزيل مطور + الايدي"
+                    f"**- هاو-پەرەپێدەر :** {_format.mentionuser(user_.first_name , user_.id)}:\n**- ناسنامەی گەشەپێدەر:** {user_.id}\n\n"
+                    "**- دووبارەکردنەوە لە یاریدەدەری بۆت، بۆ داگرتنی فرمانەکە بەکاربێنە ** داگرتنی گەشەپێدەر + ناسنامە"
                 )
                 if BOTLOG:
-                    await zedub.tgbot.send_message(BOTLOG_CHATID, sudo_spam)
+                    await iqub.tgbot.send_message(BOTLOG_CHATID, sudo_spam)
             else:
                 await ban_user_from_bot(
                     user_,
-                    f"**- الحظـر التلقـائي لمكافـح التكـرار في البـوت**  [exceeded flood rate of ({FloodConfig.AUTOBAN})]",
+                    f"**- دەرکردنی ئۆتۆماتیکی دژە دووبارە لە بۆت**  [exceeded flood rate of ({FloodConfig.AUTOBAN})]",
                 )
                 FloodConfig.USERS[user_.id].clear()
                 FloodConfig.ALERT[user_.id].clear()
@@ -394,7 +394,7 @@ async def send_flood_alert(user_) -> None:
         if not fa_id:
             return
         try:
-            msg_ = await zedub.tgbot.get_messages(BOTLOG_CHATID, fa_id)
+            msg_ = await iqub.tgbot.get_messages(BOTLOG_CHATID, fa_id)
             if msg_.text != flood_msg:
                 await msg_.edit(flood_msg, buttons=buttons)
         except Exception as fa_id_err:
@@ -409,29 +409,29 @@ async def send_flood_alert(user_) -> None:
             )
         try:
             chat = await zedub.tgbot.get_entity(BOTLOG_CHATID)
-            await zedub.tgbot.send_message(
+            await iqub.tgbot.send_message(
                 Config.OWNER_ID,
-                f"⚠️  **[تحذيـر مكافـح التكـرار](https://t.me/c/{chat.id}/{fa_msg.id})**",
+                f"⚠️  **[ئاگاداری دژە دووبارەکردنەوە](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
         except UserIsBlockedError:
             if BOTLOG:
-                await zedub.tgbot.send_message(BOTLOG_CHATID, "**- قم بالغـاء حظـر بوتك المسـاعـد ؟!**")
+                await iqub.tgbot.send_message(BOTLOG_CHATID, "**- لادانی دەرکردنی یاریدەدەری بۆت!**")
     if FloodConfig.ALERT[user_.id].get("fa_id") is None and fa_msg:
         FloodConfig.ALERT[user_.id]["fa_id"] = fa_msg.id
 
 
-@zedub.tgbot.on(CallbackQuery(data=re.compile(b"bot_pm_ban_([0-9]+)")))
+@iqub.tgbot.on(CallbackQuery(data=re.compile(b"bot_pm_ban_([0-9]+)")))
 @check_owner
 async def bot_pm_ban_cb(c_q: CallbackQuery):
     user_id = int(c_q.pattern_match.group(1))
     try:
-        user = await zedub.get_entity(user_id)
+        user = await iqub.get_entity(user_id)
     except Exception as e:
-        await c_q.answer(f"- خطـأ :\n{e}")
+        await c_q.answer(f"- هەڵەیە :\n{e}")
     else:
-        await c_q.answer(f"- جـارِ حظـر -> {user_id} ...", alert=False)
+        await c_q.answer(f"- دەردەکرێت  -> {user_id} ...", alert=False)
         await ban_user_from_bot(user, "Spamming Bot")
-        await c_q.edit(f"**- الايـدي :** {user_id} \n**- تم الحظـر .. بنجـاح ✅**")
+        await c_q.edit(f"**- ناسنامە :** {user_id} \n**- بە سەرکەوتوویی دەرکرا  ..  ✅**")
 
 
 def time_now() -> Union[float, int]:
@@ -462,18 +462,18 @@ def is_flood(uid: int) -> Optional[bool]:
         return True
 
 
-@zedub.tgbot.on(CallbackQuery(data=re.compile(b"toggle_bot-antiflood_off$")))
+@iqub.tgbot.on(CallbackQuery(data=re.compile(b"toggle_bot-antiflood_off$")))
 @check_owner
 async def settings_toggle(c_q: CallbackQuery):
     if gvarstatus("bot_antif") is None:
-        return await c_q.answer("**- مكافـح التكـرار التلقـائي بالبـوت .. معطـل مسبقـاً**", alert=False)
+        return await c_q.answer("**- دووبارەکردنەوەی دژە ئۆتۆماتیکی لەگەڵ بۆت.. پێشتر-لەکارخراو**", alert=False)
     delgvar("bot_antif")
     await c_q.answer("Bot Antiflood disabled.", alert=False)
-    await c_q.edit("**- مكافـح التكـرار التلقـائي بالبـوت .. تم تعطيلـه بنجـاح✓**")
+    await c_q.edit("**- دووبارەکردنەوەی دژە ئۆتۆماتیکی لەگەڵ بۆت..بەسەرکەوتوویی لە کارخراوە✓**")
 
 
-@zedub.bot_cmd(incoming=True, func=lambda e: e.is_private)
-@zedub.bot_cmd(edited=True, func=lambda e: e.is_private)
+@iqub.bot_cmd(incoming=True, func=lambda e: e.is_private)
+@iqub.bot_cmd(edited=True, func=lambda e: e.is_private)
 async def antif_on_msg(event):
     if gvarstatus("bot_antif") is None:
         return
