@@ -18,7 +18,7 @@ from telethon.events import CallbackQuery
 from telethon.utils import get_attributes
 from wget import download
 
-from zthon import zedub
+from iquser import iqub
 
 from ..Config import Config
 from ..core import check_owner, pool
@@ -40,13 +40,13 @@ BASE_YT_URL = "https://www.youtube.com/watch?v="
 YOUTUBE_REGEX = re.compile(
     r"(?:youtube\.com|youtu\.be)/(?:[\w-]+\?v=|embed/|v/|shorts/)?([\w-]{11})"
 )
-PATH = "./zthon/cache/ytsearch.json"
-plugin_category = "البوت"
+PATH = "./iquser/cache/ytsearch.json"
+plugin_category = "بۆت"
 
 
-@zedub.zed_cmd(
-    pattern="يوت(?:\s|$)([\s\S]*)",
-    command=("يوت", plugin_category),
+@iqub.iq_cmd(
+    pattern="گۆرانی(?:\s|$)([\s\S]*)",
+    command=("گۆرانی", plugin_category),
     info={
         "header": "ytdl with inline buttons.",
         "description": "To search and download youtube videos by inline buttons.",
@@ -64,8 +64,8 @@ async def iytdl_inline(event):
     elif reply and reply.text:
         input_url = (reply.text).strip()
     if not input_url:
-        return await edit_delete(event, "**- بالـرد ع رابـط او كتـابة نص مـع الامـر**")
-    zedevent = await edit_or_reply(event, f"**⌔╎جـارِ البحث في اليوتيوب عـن:** `'{input_url}'`")
+        return await edit_delete(event, "**- بە وەڵامدانەوەی بەستەرەکە یان نوسینی ناوی گۆرانی لەگەڵ فەرمانەکە**")
+    iqevent = await edit_or_reply(event, f"**⌔╎گەڕان لە یوتوب بۆ:** `'{input_url}'`")
     flag = True
     cout = 0
     results = None
@@ -81,13 +81,13 @@ async def iytdl_inline(event):
         if cout > 5:
             flag = False
     if results:
-        await zedevent.delete()
+        await iqevent.delete()
         await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     else:
-        await zedevent.edit("**⌔╎عـذراً .. لم اجد اي نتائـج**")
+        await iqevent.edit("**⌔╎ببوورە ..هیچ ئەنجامێك نەدۆزرایەوە**")
 
 
-@zedub.tgbot.on(
+@iqub.tgbot.on(
     CallbackQuery(
         data=re.compile(b"^ytdl_download_(.*)_([\d]+|mkv|mp4|mp3)(?:_(a|v))?")
     )
@@ -112,19 +112,19 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
     if str(choice_id).isdigit():
         choice_id = int(choice_id)
         if choice_id == 0:
-            await c_q.answer("🔄  جـارِ ...", alert=False)
+            await c_q.answer("🔄 بارکردن ...", alert=False)
             await c_q.edit(buttons=(await download_button(yt_code)))
             return
     startTime = time()
     choice_str, disp_str = get_choice_by_id(choice_id, downtype)
-    media_type = "فيديو" if downtype == "v" else "مقطع صوتي"
-    callback_continue = f"جار تحميل {media_type} يرجى الانتظار"
-    callback_continue += f"\n\nصيغـة الملـف : {disp_str}"
+    media_type = "ڤیدیۆ" if downtype == "v" else "کلیپی دەنگی"
+    callback_continue = f"دادەبەزێت  {media_type} تکایە چاوەڕوان بە"
+    callback_continue += f"\n\nفۆڕماتی کۆد : {disp_str}"
     await c_q.answer(callback_continue, alert=True)
-    upload_msg = await c_q.client.send_message(BOTLOG_CHATID, "**⌔╎جـارِ الـرفـع ...**")
+    upload_msg = await c_q.client.send_message(BOTLOG_CHATID, "**⌔╎بارکردن ...**")
     yt_url = BASE_YT_URL + yt_code
     await c_q.edit(
-        f"<b>⌔╎جـارِ تحميـل {media_type} ....</b>\n\n<b>⌔╎الـرابـط 📎 : </b><a href={yt_url}></a>\n<b>⌔╎الصيغـه 🎚: </b> {disp_str}",
+        f"<b>⌔╎دادەبەزێت  {media_type} ....</b>\n\n<b>⌔╎بەستەر 📎 : </b><a href={yt_url}></a>\n<b>⌔╎هاوکێشە 👾: </b> {disp_str}",
         parse_mode="html",
     )
     if downtype == "v":
@@ -154,7 +154,7 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
                 t,
                 c_q,
                 startTime,
-                "هەوڵدان بۆ بارکردن ...",
+                "بارکردن ...",
                 file_name=os.path.basename(Path(_fpath)),
             )
         ),
