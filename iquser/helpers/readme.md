@@ -1,1 +1,1 @@
-هەندێک لە کردارە پێویستەکان بۆ پێوەکراوەکان لێرەدا پێناسە دەکرێن
+Some of the functions required for plugins are defined here
