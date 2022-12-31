@@ -1,9 +1,9 @@
-# ZedThon - zthon
-# Copyright (C) 2022 ZedThon . All Rights Reserved
-#< https://t.me/ZedThon >
-# This file is a part of < https://github.com/Zed-Thon/ZelZal/ >
+# IQuser - iquser
+# Copyright (C) 2022 iquser . All Rights Reserved
+#< https://t.me/IQUSER0 >
+# This file is a part of < https://github.com/vtvit/iquser/ >
 # PLease read the GNU Affero General Public License in
-# <https://www.github.com/Zed-Thon/ZelZal/blob/master/LICENSE/>.
+# <https://github.com/vtvit/iquser/blob/main/LICENSE>.
 
 import os
 import aiohttp
@@ -23,7 +23,7 @@ from telethon.events import CallbackQuery, InlineQuery
 from telethon.utils import get_display_name
 from telethon.errors import QueryIdInvalidError
 from telethon.tl.types import InputMessagesFilterDocument
-from zthon import StartTime, zedub, zedversion
+from iquser import StartTime, iqub, iqversion
 from ..Config import Config
 from ..core import check_owner, pool
 from ..core.logger import logging
@@ -39,8 +39,8 @@ from . import SUDO_LIST, edit_delete, edit_or_reply, reply_id, BOTLOG, BOTLOG_CH
 
 LOGS = logging.getLogger(os.path.basename(__name__))
 LOGS1 = logging.getLogger(__name__)
-ZORDR = gvarstatus("Z_ORDR") or "الاوامر"
-ZLORDR = gvarstatus("Z_LORDR") or "الاوامر"
+ZORDR = gvarstatus("Z_ORDR") or "فەرمانەکان"
+ZLORDR = gvarstatus("Z_LORDR") or "فەرمانەکان"
 ppath = os.path.join(os.getcwd(), "temp", "githubuser.jpg")
 GIT_TEMP_DIR = "./temp/"
 cmdhd = Config.COMMAND_HAND_LER
@@ -48,12 +48,12 @@ DELETE_TIMEOUT = 1
 USERID = bot.uid if Config.OWNER_ID == 0 else Config.OWNER_ID
 ALIVE_NAME = Config.ALIVE_NAME
 thumb_image_path = os.path.join(Config.TMP_DOWNLOAD_DIRECTORY, "thumb_image.jpg")
-Malath = f"**🖥┊لـوحـة اوامـر 𝗭𝗧𝗵𝗼𝗻 الشفـافـه **\n**🧑🏻‍💻┊المستخـدم ↶** {mention} \n\n**•❐• قـائمــة الاوامــر الـعـامــه :**\n\n**•❶• اوامــر الـبحـث والـتحميـل **\n**•❷• اوامــر الـبـوت **\n**•❸• اوامــر الـوقـتـي **\n**•❹• اوامــر الـكــروب¹ **\n**•❺• اوامــر الـكــروب² **\n**•❻• اوامــر الـحسـاب **\n**•❼• اوامــر الميـديـا والـصيــغ **\n\n**•❐• لعـرض بقيـة الاوامـر اضغـط زر التـالي ⇒**\n**•❐• لعـرض الاوامـر مع الوصـف استخـدم امـر** `.الأوامر` "
-Malotha = f"**🖥┊يتبـع لـوحـة اوامـر 𝗭𝗧𝗵𝗼𝗻 الشفـافـه **\n**🧑🏻‍💻┊المستخـدم ↶** {mention} \n\n**•❐• يتبــع قـائمــة الاوامــر الـعـامــه :**\n\n**•❽• اوامــر الـفــارات **\n**•❾• اوامــر الخـدمــات العـامــه **\n**•❿• اوامــر الالعــاب **\n**•⓫• اوامــر الـتســليــه**\n**•⓬• اوامــر التحشيـش**\n**•⓭• اوامــر الستـوريات**\n**•⓮• اوامــر الآفتــارات**\n\n**•❐• للرجـوع للوحـه السـابقـه اضغـط زر السـابق ⇐**\n**•❐• لعـرض الاوامـر مع الوصـف استخـدم امـر** `.الأوامر` "
+razan = f"**🖥┊تـەخـتـەی فـەرمـانی 𝙄𝙌𝙐𝙎𝙀𝙍 メ  **\n**🧑🏻‍💻┊بەکارھێـنەر ↶** {mention} \n\n**•❐• لـیـسـتی فـەرمـانە گـشتـییەکان :**\n\n**•❶• فـەرمـانـی گـەڕان و داگـرتـن  **\n**•❷• فـەرمـانـی بـۆت  **\n**•❸• فـەرمـانـی کـات **\n**•❹• فـەرمـانـی گـرووپ¹ **\n**•❺• فـەرمـانـی گـرووپ² **\n**•❻• فـەرمـانـی ئـەکـاونـت **\n**•❼• فـەرمـانـی  مـیـدیـا و هـاوکـێـشـەکـان **\n\n**•❐• بۆ بینینی ئەو فەرمانانەی کە ماون دواتر دابگرە ⇒**\n**•❐• بۆ بینینی فەرمان و ڕونکردنەوەکەی ئەم فەرمانە داگرە ** `.فەرمانەکانم` "
+razan = f"🖥┊تەختەی فـەرمانی 𝙄𝙌𝙐𝙎𝙀𝙍 メ  \n🧑🏻‍💻┊بەکارهێنەر ↶ {mention} \n\n•❐• دوای لیستی فەرمانە گشتییەکان بکەوە :\n\n•❽• فـەرمـانـی ڤـارەکـان \n•❾• فـەرمـانـی خـزمـەتگوزاریـیـە گـشتـیـیەکان \n•❿• فـەرمـانـی یـاری \n•⓫• فـەرمـانـی ڕابـواردن\n•⓬• فـەرمـانـی خـۆشـی\n•⓭• فـەرمـانـی سـتۆریـیەکان\n•⓮• فـەرمـانـی وێـنە\n\n•❐• بۆ گەڕانەوە لە تەختەکە پێشتر دابگرە ⇐\n•❐• بۆ بینینی فەرمانەکان و ڕونکردنەوەکەی ئەم فەرمانە بەکاربهێنە .فەرمانەکانم "
 TG_BOT = Config.TG_BOT_USERNAME
 TM = time.strftime("%I:%M")
-Channels = f"**•❐• مـرحبــاً عـزيـزي  {mention} **\n**•❐• اليـك مجمـوعــة قنـوات زدثـــون ↵ 𝙕𝙏𝙝𝙤𝙣 ♥️🦾**\n\n**•❐• استـخـدم الازرار بالاسفــل↓**"
-Zelzal = f"**•◈• اصــدار الســورس ⤽ 7.7**  \n**•◈• المستخــدم ⤽**  {mention}  \n**•◈• وقــت التشغيــل ⤽  {TM}  **\n**•◈• البــوت المســاعـد ⤽  {TG_BOT} **\n**•◈• قنــاة الســورس ⤽  @ZedThon **"
+Channels = f"**•❐• بـەخـێربـێی ئـەزیـزم🖤!  {mention} **\n**•❐• ئـەمـە گـرووپـی چـەنـاڵی بـۆتـی زیـرەكـە ↵ 𝙄𝙌𝙐𝙎𝙀𝙍 メ👾🖤**\n\n**•❐• دوگمەکانی خوارەوە بەکاربھێنە↓**"
+iquser = f"**•◈• وەشـانـی سـەرچـاوە ⤽ 7.7**  \n**•◈• بـەکـارھـێـنەر ⤽**  {mention}  \n**•◈• کـاتـی کـارکـردن ⤽  {TM}  **\n**•◈• بـۆتـی یـارمـەتـیـدەر ⤽  {TG_BOT} **\n**•◈• چـەنـاڵـی سـەرچـاوە ⤽  @IQUSER0 **"
 
 
 
