@@ -57,39 +57,39 @@ iquser = f"**•◈• وەشـانـی سـەرچـاوە ⤽ 7.7**  \n**•◈
 
 
 
-#لـوحــة الاوامــر - حقــوق زدثـــون
-@zedub.tgbot.on(events.InlineQuery)
+#تەختەی فەرمانی - مافی بـۆتی زیرەك
+@iqub.tgbot.on(events.InlineQuery)
 @check_owner
-async def zed_handler(event):
+async def iq_handler(event):
     builder = event.builder
     result = None
     query = event.text
-    await zedub.get_me()
-    if query.startswith("الاوامر") and event.query.user_id == zedub.uid:
-        ZEDPIC = gvarstatus("CMD_PIC") or "https://telegra.ph/file/1035d07280ee0ec9fc29b.mp4"
+    await iqub.get_me()
+    if query.startswith("فەرمانەکان") and event.query.user_id == iqub.uid:
+        IQPIC = gvarstatus("CMD_PIC") or "https://telegra.ph/file/1035d07280ee0ec9fc29b.mp4"
         buttons = [[Button.inline("❶", data="ahmed1"), Button.inline("❷", data="ahmed2"), Button.inline("❸", data="ahmed3"), Button.inline("❹", data="ahmed4"),],[Button.inline("❺", data="ahmed5"), Button.inline("❻", data="ahmed6"), Button.inline("❼", data="ahmed7"), Button.inline("⇒", data="back1"),]]
-        if ZEDPIC and ZEDPIC.endswith((".jpg", ".png")):
-            result = builder.photo(ZEDPIC,text=Malath, buttons=buttons, link_preview=True)
-        elif ZEDPIC and ZEDPIC.endswith((".gif", ".mp4")):
-            result = builder.document(ZEDPIC,title="zedub", text=Malath ,buttons=buttons, link_preview=True)
+        if IQPIC and IQPIC.endswith((".jpg", ".png")):
+            result = builder.photo(IQPIC,text=razan, buttons=buttons, link_preview=True)
+        elif IQPIC and IQPIC.endswith((".gif", ".mp4")):
+            result = builder.document(IQPIC,title="iqub", text=razan ,buttons=buttons, link_preview=True)
         else:
-            result = builder.article(title="zedub",text=Malath,buttons=buttons,link_preview=True)
+            result = builder.article(title="iqub",text=razan,buttons=buttons,link_preview=True)
         await event.answer([result] if result else None)
-@zedub.zed_cmd(pattern="الاوامر(?: |$)(.*)")
-async def repozedub(event):
+@iqub.iq_cmd(pattern="فەرمانەکان(?: |$)(.*)")
+async def repoiqub(event):
     if event.fwd_from:
         return
     TG_BOT = Config.TG_BOT_USERNAME
     if event.reply_to_msg_id:
         await event.get_reply_message()
-    response = await event.client.inline_query(TG_BOT, "الاوامر")
+    response = await event.client.inline_query(TG_BOT, "فەرمانەکان")
     await response[0].click(event.chat_id)
     await event.delete()
 
 
-@zedub.zed_cmd(pattern=f"الأوامر(?: |$)(.*)") 
-async def zed(event):
-    await edit_or_reply(event, f"𓆰 [𝗦𝗢𝗨𝗥𝗖𝗘 𝙕𝞝𝘿 - قائمــة الاوامــر العــامــه](t.me/ZEDthon) 𓆪\n◐━─━─━─━─**𝙕𝞝𝘿**─━─━─━─━◐\n**⌔ مـرحبـاً عـزيـزي {mention} اضغـط ع الامـر لـ النسـخ**\n**⌔ ضـع نقطه (.) بداية كل امـر :**\n\n `.م1`**   ➪ اوامـر البحـث والتحميــل** \n\n `.م2`**   ➪ اوامـر البــوت**\n\n `.م3`**   ➪ اوامـر الـوقتــي**\n\n `.م4`**   ➪ اوامـر المجمــوعــه¹**\n\n `.م5`**   ➪ اوامـر المجمــوعــه²**\n\n `.م6`**   ➪ اوامـر الحســاب**\n\n `.م7`**   ➪ اوامـر الميـديـا والصيــغ**\n\n `.م8`**   ➪ اوامـر الفــارات**\n\n `.م9`**   ➪ اوامـر الـخدمــات**\n\n `.م10`** ➪ اوامـر الالـعــاب**\n\n `.م11`** ➪ اوامـر التســليـه**\n\n `.م12`** ➪ اوامـر التحشيـش**\n\n `.م13`** ➪ اوامـر الستـوريات**\n\n `.م14`** ➪ اوامـر الآفتــارات**\n\n ◐━─━─━─━─**𝙕𝞝𝘿**─━─━─━─━◐\n 𓆩 [𝗦𝗢𝗨𝗥𝗖𝗘 𝙕𝞝𝘿 - قنـاة السـورس](t.me/ZEDthon) 𓆪")
+@iqub.zed_cmd(pattern=f"فەرمانەکانم(?: |$)(.*)") 
+async def iq(event):
+    await edit_or_reply(event, f"𓆰 [𝗦𝗢𝗨𝗥𝗖𝗘 𝙄𝙌 - لیـسـتـی فـەرمـانـە گـشـتیـیـەکـان](t.me/IQUSER0) 𓆪\n◐━─━─━─━─**𝙄𝙌**─━─━─━─━◐\n**⌔ بەخـێربـێی ئـەزیـزم {mention} فەرمانەکە دابگرە بۆ کۆپی کردن **\n**⌔ دانانی نوقتە (.) لە سەرەتای هەموو فەرمانەکان :**\n\n `.م1`**   ➪ فـەرمـانـی گـەڕان و داگـرتـن** \n\n `.م2`**   ➪ فـەرمـانـی بـۆت**\n\n `.م3`**   ➪ فـەرمـانـی کـات**\n\n `.م4`**   ➪ فـەرمـانـی گـرووپ¹**\n\n `.م5`**   ➪ فـەرمـانـی گـرووپ²**\n\n `.م6`**   ➪ فـەرمـانـی ئـەکـاونـت**\n\n `.م7`**   ➪ فـەرمـانـی مـیدیـا و هـاوکـێشـەکـان**\n\n `.م8`**   ➪ فـەرمـانـی ڤارەکـان**\n\n `.م9`**   ➪ اوامـر الـخدمــات**\n\n `.م10`** ➪ اوامـر الالـعــاب**\n\n `.م11`** ➪ اوامـر التســليـه**\n\n `.م12`** ➪ اوامـر التحشيـش**\n\n `.م13`** ➪ اوامـر الستـوريات**\n\n `.م14`** ➪ اوامـر الآفتــارات**\n\n ◐━─━─━─━─**𝙕𝞝𝘿**─━─━─━─━◐\n 𓆩 [𝗦𝗢𝗨𝗥𝗖𝗘 𝙄𝙌 - چـەنـاڵی سـەرچاوە](t.me/IQUSER0) 𓆪")
 
 @zedub.zed_cmd(pattern="م1(?: |$)(.*)") 
 async def zed(event):
@@ -262,20 +262,20 @@ async def repozedub(event):
     await event.delete()
 
 
-@zedub.tgbot.on(InlineQuery)
+@iqub.tgbot.on(InlineQuery)
 @check_owner
-async def zed_handler(event):
+async def iq_handler(event):
     builder = event.builder
     result = None
     query = event.text
-    await zedub.get_me()
-    if query.startswith("سورس") and event.query.user_id == zedub.uid:
-        ZPIC = gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/1035d07280ee0ec9fc29b.mp4"
-        buttons = [[Button.url("قنـاة الســورس", "https://t.me/ZedThon"), Button.url("مطـور الســورس", "https://t.me/zzzzl1l")]]
-        if ZPIC and ZPIC.endswith((".jpg", ".png")):
+    await iqub.get_me()
+    if query.startswith("سـەرچاوە") and event.query.user_id == iqub.uid:
+        IPIC = gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/1035d07280ee0ec9fc29b.mp4"
+        buttons = [[Button.url("چـەنـاڵـی سـەرچـاوە", "https://t.me/IQUSER0"), Button.url("گـەشـەپـێدەری سـەرچـاوە", "https://t.me/IQ7amo")]]
+        if IPIC and ZPIC.endswith((".jpg", ".png")):
             result = builder.photo(ZPIC,text=Zelzal, buttons=buttons, link_preview=True)
-        elif ZPIC and ZPIC.endswith((".gif", ".mp4")):
-            result = builder.document(ZPIC,title="iqub",text=iquser,buttons=buttons,link_preview=True)
+        elif IPIC and IPIC.endswith((".gif", ".mp4")):
+            result = builder.document(IPIC,title="iqub",text=iquser,buttons=buttons,link_preview=True)
         else:
             result = builder.article(title="iqub",text=iquser,buttons=buttons,link_preview=True)
         await event.answer([result] if result else None)
