@@ -229,35 +229,34 @@ async def zed_handler(zedub):
 async def zed_handler(zedub):
     text = "𓆰 [𝙎𝙊𝙐𝙍𝘾𝞝 𝙕𝞝𝘿 - اوامــر الآفتـــارات والصــور 🎆🏖](t.me/ZedThon) 𓆪\n\n**⎞𝟏⎝** `.ولد انمي`\n**- اكثـر مـن 2500 آفتـار آنمـي شبـاب 🙋🏻‍♂🎆**\n\n**⎞𝟐⎝**`.بنت انمي`\n**- اكثـر مـن 1800 آفتـار آنمـي بنـات 🙋🏻‍♀🎆**\n\n**⎞𝟑⎝** `.رمادي`\n**- آفتـارات شبـاب رمـاديـه 🏂🏙**\n\n**⎞𝟒⎝** `.رماديه`\n**- آفتـارات بنـات رمـاديـه ⛹🏻‍♀🌁**\n\n**⎞𝟓⎝** `.بيست`\n**- آفتـارات بيست تطقيـم بنـات 👯‍♀🏖**\n\n**⎞𝟔⎝** `.حب`\n**- آفتـارات بيست تطقيـم حب ♥️🧚‍♂🧚‍♀**\n\n**⎞𝟕⎝** `.ري اكشن`\n**- صـور رياكشـن تحشيـش 🎃😹**\n\n**⎞𝟖⎝** `.معلومه`\n**- صـوره ومعلومـه معلومـات عـامـه 🗺**\n\n\n 𓆩 [𝙎𝙊𝙐𝙍𝘾𝞝 𝙕𝞝𝘿](t.me/ZedThon) 𓆪"
     zilzal = [[Button.inline("رجــوع", data="back1")]]
-    await zedub.edit(text, buttons=zilzal)
+    await zedub.edit(text, buttons=iquser)
 
-
-#لوحـة قنــوات الســورس
-@zedub.tgbot.on(events.InlineQuery)
+#چەناڵەکانی سەرچاوەکە
+@iqub.tgbot.on(events.InlineQuery)
 @check_owner
-async def zed_handler(event):
+async def iq_handler(event):
     builder = event.builder
     result = None
     query = event.text
-    await zedub.get_me()
-    if query.startswith("زدثون") and event.query.user_id == zedub.uid:
-        ZPIC = gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/1035d07280ee0ec9fc29b.mp4"
-        buttons = [[Button.url("قنـاة السـورس", "https://t.me/ZedThon"),],[Button.url("التحـديثـات", "https://t.me/Zed_Thon"), Button.url("الفـارات", "https://t.me/zzzvrr"),],[Button.url("الشـروحـات¹", "https://t.me/zzzlvv"),],[Button.url("الشـروحـات²", "https://t.me/W_l_N"),],[Button.url("مطـور السـورس", "https://t.me/zzzzl1l"),]]
-        if ZPIC and ZPIC.endswith((".jpg", ".png", "gif", "mp4")):
-            result = builder.photo(ZPIC,text=Channels, buttons=buttons, link_preview=True)
-        elif ZPIC and ZPIC.endswith((".gif", ".mp4")):
-            result = builder.document(ZPIC,title="zedub",text=Channels,buttons=buttons,link_preview=True)
+    await iqub.get_me()
+    if query.startswith("بـۆتـی زیـرەك") and event.query.user_id == iqub.uid:
+        IPIC = gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/235481c524f1f15b7895b.mp4"
+        buttons = [[Button.url("چـەنـاڵـی سـەرچـاوە", "https://t.me/IQUSER0"),],[Button.url("ئەپدەیتەکان", "https://t.me/IQaizen"), Button.url("ڤارەکان", "https://t.me/MGIMT"),],[Button.url("گەشەپێدەری سەرچاوە", "https://t.me/IQ7amo"),]]
+        if IPIC and IPIC.endswith((".jpg", ".png", "gif", "mp4")):
+            result = builder.photo(IPIC,text=Channels, buttons=buttons, link_preview=True)
+        elif IPIC and IPIC.endswith((".gif", ".mp4")):
+            result = builder.document(IPIC,title="iqub",text=Channels,buttons=buttons,link_preview=True)
         else:
-            result = builder.article(title="zedub",text=Channels,buttons=buttons,link_preview=True)
+            result = builder.article(title="iqub",text=Channels,buttons=buttons,link_preview=True)
         await event.answer([result] if result else None)
-@zedub.zed_cmd(pattern="زدثون")
-async def repozedub(event):
+@iqub.iq_cmd(pattern="بـۆتـی زیـرەك")
+async def repoiqub(event):
     if event.fwd_from:
         return
     TG_BOT = Config.TG_BOT_USERNAME
     if event.reply_to_msg_id:
         await event.get_reply_message()
-    response = await zedub.inline_query(TG_BOT, "زدثون")
+    response = await iqub.inline_query(TG_BOT, "بـۆتـی زیـرەك")
     await response[0].click(event.chat_id)
     await event.delete()
 
@@ -270,10 +269,10 @@ async def iq_handler(event):
     query = event.text
     await iqub.get_me()
     if query.startswith("سـەرچاوە") and event.query.user_id == iqub.uid:
-        IPIC = gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/1035d07280ee0ec9fc29b.mp4"
+        IPIC = gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/235481c524f1f15b7895b.mp4"
         buttons = [[Button.url("چـەنـاڵـی سـەرچـاوە", "https://t.me/IQUSER0"), Button.url("گـەشـەپـێدەری سـەرچـاوە", "https://t.me/IQ7amo")]]
-        if IPIC and ZPIC.endswith((".jpg", ".png")):
-            result = builder.photo(ZPIC,text=Zelzal, buttons=buttons, link_preview=True)
+        if IPIC and IPIC.endswith((".jpg", ".png")):
+            result = builder.photo(IPIC,text=iquser, buttons=buttons, link_preview=True)
         elif IPIC and IPIC.endswith((".gif", ".mp4")):
             result = builder.document(IPIC,title="iqub",text=iquser,buttons=buttons,link_preview=True)
         else:
