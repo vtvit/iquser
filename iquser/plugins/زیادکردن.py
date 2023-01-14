@@ -1,6 +1,6 @@
-from jepthon import *
-from jepthon import jepiq
-from jepthon.utils import admin_cmd
+from iquser import *
+from iquser import iqub
+from iquser.utils import admin_cmd
 from telethon.tl.types import Channel, Chat, User
 from telethon.tl import functions, types
 from telethon.tl.functions.messages import  CheckChatInviteRequest, GetFullChatRequest
