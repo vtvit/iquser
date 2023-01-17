@@ -102,24 +102,18 @@ async def iqvois(vois):
   url = f"https://t.me/IQQUR/{rl}"
   await vois.client.send_file(vois.chat_id,url,caption="᯽︙ BY : @IQUSER0E 🤲🏻☪️",parse_mode="html")
   await vois.delete()
-@jepiq.on(admin_cmd(outgoing=True, pattern="لاتغلط$"))
-async def jepmeme(memejep):
-  Jep = await reply_id(memejep)
-  url = f"https://t.me/MemeSoundJep/4"
-  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
-  await memejep.delete()
-@jepiq.on(admin_cmd(outgoing=True, pattern="بجيت$"))
-async def jepmeme(memejep):
-  Jep = await reply_id(memejep)
-  url = f"https://t.me/MemeSoundJep/5"
-  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
-  await memejep.delete()
-@jepiq.on(admin_cmd(outgoing=True, pattern="نشاقة$"))
-async def jepmeme(memejep):
-  Jep = await reply_id(memejep)
-  url = f"https://t.me/MemeSoundJep/3"
-  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
-  await memejep.delete()
+@iqub.on(admin_cmd(outgoing=True, pattern="هەڵە مەکە$"))
+async def iqmeme(memeiq):
+  Iq = await reply_id(memeiq)
+  url = f"https://t.me/memesoundiq/7"
+  await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
+  await memeiq.delete()
+@iqub.on(admin_cmd(outgoing=True, pattern="گاڵتە$"))
+async def iqmeme(memeiq):
+  Iq = await reply_id(memeiq)
+  url = f"https://t.me/memesoundiq/6"
+  await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
+  await memeiq.delete()
 @iqub.on(admin_cmd(outgoing=True, pattern="خودا$"))
 async def iqmeme(memeiq):
   Iq = await reply_id(memeiq)
@@ -180,9 +174,9 @@ async def jepmeme(memejep):
   url = f"https://t.me/MemeSoundJep/17"
   await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
   await memejep.delete()
-@jepiq.on(admin_cmd(outgoing=True, pattern="انمي10$"))
+@iqub.on(admin_cmd(outgoing=True, pattern="انمي10$"))
 async def jepmeme(memejep):
-  Jep = await reply_id(memejep)
+  Iq = await reply_id(memejep)
   url = f"https://t.me/MemeSoundJep/18"
   await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
   await memejep.delete()
