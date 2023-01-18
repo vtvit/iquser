@@ -120,66 +120,66 @@ async def iqmeme(memeiq):
   url = f"https://t.me/memesoundiq/4"
   await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
   await memeiq.delete()
-@jepiq.on(admin_cmd(outgoing=True, pattern="انمي1$"))
-async def jepmeme(memejep):
-  Jep = await reply_id(memejep)
-  url = f"https://t.me/MemeSoundJep/7"
-  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
-  await memejep.delete()
-@jepiq.on(admin_cmd(outgoing=True, pattern="انمي2$"))
-async def jepmeme(memejep):
-  Jep = await reply_id(memejep)
-  url = f"https://t.me/MemeSoundJep/9"
-  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
-  await memejep.delete()
-@jepiq.on(admin_cmd(outgoing=True, pattern="انمي3$"))
-async def jepmeme(memejep):
-  Jep = await reply_id(memejep)
-  url = f"https://t.me/MemeSoundJep/11"
-  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
-  await memejep.delete()
-@jepiq.on(admin_cmd(outgoing=True, pattern="انمي4$"))
-async def jepmeme(memejep):
-  Jep = await reply_id(memejep)
-  url = f"https://t.me/MemeSoundJep/12"
-  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
-  await memejep.delete()
-@jepiq.on(admin_cmd(outgoing=True, pattern="انمي5$"))
-async def jepmeme(memejep):
-  Jep = await reply_id(memejep)
-  url = f"https://t.me/MemeSoundJep/13"
-  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
-  await memejep.delete()
-@jepiq.on(admin_cmd(outgoing=True, pattern="انمي6$"))
-async def jepmeme(memejep):
-  Jep = await reply_id(memejep)
-  url = f"https://t.me/MemeSoundJep/14"
-  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
-  await memejep.delete()
-@jepiq.on(admin_cmd(outgoing=True, pattern="انمي7$"))
-async def jepmeme(memejep):
-  Jep = await reply_id(memejep)
-  url = f"https://t.me/MemeSoundJep/15"
-  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
-  await memejep.delete()
-@jepiq.on(admin_cmd(outgoing=True, pattern="انمي8$"))
-async def jepmeme(memejep):
-  Jep = await reply_id(memejep)
-  url = f"https://t.me/MemeSoundJep/16"
-  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
-  await memejep.delete()
-@jepiq.on(admin_cmd(outgoing=True, pattern="انمي9$"))
-async def jepmeme(memejep):
-  Jep = await reply_id(memejep)
-  url = f"https://t.me/MemeSoundJep/17"
-  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
-  await memejep.delete()
-@iqub.on(admin_cmd(outgoing=True, pattern="انمي10$"))
-async def jepmeme(memejep):
-  Iq = await reply_id(memejep)
-  url = f"https://t.me/MemeSoundJep/18"
-  await memejep.client.send_file(memejep.chat_id,url,caption="",parse_mode="html",reply_to=Jep)
-  await memejep.delete()
+@iqub.on(admin_cmd(outgoing=True, pattern="ئەنیمی1$"))
+async def iqmeme(memejep):
+  Iq = await reply_id(memeiq)
+  url = f"https://t.me/memesoundiq/8"
+  await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
+  await memeiq.delete()
+@iqub.on(admin_cmd(outgoing=True, pattern="ائەنیمی2$"))
+async def iqmeme(memeiq):
+  Iq = await reply_id(memeiq)
+  url = f"https://t.me/memesoundiq/9"
+  await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
+  await memeiq.delete()
+@iqub.on(admin_cmd(outgoing=True, pattern="ئەنیمی3$"))
+async def iqmeme(memeiq):
+  Iq = await reply_id(memeiq)
+  url = f"https://t.me/memesoundiq/10"
+  await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
+  await memeiq.delete()
+@iqub.on(admin_cmd(outgoing=True, pattern="ئەنیمی4$"))
+async def iqmeme(memeiq):
+  Iq = await reply_id(memeiq)
+  url = f"https://t.me/memesoundiq/11"
+  await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
+  await memeiq.delete()
+@iqub.on(admin_cmd(outgoing=True, pattern="ئەنیمی5$"))
+async def iqmeme(memeiq):
+  Iq = await reply_id(memeiq)
+  url = f"https://t.me/memesoundiq/12"
+  await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
+  await memeiq.delete()
+@iqub.on(admin_cmd(outgoing=True, pattern="ئەنیمی6$"))
+async def iqmeme(memeiq):
+  Iq = await reply_id(memeiq)
+  url = f"https://t.me/memesoundiq/13"
+  await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
+  await memeiq.delete()
+@iqub.on(admin_cmd(outgoing=True, pattern="ئەنیمی7$"))
+async def iqmeme(memeiq):
+  Iq = await reply_id(memeiq)
+  url = f"https://t.me/memesoundiq/14"
+  await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
+  await memeiq.delete()
+@iqub.on(admin_cmd(outgoing=True, pattern="ئەنیمی8$"))
+async def iqmeme(memeiq):
+  Iq = await reply_id(memeiq)
+  url = f"https://t.me/memesoundiq/15"
+  await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
+  await memeiq.delete()
+@iqub.on(admin_cmd(outgoing=True, pattern="ئەنیمی9$"))
+async def iqmeme(memeiq):
+  Iq = await reply_id(memeiq)
+  url = f"https://t.me/memesoundiq/16"
+  await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
+  await memeiq.delete()
+@iqub.on(admin_cmd(outgoing=True, pattern="ئەنیمی10$"))
+async def iqmeme(memeiq):
+  Iq = await reply_id(memeiq)
+  url = f"https://t.me/memesoundiq/17"
+  await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
+  await memeiq.delete()
 @iqub.on(admin_cmd(outgoing=True, pattern="جڕت2$"))
 async def iqmeme(memeiq):
   Iq = await reply_id(memeiq)
