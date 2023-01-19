@@ -168,6 +168,25 @@ async def iqmeme(memeiq):
   url = f"https://t.me/memesoundiq/15"
   await memeiq.client.send_file(memeiq.chat_id,url,caption="",parse_mode="html",reply_to=Iq)
   await memeiq.delete()
+@iqub.iq_cmd(pattern="ئیدیت$")
+async def iqmeme(memeiq):
+    Iq = await edit_or_reply(event, "**╮•⎚ داگرتنی ئیدیت🖤 ...**")
+    try:
+        iqub = [
+            asupan
+            async for asupan in event.client.iter_messages(
+                "@xv7amo", filter=InputMessagesFilterVideo
+            )
+        ]
+        aing = await event.client.get_me()
+        await event.client.send_file(
+            event.chat_id,
+            file=random.choice(iqub),
+            caption=f"**🎬┊کلیپی ئیدیت جۆراوجۆر ➧ 🖤🎭◟**\n\n[➧𝙎𝙤𝙪𝙧𝙘𝙚 𝙄𝙌𝙐𝙎𝙀𝙍 ࿐](https://t.me/IQUSER0)",
+        )
+        await iqmeme.delete()
+    except Exception:
+        await iqmeme.edit("**╮•⎚ ببوورە .. هیچ شتێك نەدۆزرایەوە  ☹️💔**")
 @iqub.on(admin_cmd(outgoing=True, pattern="ئەنیمی9$"))
 async def iqmeme(memeiq):
   Iq = await reply_id(memeiq)
