@@ -87,7 +87,7 @@ async def _(event):
 async def iqvois(vois):
   rl = random.randint(3,267)
   url = f"https://t.me/IQMUC/{rl}"
-  await vois.client.send_file(vois.chat_id,url,caption="᯽︙ BY : @VTVIT 👾",parse_mode="html")
+  await vois.client.send_file(vois.chat_id,url,caption="᯽︙ ✦┊گۆرانیەکە بۆ تۆ هەڵبژێردراوە💞🎶ٴ▁ ▂ ▉ ▄ ▅ ▆ ▇ ▅ ▆ ▇ █ ▉ ▂ ▁ ",parse_mode="html")
   await vois.delete()
 
 @iqub.on(admin_cmd(outgoing=True, pattern="شعر$"))
