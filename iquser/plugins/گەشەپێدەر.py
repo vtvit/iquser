@@ -300,13 +300,13 @@ async def _(event):  # sourcery no-metrics
             "-flag": "Will disable all flaged cmds like eval, exec...etc.",
             "-p": "Will disable all cmds from the given plugin names.",
         },
-        "الاستـخـدام": [
+        "بەکارهێنان": [
             "{tr}rmscmd -all",
             "{tr}rmscmd -flag",
             "{tr}rmscmd -p <plugin names>",
             "{tr}rmscmd <commands>",
         ],
-        "مثــال": [
+        "وەکو": [
             "{tr}rmscmd -p autoprofile botcontrols i.e, for multiple names use space between each name",
             "{tr}rmscmd ping alive i.e, for multiple commands use space between each name",
         ],
@@ -329,44 +329,44 @@ async def _(event):  # sourcery no-metrics
         flagcmds = sudocmds
     elif input_str[0] == "پاراستن":
         iqevent = await edit_or_reply(
-            event, "**✾╎تـم تعطيـل التحكـم للمطـوريـن لـ الاوامـر الآمـنـه .. بنجـاح🧑🏻‍💻✅**"
+            event, "**✾╎بە سەرکەوتوویی دەسەڵاتی کۆنتڕۆڵی پاراستن بۆ گەشەپێدەر .. ناچالاککرا🧑🏻‍💻✅**"
         )
         flagcmds = (
             PLG_INFO["botcontrols"]
-            + PLG_INFO["الوقتي"]
-            + PLG_INFO["التحديث"]
-            + PLG_INFO["الاوامر"]
+            + PLG_INFO["کاتی"]
+            + PLG_INFO["نوێکردنەوە"]
+            + PLG_INFO["فەرمانەکان"]
             + PLG_INFO["هيروكو"]
-            + PLG_INFO["الادمن"]
-            + PLG_INFO["الحمايه"]
-            + PLG_INFO["الاغاني"]
-            + PLG_INFO["المجموعه"]
-            + PLG_INFO["اعاده تشغيل"]
-            + PLG_INFO["تحويل الصيغ"]
-            + PLG_INFO["المطور"]
-            + PLG_INFO["بوت الحمايه"]
+            + PLG_INFO["بەڕێوبەر"]
+            + PLG_INFO["پاراستن"]
+            + PLG_INFO["گۆرانی"]
+            + PLG_INFO["گرووپ"]
+            + PLG_INFO["دەستپێکردنەوە"]
+            + PLG_INFO["گۆڕین"]
+            + PLG_INFO["گەشەپێدەر"]
+            + PLG_INFO["بۆتی پاراستن"]
             + ["gauth"]
             + ["greset"]
         )
-    elif input_str[0] == "ملف":
-        zedevent = event
-        input_str.remove("ملف")
+    elif input_str[0] == "فایل":
+        iqevent = event
+        input_str.remove("فایل")
         flagcmds = []
         for plugin in input_str:
             if plugin not in PLG_INFO:
                 errors += (
-                    f"`{plugin}` __There is no such plugin in your ZThon__.\n"
+                    f"`{plugin}` __There is no such plugin in your IQuser__.\n"
                 )
             else:
                 flagcmds += PLG_INFO[plugin]
     else:
-        zedevent = event
+        iqevent = event
         flagcmds = []
         for cmd in input_str:
             if cmd not in CMD_INFO:
-                errors += f"**✾╎عـذراً .. لايـوجـد امـر بـ اسـم** `{cmd}` **فـي السـورس**\n"
+                errors += f"**✾╎ببوورە .. هیچ فەرمانی بە ناو نییە** `{cmd}` **لە سەرچاوەکە**\n"
             elif cmd not in sudocmds:
-                errors += f"**✾╎تـم تعطيـل التحكـم بـ امـر** `{cmd}` \n**✾╎لجميـع مطـوريـن البـوت .. بنجـاح🧑🏻‍💻✅**\n"
+                errors += f"**✾╎کۆنتڕۆڵی بە فەرمان ناچالاککرا** `{cmd}` \n**✾╎بە سەرکەوتوویی .. بۆ هەموو گەشەپێدەرانی بۆت🧑🏻‍💻✅**\n"
             else:
                 flagcmds.append(cmd)
     count = 0
@@ -374,26 +374,26 @@ async def _(event):  # sourcery no-metrics
         if sqllist.is_in_list("sudo_enabled_cmds", cmd):
             count += 1
             sqllist.rm_from_list("sudo_enabled_cmds", cmd)
-    result = f"**✾╎تـم تعطيـل التحكـم الكـامل لـ**  `{count}` **امـر 🧑🏻‍💻✅**\n"
+    result = f"**✾╎کۆنتڕۆڵی گشتی ناچالاککرا **  `{count}` **فەرمان 🧑🏻‍💻✅**\n"
     output = (
-        result + "**✾╎يتم الان اعـادة تشغيـل بـوت زدثــون انتظـر 2-1 دقيقـه ▬▭ ...**\n"
+        result + "**✾╎دەستپێدەکاتەوە بۆتی زیرەك 1-2 خولەڬ چاوەڕێ بکە ▬▭ ...**\n"
     )
     if errors != "":
-        output += "\n**- خطــأ :**\n" + errors
+        output += "\n**- هەڵەیە :**\n" + errors
     msg = await edit_or_reply(zedevent, output)
     await event.client.reload(msg)
 
 
-@zedub.zed_cmd(
-    pattern="التحكم( المعطل)?$",
-    command=("التحكم", plugin_category),
+@iqub.iq_cmd(
+    pattern="کۆنتڕۆڵکراو( نالاچالاک)?$",
+    command=("کۆنتڕۆڵکراو", plugin_category),
     info={
         "header": "To show list of enabled cmds for sudo.",
         "description": "will show you the list of all enabled commands",
         "flags": {"-d": "To show disabled cmds instead of enabled cmds."},
-        "الاستـخـدام": [
-            "{tr}التحكم",
-            "{tr}التحكم المعطل",
+        "بەکارهێنان": [
+            "{tr}کۆنتڕۆڵکراو",
+            "{tr}کۆنتڕۆڵکراو ناچالاککراوە",
         ],
     },
 )
@@ -404,8 +404,8 @@ async def _(event):  # sourcery no-metrics
     clist = {}
     error = ""
     if not input_str:
-        text = "**•🧑🏻‍💻• قائمــة الاوامـر المسمـوحـه لـ المطـوريـن المـرفـوعيـن فـي البـوت الخـاص بـك 🏧:**"
-        result = "**- اوامـر تحكـم المطـوريـن 🛃**"
+        text = "**•🧑🏻‍💻• لیستی فەرمانە کۆنتڕۆڵکراوەکانی گەشەپێدەر لە بۆتی تایبەت بە تۆ 🏧:**"
+        result = "**- فەرمانی کۆنتڕۆڵی گەشەپێدەر 🛃**"
         if len(sudocmds) > 0:
             for cmd in sudocmds:
                 plugin = get_key(cmd)
@@ -414,7 +414,7 @@ async def _(event):  # sourcery no-metrics
                 else:
                     clist[plugin] = [cmd]
         else:
-            error += "**✾╎عـذراً .. لايـوجـد اي اوامـر تحكـم خاصـه بـ المطـوريـن**\n**✾╎بنێرە (** `.یارمەتیدان` **) لـ تصفـح اوامـر التحكـم 🛂**"
+            error += "**✾╎ببوورە .. هیچ فەرمانێکی کۆنتڕۆڵکراو نییە بۆ گەشەپێدەر **\n**✾╎بنێرە (** `.یارمەتیدان `**)بۆ گەڕانی فەرمانەکانی کۆنترۆڵ  🛂**"
         count = len(sudocmds)
     else:
         text = "**•🧑🏻‍💻• لیستی فەرمانەکان ڕێگە پێنەدراوە 📵 بۆ گەشەپێدەران کە بارکراون لە بۆتەکەت :**"
