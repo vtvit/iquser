@@ -280,19 +280,19 @@ async def _(event):  # sourcery no-metrics
                 loadcmds.append(cmd)
     for cmd in loadcmds:
         sqllist.add_to_list("sudo_enabled_cmds", cmd)
-    result = f"**✾╎تـم تفعيـل التحكـم الكـامل لـ**  `{len(loadcmds)}` **امـر 🧑🏻‍💻✅**\n"
+    result = f"**✾╎کۆنتڕۆڵی گشتی چالاککرا**  `{len(loadcmds)}` **فەرمان 🧑🏻‍💻✅**\n"
     output = (
-        result + "**✾╎يتم الان اعـادة تشغيـل بـوت زدثــون انتظـر 2-1 دقيقـه ▬▭ ...**\n"
+        result + "**✾╎دەستپێدەکاتەوە بۆتی زیرەك 1-2 خولەك چاوەڕێ بکە ▬▭ ...**\n"
     )
     if errors != "":
-        output += "\n**- خطــأ :**\n" + errors
+        output += "\n**- هەڵەیە :**\n" + errors
     msg = await edit_or_reply(zedevent, output)
     await event.client.reload(msg)
 
 
-@zedub.zed_cmd(
-    pattern="ايقاف تحكم(s)?(?:\s|$)([\s\S]*)?",
-    command=("ايقاف تحكم", plugin_category),
+@iqub.iq_cmd(
+    pattern="وەستاندنی کۆنتڕۆڵ(s)?(?:\s|$)([\s\S]*)?",
+    command=("وەستاندنی کۆنتڕۆڵ", plugin_category),
     info={
         "header": "To disable given cmds for sudo.",
         "flags": {
@@ -322,13 +322,13 @@ async def _(event):  # sourcery no-metrics
             event, "__Which command should I disable for sudo users . __"
         )
     input_str = input_str.split()
-    if input_str[0] == "كامل" or input_str[0] == "الكل":
-        zedevent = await edit_or_reply(
-            event, "**✾╎تـم تعطيـل التحكـم الكـامـل للمطـوريـن لـ جميـع الاوامـر .. بنجـاح🧑🏻‍💻✅**"
+    if input_str[0] == "گشتی" or input_str[0] == "هەموو":
+        iqevent = await edit_or_reply(
+            event, "**✾╎بە سەرکەوتوویی دەسەڵاتی کۆنتڕۆڵی گشتی بۆ هەموو گەشەپێدەرانی بۆت .. ناچالاککرا🧑🏻‍💻✅**"
         )
         flagcmds = sudocmds
-    elif input_str[0] == "آمن":
-        zedevent = await edit_or_reply(
+    elif input_str[0] == "پاراستن":
+        iqevent = await edit_or_reply(
             event, "**✾╎تـم تعطيـل التحكـم للمطـوريـن لـ الاوامـر الآمـنـه .. بنجـاح🧑🏻‍💻✅**"
         )
         flagcmds = (
