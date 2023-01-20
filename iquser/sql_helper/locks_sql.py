@@ -79,10 +79,10 @@ jpvois7 = "jepthon/helpers/styles/Voic/بمدەرێ.ogg"
 jpvois8 = "jepthon/helpers/styles/Voic/سپایدەرمان.ogg"
 jpvois9 = "jepthon/helpers/styles/Voic/سڵاو😂.ogg"
 jpvois10 = "jepthon/helpers/styles/Voic/عەرەبی.ogg"
-jpvois11 = "jepthon/helpers/styles/Voic/الكعدة وياكم حلوة.ogg"
-jpvois12 = "jepthon/helpers/styles/Voic/الكمر اني النجم اني.ogg"
-jpvois13 = "jepthon/helpers/styles/Voic/اللهم لا شماتة.ogg"
-jpvois14 = "jepthon/helpers/styles/Voic/انا ما اكدر بعد.ogg"
+jpvois11 = "jepthon/helpers/styles/Voic/سویی.ogg"
+jpvois12 = "jepthon/helpers/styles/Voic/کەلاری.ogg"
+jpvois13 = "jepthon/helpers/styles/Voic/یا مرحبا.ogg"
+ = "jepthon/helpers/styles/Voic/انا ما اكدر بعد.ogg"
 jpvois15 = "jepthon/helpers/styles/Voic/بقولك اي يا قلبي كسمك.ogg"
 jpvois16 = "jepthon/helpers/styles/Voic/تف على شرفك.ogg"
 jpvois17 = "jepthon/helpers/styles/Voic/شجلبت.ogg"
@@ -91,10 +91,7 @@ jpvois19 = "jepthon/helpers/styles/Voic/صباح القنادر.ogg"
 jpvois20 = "jepthon/helpers/styles/Voic/ضحكة فيطية.ogg"
 jpvois21 = "jepthon/helpers/styles/Voic/طار القلب.ogg"
 jpvois22 = "jepthon/helpers/styles/Voic/غطيلي واغطيلك.ogg"
-jpvois23 = "jepthon/helpers/styles/Voic/في منتصف الجبهة.ogg"
-jpvois24 = "jepthon/helpers/styles/Voic/لا تقتل المتعة .ogg"
-jpvois25 = "jepthon/helpers/styles/Voic/لا لتغلط.ogg"
-jpvois26 = "jepthon/helpers/styles/Voic/لا يمه لا محاجي.ogg"
+jpvois23 = "jepthon/helpers/styles/Voic/في منتصف 
 
 
 def get_locks(chat_id):
