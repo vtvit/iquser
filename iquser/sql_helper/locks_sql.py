@@ -69,31 +69,20 @@ def is_locked(chat_id, lock_type):
     if lock_type == "url":
         return curr_perm.url
 
-jpvois1 = "jepthon/helpers/styles/Voic/ئۆنی چان.ogg"
-jpvois2 = "jepthon/helpers/styles/Voic/ئۆنی چان2.ogg"
-jpvois3 = "jepthon/helpers/styles/Voic/ئێھ.ogg"
-jpvois4 = "jepthon/helpers/styles/Voic/ئەتاك.ogg"
-jpvois5 = "jepthon/helpers/styles/Voic/ئەوە...ogg"
-jpvois6 = "jepthon/helpers/styles/Voic/برادەر.ogg"
-jpvois7 = "jepthon/helpers/styles/Voic/بمدەرێ.ogg"
-jpvois8 = "jepthon/helpers/styles/Voic/سپایدەرمان.ogg"
-jpvois9 = "jepthon/helpers/styles/Voic/سڵاو😂.ogg"
-jpvois10 = "jepthon/helpers/styles/Voic/عەرەبی.ogg"
-jpvois11 = "jepthon/helpers/styles/Voic/سویی.ogg"
-jpvois12 = "jepthon/helpers/styles/Voic/کەلاری.ogg"
-jpvois13 = "jepthon/helpers/styles/Voic/یا مرحبا.ogg"
- = "jepthon/helpers/styles/Voic/انا ما اكدر بعد.ogg"
-jpvois15 = "jepthon/helpers/styles/Voic/بقولك اي يا قلبي كسمك.ogg"
-jpvois16 = "jepthon/helpers/styles/Voic/تف على شرفك.ogg"
-jpvois17 = "jepthon/helpers/styles/Voic/شجلبت.ogg"
-jpvois18 = "jepthon/helpers/styles/Voic/شكد شفت ناس مدودة.ogg"
-jpvois19 = "jepthon/helpers/styles/Voic/صباح القنادر.ogg"
-jpvois20 = "jepthon/helpers/styles/Voic/ضحكة فيطية.ogg"
-jpvois21 = "jepthon/helpers/styles/Voic/طار القلب.ogg"
-jpvois22 = "jepthon/helpers/styles/Voic/غطيلي واغطيلك.ogg"
-jpvois23 = "jepthon/helpers/styles/Voic/في منتصف 
-
-
+iqvois1 = "jepthon/helpers/styles/Voic/ئۆنی چان.ogg"
+iqvois2 = "jepthon/helpers/styles/Voic/ئۆنی چان2.ogg"
+iqvois3 = "jepthon/helpers/styles/Voic/ئێھ.ogg"
+iqvois4 = "jepthon/helpers/styles/Voic/ئەتاك.ogg"
+iqvois5 = "jepthon/helpers/styles/Voic/ئەوە...ogg"
+iqvois6 = "jepthon/helpers/styles/Voic/برادەر.ogg"
+iqvois7 = "jepthon/helpers/styles/Voic/بمدەرێ.ogg"
+iqvois8 = "jepthon/helpers/styles/Voic/سپایدەرمان.ogg"
+iqvois9 = "jepthon/helpers/styles/Voic/سڵاو😂.ogg"
+iqvois10 = "jepthon/helpers/styles/Voic/عەرەبی.ogg"
+iqvois11 = "jepthon/helpers/styles/Voic/سویی.ogg"
+iqvois12 = "jepthon/helpers/styles/Voic/کەلاری.ogg"
+iqvois13 = "jepthon/helpers/styles/Voic/یا مرحبا.ogg"
+ 
 def get_locks(chat_id):
     try:
         return SESSION.query(Locks).get(str(chat_id))
