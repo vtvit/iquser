@@ -1,10 +1,10 @@
-FROM vtvit/iquser:slim-buster
+FROM iquser/iquser:slim-buster
 
 #clonning repo 
-RUN git clone https://github.com/vtvit/iquser /root/iquser
+RUN git clone https://github.com/vtvit/iquser.git /root/iquser
 #working directory 
 WORKDIR /root/iquser
-RUN apk add --update --no-cache p7zip
+
 # Install requirements
 RUN pip3 install --no-cache-dir -r requirements.txt
 
