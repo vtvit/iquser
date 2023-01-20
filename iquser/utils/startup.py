@@ -16,7 +16,7 @@ from ..Config import Config
 from aiohttp import web
 from ..core import web_server
 from ..core.logger import logging
-from ..core.session import jepiq
+from ..core.session import iqub
 from ..helpers.utils import install_pip
 from ..helpers.utils.utils import runcmd
 from ..sql_helper.global_collection import (
@@ -270,7 +270,7 @@ async def load_plugins(folder, extfolder=None):
             failure.append("None")
         await iqub.tgbot.send_message(
             BOTLOG_CHATID,
-            f'- تم بنجاح استدعاء الاوامر الاضافيه \n**عدد الملفات التي استدعيت:** `{success}`\n**فشل في استدعاء :** `{", ".join(failure)}`',
+            f'- پەیوەندی کرا بە فەرمانی زیادکراو بە سەرکەوتوویی \n**ژمارەی ئەو فایلانەی پەیوەندیان پێوەکراوە:** `{success}`\n**سەرکەوتوو نەبوو لە پەیوەندی کردن :** `{", ".join(failure)}`',
         )
 
 
@@ -282,21 +282,21 @@ async def verifyLoggerGroup():
     flag = False
     if BOTLOG:
         try:
-            entity = await jepiq.get_entity(BOTLOG_CHATID)
+            entity = await iqub.get_entity(BOTLOG_CHATID)
             if not isinstance(entity, types.User) and not entity.creator:
                 if entity.default_banned_rights.send_messages:
                     LOGS.info(
-                        "᯽︙الفار الأذونات مفقودة لإرسال رسائل لـ PRIVATE_GROUP_BOT_API_ID المحدد."
+                        "᯽︙الفار ڕێپێدانەکانی ڤار ونن بۆ ناردنی نامەکە بۆ دیاریکراوەکە PRIVATE_GROUP_BOT_API_ID ."
                     )
                 if entity.default_banned_rights.invite_users:
                     LOGS.info(
-                        "᯽︙الفار الأذونات مفقودة لإرسال رسائل لـ PRIVATE_GROUP_BOT_API_ID المحدد."
+                        "᯽︙ڕێپێدانەکانی ڤار ونن بۆ ناردنی نامەکان بۆ دیاریکراوەکە PRIVATE_GROUP_BOT_API_ID ."
                     )
         except ValueError:
-            LOGS.error("᯽︙تـأكد من فـار المجـموعة  PRIVATE_GROUP_BOT_API_ID.")
+            LOGS.error("᯽︙ دڵنیابوون لە ڤاری گرووپ PRIVATE_GROUP_BOT_API_ID.")
         except TypeError:
             LOGS.error(
-                "᯽︙لا يمكـن العثور على فار المجموعه PRIVATE_GROUP_BOT_API_ID. تأكد من صحتها."
+                "᯽︙نادۆزرێتەوە. دڵنیابە لەوەی کە ڕاستە PRIVATE_GROUP_BOT_API_ID. ."
             )
         except Exception as e:
             LOGS.error(
@@ -304,42 +304,42 @@ async def verifyLoggerGroup():
                 + str(e)
             )
     else:
-        descript = "- عزيزي المستخدم هذه هي مجموعه الاشعارات يرجى عدم حذفها  - @Jepthon"
-        photobt = await jepiq.upload_file(file="JepIQ/razan/resources/start/Jepthon.JPEG")
+        descript = "- بەکارهێنەری ئازیز، ئەمە گروپی ئاگاداریەکانە، تکایە بسڕەوە - @IQUSER0"
+        photobt = await iqub.upload_file(file="iqub/razan/resources/start/Iquser.JPEG")
         _, groupid = await create_supergroup(
-            "مجموعة أشعارات الجوكر ", jepiq, Config.TG_BOT_USERNAME, descript, photobt
+            "گرووپی ئاگاداریەکان", iqub, Config.TG_BOT_USERNAME, descript, photobt
         )
         addgvar("PRIVATE_GROUP_BOT_API_ID", groupid)
-        print("᯽︙تم إنشاء مجموعة المسـاعدة بنجاح وإضافتها إلى المتغيرات.")
+        print("᯽︙گرووپی ئاگاداریەکان سەرکەوتوانە دروستکرا بۆ گۆڕانکاریەکان.")
         flag = True
     if PM_LOGGER_GROUP_ID != -100:
         try:
-            entity = await jepiq.get_entity(PM_LOGGER_GROUP_ID)
+            entity = await iqub.get_entity(PM_LOGGER_GROUP_ID)
             if not isinstance(entity, types.User) and not entity.creator:
                 if entity.default_banned_rights.send_messages:
                     LOGS.info(
-                        "᯽︙الأذونات مفقودة لإرسال رسائل لـ PM_LOGGER_GROUP_ID المحدد."
+                        "᯽︙ڕێپێدانەکان ونن بۆ ناردنی نامەکان بۆ PM_LOGGER_GROUP_ID ."
                     )
                 if entity.default_banned_rights.invite_users:
                     LOGS.info(
-                        "᯽︙الأذونات مفقودة للمستخدمين الإضافيين لـ PM_LOGGER_GROUP_ID المحدد."
+                        "᯽︙ڕێپێدانەکان ونن بۆ بەکارهێنەرانی زیاتر لە PM_LOGGER_GROUP_ID ."
                     )
         except ValueError:
-            LOGS.error("᯽︙لا يمكن العثور على فار  PM_LOGGER_GROUP_ID. تأكد من صحتها.")
+            LOGS.error("᯽︙هیچ شتێك نییە لە ڤارەکە PM_LOGGER_GROUP_ID. دڵنیابە کە ڕاستە.")
         except TypeError:
-            LOGS.error("᯽︙PM_LOGGER_GROUP_ID غير مدعوم. تأكد من صحتها.")
+            LOGS.error("᯽︙PM_LOGGER_GROUP_ID پشتگیری نەکراوە. دڵنیابە کە ئەوان ڕاستن")
         except Exception as e:
             LOGS.error(
-                "⌯︙حدث استثناء عند محاولة التحقق من PM_LOGGER_GROUP_ID.\n" + str(e)
+                "⌯︙جیاکارییەکی ڕوویدا لەکاتی هەوڵدان بۆ سەلماندن PM_LOGGER_GROUP_ID.\n" + str(e)
             )
     else:
-        descript = "᯽︙ وظيفه الكروب يحفظ رسائل الخاص اذا ما تريد الامر احذف الكروب نهائي \n  - @Jepthon"
-        photobt = await jepiq.upload_file(file="JepIQ/razan/resources/start/Jepthon2.JPEG")
+        descript = "᯽︙ وظيفه الكروب يحفظ رسائل الخاص اذا ما تريد الامر احذف الكروب نهائي \n  - @IQUSER0"
+        photobt = await iqub.upload_file(file="iqub/razan/resources/start/Iquser2.JPEG")
         _, groupid = await create_supergroup(
-            "مجموعة التخزين", jepiq, Config.TG_BOT_USERNAME, descript, photobt
+            "گرووپی سەیڤکراوەکان", iqub, Config.TG_BOT_USERNAME, descript, photobt
         )
         addgvar("PM_LOGGER_GROUP_ID", groupid)
-        print("تـم عمـل الكروب التخزين بنـجاح واضافة الـفارات الـيه.")
+        print("گرووپی سەیڤکراوەکان سەرکەوتوانە دروستکرا و ڤارەکەی بۆ زیادکرا.")
         flag = True
     if flag:
         executable = sys.executable.replace(" ", "\\ ")
@@ -348,28 +348,28 @@ async def verifyLoggerGroup():
         sys.exit(0)
 
 async def install_externalrepo(repo, branch, cfolder):
-    JEPTHONREPO = repo
+    IQUSERREPO = repo
     rpath = os.path.join(cfolder, "requirements.txt")
-    if JEPTHONBRANCH := branch:
+    if IQUSERBRANCH := branch:
         repourl = os.path.join(IQUSERREPO, f"tree/{IQUSERBRANCH}")
-        gcmd = f"git clone -b {JEPTHONBRANCH} {IQUSERREPO} {cfolder}"
-        errtext = f"لا يوحد فرع بأسم `{IQUSERBRANCH}` في الريبو الخارجي {IQUSERREPO}. تاكد من اسم الفرع عبر فار (`EXTERNAL_REPO_BRANCH`)"
+        gcmd = f"git clone -b {IQUSERBRANCH} {IQUSERREPO} {cfolder}"
+        errtext = f"هیچ لقێك بە ناوەوە نییە`{IQUSERBRANCH}` لە ڕیپۆیی دەرەکی {IQUSERREPO}. دووبارە پشکنینی ناوی لق و ڕاستکردنەوەی لە ڤارەکان(`EXTERNAL_REPO_BRANCH`)"
     else:
-        repourl = JEPTHONREPO
+        repourl = IQUSERREPO
         gcmd = f"git clone {IQUSERREPO} {cfolder}"
-        errtext = f"الرابط ({IQUSERREPO}) الذي وضعته لفار `EXTERNAL_REPO` غير صحيح عليك وضع رابط صحيح"
+        errtext = f"بەستەر ({IQUSERREPO}) تۆ دابینت کردووە بۆ`EXTERNAL_REPO` لە ڤاردا نادروستە. تکایە ئەو بەستەرە دووبارە بپشکنە"
     response = urllib.request.urlopen(repourl)
     if response.code != 200:
         LOGS.error(errtext)
-        return await jepiq.tgbot.send_message(BOTLOG_CHATID, errtext)
+        return await iqub.tgbot.send_message(BOTLOG_CHATID, errtext)
     await runcmd(gcmd)
     if not os.path.exists(cfolder):
         LOGS.error(
-            "هنالك خطأ اثناء استدعاء رابط الملفات الاضافية يجب التأكد من الرابط اولا "
+            "هەڵەیەك هەیە لەکاتی پەیوەندیکردنی بەستەرەکە بۆ فایلە زیادەکان، پێویستە سەرەتا دڵنیابیتەوە لە بەستەرەکە "
         )
-        return await jepiq.tgbot.send_message(
+        return await iqub.tgbot.send_message(
             BOTLOG_CHATID,
-            "هنالك خطأ اثناء استدعاء رابط الملفات الاضافية يجب التأكد من الرابط اولا ",
+            "هەڵەیەك هەیە لەکاتی پەیوەندیکردنی بەستەرەکه بۆ فایلە زیادەکان، پێویستە سەرەتا دڵنیابیتەوە لە بەستەرەکە ",
         )
     if os.path.exists(rpath):
         await runcmd(f"pip3 install --no-cache-dir -r {rpath}")
