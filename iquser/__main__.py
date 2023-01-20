@@ -55,12 +55,20 @@ async def startup_process():
     await verifyLoggerGroup()
     await load_plugins("plugins")
     await load_plugins("assistant")
-    LOGS.info(f"⌔┊بە سەرکەوتوویی بۆتی زیرەك .. دامەزرا 👾 ✓")
+    print("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖")
+    print("᯽︙ بە سەرکەوتوویی بـۆتـی زیـرەك کاردەکات  ")
+    print(
+        f"کارکردنی خودکاری سەرهێڵ {cmdhr}فەرمانەکان بۆ بینینی فەرمانی سەرچاوەکە.\
+        \nبۆ یارمەتیدان نامە بنێرە  https://t.me/GrouIQuser"
+    )
+    print("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖")
     await verifyLoggerGroup()
+    await saves()
     await add_bot_to_logger_group(BOTLOG_CHATID)
     if PM_LOGGER_GROUP_ID != -100:
         await add_bot_to_logger_group(PM_LOGGER_GROUP_ID)
     await startupmessage()
+    Catcheck.sucess = True
     return
 
 
