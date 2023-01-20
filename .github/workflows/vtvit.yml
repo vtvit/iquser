@@ -1,4 +1,4 @@
-name: vtvit
+name:vtvit
 
 on:
     push:
