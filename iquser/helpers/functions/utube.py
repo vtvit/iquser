@@ -32,9 +32,9 @@ name_dl = (
 )
 
 
-async def yt_search(zed):
+async def yt_search(iquser):
     try:
-        zed = urllib.parse.quote(zed)
+        iquser = urllib.parse.quote(iquser)
         html = urllib.request.urlopen(
             f"https://www.youtube.com/results?search_query={zed}"
         )
@@ -61,10 +61,10 @@ async def ytsearch(query, limit):
     for v in videolinks.result()["result"]:
         textresult = f"[{v['title']}](https://www.youtube.com/watch?v={v['id']})\n"
         try:
-            textresult += f"**Description : **`{v['descriptionSnippet'][-1]['text']}`\n"
+            textresult += f"**ڕوونکردنەوە : **`{v['descriptionSnippet'][-1]['text']}`\n"
         except Exception:
-            textresult += "**Description : **`None`\n"
-        textresult += f"**Duration : **__{v['duration']}__  **Views : **__{v['viewCount']['short']}__\n"
+            textresult += "**ڕوونکردنەوە : **`None`\n"
+        textresult += f"**ماوەکای : **__{v['duration']}__  **بینەر : **__{v['viewCount']['short']}__\n"
         result += f"☞ {textresult}\n"
     return result
 
@@ -89,7 +89,7 @@ class YT_Search_X:
 ytsearch_data = YT_Search_X()
 
 """
-async def yt_data(zed):
+async def yt_data(iquser):
     params = {"format": "json", "url": zed}
     url = "https://www.youtube.com/oembed"  # https://stackoverflow.com/questions/29069444/returning-the-urls-as-a-list-from-a-youtube-search-query
     query_string = urllib.parse.urlencode(params)
@@ -160,12 +160,12 @@ async def result_formatter(results: list):
             out += "<code>{}</code>\n\n".format(
                 "".join(x.get("text") for x in r.get("descriptionSnippet"))
             )
-        out += f'<b>❯  Duration:</b> {r.get("accessibility").get("duration")}\n'
-        views = f'<b>❯  Views:</b> {r.get("viewCount").get("short")}\n'
+        out += f'<b>❯  ماوەکەی:</b> {r.get("accessibility").get("duration")}\n'
+        views = f'<b>❯  بینەر:</b> {r.get("viewCount").get("short")}\n'
         out += views
-        out += f'<b>❯  Upload date:</b> {r.get("publishedTime")}\n'
+        out += f'<b>❯  بەرواری داگرتن:</b> {r.get("publishedTime")}\n'
         if upld:
-            out += "<b>❯  Uploader:</b> "
+            out += "<b>❯  دابەزێنەر:</b> "
             out += f'<a href={upld.get("link")}>{upld.get("name")}</a>'
 
         output[index] = dict(
@@ -184,7 +184,7 @@ def yt_search_btns(
     buttons = [
         [
             Button.inline(
-                text="⬅️  Back",
+                text="⬅️ گەڕانەوە",
                 data=f"ytdl_back_{data_key}_{page}",
             ),
             Button.inline(
@@ -194,11 +194,11 @@ def yt_search_btns(
         ],
         [
             Button.inline(
-                text="📜  List all",
+                text="📜  لیستی گشتی",
                 data=f"ytdl_listall_{data_key}_{page}",
             ),
             Button.inline(
-                text="⬇️  Download",
+                text="⬇️  دابەزاندن",
                 data=f"ytdl_download_{vid}_0",
             ),
         ],
@@ -219,9 +219,9 @@ def download_button(vid: str, body: bool = False):  # sourcery no-metrics
         vid_data = {"formats": []}
     buttons = [
         [
-            Button.inline("⭐️ BEST - 📹 MKV", data=f"ytdl_download_{vid}_mkv_v"),
+            Button.inline("⭐️ باشترین - 📹 MKV", data=f"ytdl_download_{vid}_mkv_v"),
             Button.inline(
-                "⭐️ BEST - 📹 WebM/MP4",
+                "⭐️ باشترین - 📹 WebM/MP4",
                 data=f"ytdl_download_{vid}_mp4_v",
             ),
         ]
@@ -261,7 +261,7 @@ def download_button(vid: str, body: bool = False):  # sourcery no-metrics
             )
     buttons += sublists(video_btns, width=2)
     buttons += [
-        [Button.inline("⭐️ BEST - 🎵 320Kbps - MP3", data=f"ytdl_download_{vid}_mp3_a")]
+        [Button.inline("⭐️ باشترین - 🎵 320Kbps - MP3", data=f"ytdl_download_{vid}_mp3_a")]
     ]
     buttons += sublists(
         [
@@ -303,7 +303,7 @@ def _tubeDl(url: str, starttime, uid: str):
         LOGS.error(e)
     except GeoRestrictedError:
         LOGS.error(
-            "ERROR: The uploader has not made this video available in your country"
+            "هەڵە: دابەزێنەرەکە ئەم ڤیدیۆیەی لە وڵاتەکەت بەردەست نەکردووە"
         )
     else:
         return x
