@@ -20,7 +20,7 @@ def load_module(shortname, plugin_path=None):
     if shortname.startswith("__"):
         pass
     elif shortname.endswith("_"):
-        path = Path(f"jepthon/plugins/{shortname}.py")
+        path = Path(f"iquser/plugins/{shortname}.py")
         checkplugins(path)
         name = "iquser.plugins.{}".format(shortname)
         spec = importlib.util.spec_from_file_location(name, path)
