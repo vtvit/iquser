@@ -300,7 +300,7 @@ async def verifyLoggerGroup():
             )
         except Exception as e:
             LOGS.error(
-                "᯽︙حدث استثناء عند محاولة التحقق من PRIVATE_GROUP_BOT_API_ID.\n"
+                "᯽︙جیاکارییەکی ڕوویدا لەکاتی هەوڵدان بۆ سەلماندن PRIVATE_GROUP_BOT_API_ID.\n"
                 + str(e)
             )
     else:
