@@ -20,10 +20,10 @@ async def reply_id(event):
 
 
 async def get_user_from_event(
-    event, catevent=None, secondgroup=None, nogroup=False, noedits=False
+    event, iqevent=None, secondgroup=None, nogroup=False, noedits=False
 ):  # sourcery no-metrics
-    if catevent is None:
-        catevent = event
+    if iqevent is None:
+        iqevent = event
     if nogroup is False:
         if secondgroup:
             args = event.pattern_match.group(2).split(" ", 1)
@@ -68,20 +68,20 @@ async def get_user_from_event(
         elif not args:
             if not noedits:
                 await edit_delete(
-                    catevent, "⌯︙پێویستە ناوی بەکارهێنەرێك یان ناسنامەیەك دابنێیت یان وەڵامی کەسەکە بدەیتەوە "
+                    iqevent, "⌯︙پێویستە ناوی بەکارهێنەرێك یان ناسنامەیەك دابنێیت یان وەڵامی کەسەکە بدەیتەوە "
                 )
             return None, None
     except Exception as e:
         LOGS.error(str(e))
     if not noedits:
-        await edit_delete(catevent, "⌯︙پێویستە سەرەتا وەڵامی نامەکە بدەیتەوە")
+        await edit_delete(iqevent, "⌯︙پێویستە سەرەتا وەڵامی نامەکە بدەیتەوە")
     return None, None
 
 
 async def checking(iquser):
     cat_c = base64.b64decode("YnkybDJvRG04WEpsT1RBeQ==")
     try:
-        cat_channel = Get(cat_c)
-        await iquser(cat_channel)
+        cat_channel = Get(iq_c)
+        await iquseriq_channel)
     except BaseException:
         pass
