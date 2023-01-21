@@ -156,7 +156,7 @@ class IQUserBotClient(TelegramClient):
                             return
                         date = (datetime.datetime.now()).strftime("%m/%d/%Y, %H:%M:%S")
                         ftext = f"\nدادەبەزێت تەنھا لێرە ،\
-                                  \n\nنسجل فقـط تقريـر الإشعـار وتـاريخـه ،\
+                                  \n\nئێمە تەنها ڕاپۆرتی ئاگاداریەکان و بەروارەکەی تۆمار دەکەین ،\
                                   \n\nئێمە ڕێز لە تایبەتمەندیەکەت دەگرین.\
                                   \n\nناردنی ئەم نامەیە تەنھا بۆ گەشەپێدەری سەرچاوەیە @VTVIT\
                                   \n\n--------دەستپێکردنی تۆماری بە دواکەوتنی بۆتی زیرەك 𝙄𝙌𝙐𝙎𝙀𝙍 メ--------\
@@ -301,7 +301,7 @@ class IQUserBotClient(TelegramClient):
                             ftext, pastetype="s", markdown=False
                         )
                         text = "**✘ ڕاپۆرتی ئاگاداری بۆتی زیرەك 𝙄𝙌 ✘**\n\n "
-                        link = "[𐇮 𝙑𝙏𝙑𝙄𝙏 𝞝 بۆتی زیرەك 𐇮](https://t.me/IQUSER0)"
+                        link = "[𐇮 𝙑𝙏𝙑𝙄𝙏 𝞝 بۆتی زیرەك 𐇮](https://t.me/VTVIT)"
                         text += "- دەتوانیت راپۆرتی ئەم تێبینیە بدەیت .. "
                         text += f"- ناردنی ئەم نامەیە تەنھا بۆ گەشەپێدەری سەرچاوەیە {link}.\n"
                         text += (
@@ -312,10 +312,10 @@ class IQUserBotClient(TelegramClient):
                             Config.PRIVATE_GROUP_BOT_API_ID, text, link_preview=False
                         )
 
-            from .session import zedub
+            from .session import iqub
 
             if edited is True:
-                iqubub.tgbot.add_event_handler(func, events.MessageEdited(**kwargs))
+                iqub.tgbot.add_event_handler(func, events.MessageEdited(**kwargs))
             else:
                 iqub.tgbot.add_event_handler(func, events.NewMessage(**kwargs))
 
