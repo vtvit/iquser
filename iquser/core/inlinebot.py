@@ -33,7 +33,7 @@ LOGS = logging.getLogger(__name__)
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
 MEDIA_PATH_REGEX = re.compile(r"(:?\<\bmedia:(:?(?:.*?)+)\>)")
 IQLOGO = "https://telegra.ph/file/3851323764f1629e16ce8.jpg"
-MALATH_PIC = "https://telegra.ph/file/3851323764f1629e16ce8.jpg"
+RAZAN_PIC = "https://telegra.ph/file/3851323764f1629e16ce8.jpg"
 tr = Config.COMMAND_HAND_LER
 
 
@@ -297,9 +297,9 @@ async def inline_handler(event):  # sourcery no-metrics
             note_data = ""
             buttons = []
             media = None
-            zedmedia = MEDIA_PATH_REGEX.search(markdown_note)
-            if zedmedia:
-                media = zedmedia.group(2)
+            iqmedia = MEDIA_PATH_REGEX.search(markdown_note)
+            if iqmedia:
+                media = iqmedia.group(2)
                 markdown_note = markdown_note.replace(zedmedia.group(0), "")
             for match in BTN_URL_REGEX.finditer(markdown_note):
                 n_escapes = 0
@@ -358,13 +358,13 @@ async def inline_handler(event):  # sourcery no-metrics
                 try:
                     u = await event.client.get_entity(u)
                     if u.username:
-                        vtvit = f"[{u.first_name}](tg://user?id={u.id})"
+                        razan = f"[{u.first_name}](tg://user?id={u.id})"
                     else:
-                        vtvit = f"@{u.username}"
+                        razan = f"@{u.username}"
                     u = int(u.id)
                 except ValueError:
                     # ValueError: Could not find the input entity
-                    vtvit = f"[user](tg://user?id={u})"
+                    razan = f"[user](tg://user?id={u})"
             except ValueError:
                 # if u is username
                 try:
@@ -372,9 +372,9 @@ async def inline_handler(event):  # sourcery no-metrics
                 except ValueError:
                     return
                 if u.username:
-                    vtvit = f"[{u.first_name}](tg://user?id={u.id})"
+                    razan = f"[{u.first_name}](tg://user?id={u.id})"
                 else:
-                    vtvit = f"@{u.username}"
+                    razan = f"@{u.username}"
                 u = int(u.id)
             except Exception:
                 return
@@ -384,7 +384,7 @@ async def inline_handler(event):  # sourcery no-metrics
             buttons = [Button.inline("کࢪدنِٰــۛــەوٰەی نِٰــۛــآمِٰــۛــە 𖡟 🧾", data=f"troll_{timestamp}")]
             result = builder.article(
                 title="نــٖ‌ـ‌ــآمــٖ‌ـ‌ـەی نــٖ‌ـ‌ــهہـێنــٖ‌ـ‌ــی",
-                text=f"ᯓ 𝗦𝗢𝗨𝗥𝗖𝗘 𝗜𝗤𝗨𝗦𝗘𝗥  **-نــٖ‌ـ‌ــآمــٖ‌ـ‌ــەی نــٖ‌ـ‌ــهہـێنــٖ‌ـ‌ــی 🗳**\n⋆┄─┄─┄─┄┄─┄─┄─┄─┄┄⋆\n\n**⌔╎نامەکە بۆ** {vtvit} \n**⌔╎تەڻھا ئەو دەتوانێت بیکاتەوە**",
+                text=f"ᯓ 𝗦𝗢𝗨𝗥𝗖𝗘 𝗜𝗤𝗨𝗦𝗘𝗥  **-نــٖ‌ـ‌ــآمــٖ‌ـ‌ــەی نــٖ‌ـ‌ــهہـێنــٖ‌ـ‌ــی 🗳**\n⋆┄─┄─┄─┄┄─┄─┄─┄─┄┄⋆\n\n**⌔╎نامەکە بۆ** {razan} \n**⌔╎تەڻھا ئەو دەتوانێت بیکاتەوە**",
                 buttons=buttons,
             )
             await event.answer([result] if result else None)
@@ -408,13 +408,13 @@ async def inline_handler(event):  # sourcery no-metrics
                 try:
                     u = await event.client.get_entity(u)
                     if u.first_name:
-                        vtvit = f"[{u.first_name}](tg://user?id={u.id})"
+                        razan = f"[{u.first_name}](tg://user?id={u.id})"
                     else:
-                        vtvit = f"@{u.username}"
+                        razan = f"@{u.username}"
                     u = int(u.id)
                 except ValueError:
                     # ValueError: Could not find the input entity
-                    vtvit = f"[user](tg://user?id={u})"
+                    razan = f"[user](tg://user?id={u})"
             except ValueError:
                 # if u is username
                 try:
@@ -422,9 +422,9 @@ async def inline_handler(event):  # sourcery no-metrics
                 except ValueError:
                     return
                 if u.first_name:
-                    vtvit = f"[{u.first_name}](tg://user?id={u.id})"
+                    razan = f"[{u.first_name}](tg://user?id={u.id})"
                 else:
-                    vtvit = f"@{u.username}"
+                    razan = f"@{u.username}"
                 u = int(u.id)
             except Exception:
                 return
@@ -434,7 +434,7 @@ async def inline_handler(event):  # sourcery no-metrics
             buttons = [Button.inline("کردنەوەی نامەی نهێنی 🗳", data=f"secret_{timestamp}")]
             result = builder.article(
                 title="** نامەی نهێنی **",
-                text=f"ᯓ 𝗦𝗢𝗨𝗥𝗖𝗘 𝗜𝗤𝗨𝗦𝗘𝗥 **- نامەی نهێنی 📠**\n⋆┄─┄─┄─┄┄─┄─┄─┄─┄┄⋆\n\n**⌔╎نامەکە بۆ** {vtvit} \n**⌔╎تەنھا ئەو دەتوانێت بیکاتەوە**",
+                text=f"ᯓ 𝗦𝗢𝗨𝗥𝗖𝗘 𝗜𝗤𝗨𝗦𝗘𝗥 **- نامەی نهێنی 📠**\n⋆┄─┄─┄─┄┄─┄─┄─┄─┄┄⋆\n\n**⌔╎نامەکە بۆ** {razan} \n**⌔╎تەنھا ئەو دەتوانێت بیکاتەوە**",
                 buttons=buttons,
             )
             await event.answer([result] if result else None)
@@ -519,7 +519,7 @@ async def inline_handler(event):  # sourcery no-metrics
                     id=str(uuid4()),
                     type="photo",
                     title=link,
-                    description="⬇️ کرتە بکە بۆ داگرتن",
+                    description="⬇️ کلیك بکەکە بۆ داگرتن",
                     thumb=photo,
                     content=photo,
                     send_message=types.InputBotInlineMessageMediaAuto(
@@ -576,29 +576,29 @@ async def inline_handler(event):  # sourcery no-metrics
             ]
             PM_PIC = gvarstatus("pmpermit_pic")
             if PM_PIC:
-                CAT = [x for x in PM_PIC.split()]
-                PIC = list(CAT)
-                CAT_IMG = random.choice(PIC)
+                IQ = [x for x in PM_PIC.split()]
+                PIC = list(IQ)
+                IQ_IMG = random.choice(PIC)
             else:
-                CAT_IMG = None
+                IQ_IMG = None
             query = gvarstatus("pmpermit_text")
-            if CAT_IMG and CAT_IMG.endswith((".jpg", ".jpeg", ".png")):
+            if IQ_IMG and IQ_IMG.endswith((".jpg", ".jpeg", ".png")):
                 result = builder.photo(
-                    CAT_IMG,
+                    IQ_IMG,
                     # title="Alive iquser",
                     text=query,
                     buttons=buttons,
                 )
-            elif CAT_IMG:
+            elif IQ_IMG:
                 result = builder.document(
-                    CAT_IMG,
+                    IQ_IMG,
                     title="Alive iquser",
                     text=query,
                     buttons=buttons,
                 )
             else:
                 result = builder.article(
-                    title="Alive cat",
+                    title="Alive iquser",
                     text=query,
                     buttons=buttons,
                 )
