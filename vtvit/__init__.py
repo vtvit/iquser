@@ -2,12 +2,12 @@ import sys
 import os
 from typing import Any, Dict, List, Union
 from glob import glob
-from jepthon import *
-from jepthon.helpers.functions.functions import translate
+from iquser import *
+from iquser.helpers.functions.functions import translate
 try:
     from yaml import safe_load
 except ModuleNotFoundError:
-    from jepthon.helpers.functions.functions import safe_load
+    from iquser.helpers.functions.functions import safe_load
 
 os.getenv("LANGUAGE", "kr")
 
