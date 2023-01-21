@@ -17,13 +17,13 @@ async def age_verification_true(event: CallbackQuery):
     u_id = event.query.user_id
     if u_id != Config.OWNER_ID and u_id not in Config.SUDO_USERS:
         return await event.answer(
-            "Given That It's A Stupid-Ass Decision, I've Elected To Ignore It.",
+            "بە لەبەرچاوگرتنی ئەوەی کە بڕیارێکی گەمژانەیە، من هەڵمبژاردووە پشتگوێی بخەم.",
             alert=True,
         )
     await event.answer("بەڵێ من +18م", alert=False)
     buttons = [
         Button.inline(
-            text="Unsure / Change of Decision ❔",
+            text="Unsure / گۆڕینی بڕیار ❔",
             data="chg_of_decision_",
         )
     ]
