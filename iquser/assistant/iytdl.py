@@ -45,12 +45,12 @@ plugin_category = "بۆت"
 
 
 @iqub.iq_cmd(
-    pattern="گۆرانی(?:\s|$)([\s\S]*)",
-    command=("گۆرانی", plugin_category),
+    pattern="یوتوب(?:\s|$)([\s\S]*)",
+    command=("یوتوب", plugin_category),
     info={
         "header": "ytdl with inline buttons.",
         "description": "To search and download youtube videos by inline buttons.",
-        "usage": "{tr}iytdl [URL / Text] or [Reply to URL / Text]",
+        "usage": "{tr}یوتوب [بەستەر / ناو] or [وەڵامدانەوەی بەستەر / ناو]",
     },
 )
 async def iytdl_inline(event):
@@ -140,7 +140,7 @@ async def ytdl_download_callback(c_q: CallbackQuery):  # sourcery no-metrics
             thumb_pic = _path
         else:
             _fpath = _path
-    if not _fpath:لم يتـم إيجـاد المطلـوب ؟!**")
+    if not _fpath:هیچ شتێك نەدۆزرایەوە!**")
         return
     if not thumb_pic:
         thumb_pic = str(await pool.run_in_thread(download)(await get_ytthumb(yt_code)))
