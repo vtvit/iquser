@@ -111,8 +111,8 @@ def get_manager(path, num: int):
         time.ctime(os.path.getctime(path))
         time2 = time.ctime(os.path.getmtime(path))
         time3 = time.ctime(os.path.getatime(path))
-        msg += f"**- المـوقع :** `{path}`\n"
-        msg += f"**- الايقـونه :** `{mode}`\n"
+        msg += f"**- ڕێگا :** `{path}`\n"
+        msg += f"**- مۆد :** `{mode}`\n"
         msg += f"**- قەبارە :** `{humanbytes(size)}`\n"
         msg += f"**- کۆتا نوێکردنەوەی فایل   :** `{time2}`\n"
         msg += f"**- کۆتا کاتی چوونە ژورەوەی فایل   :** `{time3}`"
