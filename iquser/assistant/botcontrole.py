@@ -38,7 +38,7 @@ cmhd = Config.COMMAND_HAND_LER
 async def bot_broadcast(event):
     replied = await event.get_reply_message()
     if not replied:
-        return await event.reply("وەڵامی نامەکە بدەوە بۆ ڕادیۆ !")
+        return await event.reply("وەڵامدانەوەی نامەیەك بۆ پەخشکردنی یەکەم !")
     start_ = datetime.now()
     br_cast = await replied.reply("بۆ هەمووان پەخش دەکرێت...")
     blocked_users = []
@@ -52,7 +52,7 @@ async def bot_broadcast(event):
     for user in users:
         try:
             await event.client.send_message(
-                int(user.user_id), "🔊 ڕادیۆیەکی نوێ وەرگیرا."
+                int(user.user_id), "🔊 تۆ پەخشێکی نوێت پێگەیشت"
             )
             await event.client.send_message(int(user.user_id), replied)
             await asyncio.sleep(0.8)
@@ -64,14 +64,14 @@ async def bot_broadcast(event):
             LOGS.error(str(e))
             if BOTLOG:
                 await event.client.send_message(
-                    BOTLOG_CHATID, f"** هەڵە هەیە لە ڕادیۆ **\n`{str(e)}`"
+                    BOTLOG_CHATID, f"**BOTLOG_CHATID, f"**هەڵە لەکاتی پەخشکردن**\n`{str(e)}`"
                 )
         else:
             count += 1
             if count % 5 == 0:
                 try:
                     prog_ = (
-                        "🔊 ڕادیۆی گشتی...\n\n"
+                        "🔊  پەخشکردن...\n\n"
                         + progress_str(
                             total=bot_users_count,
                             current=count + len(blocked_users),
@@ -83,9 +83,9 @@ async def bot_broadcast(event):
                 except FloodWaitError as e:
                     await asyncio.sleep(e.seconds)
     end_ = datetime.now()
-    b_info = f"🔊 بە سەرکەوتوویی ڕادیۆ بۆ ➜  <b>{count} لە بەکارهێنەرانەوە.</b>"
+    b_info = f"🔊بە سەرکەوتوویی نامەی پەخشکراو بۆ ➜  <b>{count} بەکارهێنەران.</b>"
     if len(blocked_users) != 0:
-        b_info += f"\n🚫  <b>{len(blocked_users)} لە بەکارهێنەرانەوە</b> ئەگەر نامەکە سڕایەوە ئەوا ئەو بۆتی تۆی بلۆککرد."
+        b_info += f"\n🚫  <b>{len(blocked_users)} لە بەکارهێنەرانەوە</b> ئەگەر نامەکە سڕایەوە ئەوا ئەو بۆت تۆی بلۆککرد."
     b_info += (
         f"\n⏳  <code> پڕۆسەکە ئەنجامدرا: {time_formatter((end_ - start_).seconds)}</code>."
     )
@@ -113,7 +113,7 @@ async def ban_starters(event):
 
 
 @iqub.bot_cmd(
-    pattern="^/block\s+([\s\S]*)",
+    pattern="^/ban\s+([\s\S]*)",
     from_users=Config.OWNER_ID,
 )
 async def ban_botpms(event):
@@ -121,7 +121,7 @@ async def ban_botpms(event):
     reply_to = await reply_id(event)
     if not user_id:
         return await event.client.send_message(
-            event.chat_id, "لا يمكنني العثور على المستخدم", reply_to=reply_to
+            event.chat_id, "'(دەرکردنی)ناتوانم بەکارهێنەر بدۆزمەوە بۆ قەدەغەکردنی", reply_to=reply_to
         )
     if not reason:
         return await event.client.send_message(
@@ -138,9 +138,9 @@ async def ban_botpms(event):
     if check:
         return await event.client.send_message(
             event.chat_id,
-            f"#پێشتر_قەدەغەکراوە\
-            \nئەم بەکارهێنەرە لە لیستی کەسە بلۆککراوەکاندایە\
-            \n**هۆکاری قەدەغەکردنت\باند:** `{check.reason}`\
+            f"#پێشتر_قەدەغەکراوە(دەرکراوە)\
+            \nئەم بەکارهێنەرە لە لیستی کەسە دەرکراوەکاندایە\
+            \n**هۆکاری قەدەغەکردنت\دەرکردن:** `{check.reason}`\
             \n**بەروار:** `{check.date}`.",
         )
     msg = await ban_user_from_bot(user, reason, reply_to)
@@ -148,7 +148,7 @@ async def ban_botpms(event):
 
 
 @iqub.ar_cmd(
-    pattern="^/unblock(?:\s|$)([\s\S]*)",
+    pattern="^/unban(?:\s|$)([\s\S]*)",
     from_users=Config.OWNER_ID,
 )
 async def ban_botpms(event):
@@ -156,7 +156,7 @@ async def ban_botpms(event):
     reply_to = await reply_id(event)
     if not user_id:
         return await event.client.send_message(
-            event.chat_id, "** ناتوانم بەکارهێنەرەکە بدۆزمەوە بۆ لادانی بلۆککردن🕷️.**", reply_to=reply_to
+            event.chat_id, "** ناتوانم بەکارهێنەرەکە بدۆزمەوە بۆ لادانی دەرکردن🕷️.**", reply_to=reply_to
         )
     try:
         user = await event.client.get_entity(user_id)
@@ -167,16 +167,16 @@ async def ban_botpms(event):
     if not check:
         return await event.client.send_message(
             event.chat_id,
-            f"#هەڵوەشاندنەوەی بلۆك لە پرۆفایلەکە \
-            \n👤 {_format.mentionuser(user.first_name , user.id)} بەسەرکەوتوویی قەدەغەی لادرا لە بوتەکەوە.",
+            f"#هەڵوەشاندنەوەی دەرکردن \
+            \n👤 {_format.mentionuser(user.first_name , user.id)} بەسەرکەوتوویی دەرکردنی لادرا لە بوتەکەوە.",
         )
     msg = await unban_user_from_bot(user, reason, reply_to)
     await event.reply(msg)
 
 
 @iqub.bot_cmd(
-    pattern="قەدەغەکراوەکان$",
-    command=("قەدەغەکراوەکان", plugin_category),
+    pattern="دەرکراوەکان$",
+    command=("دەرکراوەکان", plugin_category),
     info={
         "سەری پەڕە": "بۆ بینینی لیستی قەدەغەکراوەکان لە بۆتەکەت",
         "ڕوونکردنەوە": "بۆ بینینی لیستی قەدەغەکراوەکان\دەرکراوەکان لە بۆتەکەت🕷️",
@@ -194,26 +194,26 @@ async def ban_starters(event):
     await edit_or_reply(event, msg)
 
 @iqub.bot_cmd(
-    pattern="دۆخی_دووبارەکردنەوە(چالاککردن|ناچالاککردن)$",
+    pattern="دۆخی دووبارەکردنە(چالاک|ناچالاک)$",
     command=("دۆخی_دووبارەکردنەوە", plugin_category),
     info={
         "header": "بۆ چالاککردن و نا چالاککردنی دووبارە کردنەوە لە بۆتەکەت",
         "ڕوونکردنەوە": "🕷️ئەگەر بەکارهێنەرەکە 10 نامە دووبارە بکاتەوە یان چاکی بکاتەوە، بۆتەکە بلۆکی دەکات",
         "بەکارهێنان": [
-            "{tr}دۆخی_دووبارەکردنەوە چالاکە",
-            "{tr}دۆخی_دووبارەکردنەوە ناچالاکە",
+            "{tr}دۆخی دووبارەکردنەوە چالاکە",
+            "{tr}دۆخی دووبارەکردنەوە ناچالاکە",
         ],
     },
 )
 async def ban_antiflood(event):
     "بۆ چالاککردن و نا چالاککردنی دووبارەکردنەوە لە بۆتەکەت."
     input_str = event.pattern_match.group(1)
-    if input_str == "چالاککردن":
+    if input_str == "چالاک":
         if gvarstatus("bot_antif") is not None:
             return await edit_delete(event, "`دژە دووبارەکردنەوەی بۆت پێشتر چالاککراوە`")
         addgvar("bot_antif", True)
         await edit_delete(event, "`دژە دووبارەکردنەوەی بۆت چالاککراوە`")
-    elif input_str == "نا چالاککردن":
+    elif input_str == "ناچالاک":
         if gvarstatus("bot_antif") is None:
             return await edit_delete(event, "`دژە دووبارەکردنەوەی بۆت پێشتر لە کارخراوە.`")
         delgvar("bot_antif")
