@@ -191,7 +191,7 @@ async def bot_pms(event):  # sourcery no-metrics
                         user_id, event.text, reply_to=reply_msg, link_preview=False
                     )
             except UserIsBlockedError:
-                return await event.reply("𝗧𝗵𝗶𝘀 𝗯𝗼𝘁 𝘄𝗮𝘀 𝗯𝗹𝗼𝗰𝗸𝗲𝗱 𝗯𝘆 𝘁𝗵𝗲 𝘂𝘀𝗲𝗿. ❌")
+                return await event.reply("بۆتەکە بلۆککر̀آ̀وە لە لآ̀یەن̀ ئەم̀ بەکآ̀ر̀ه̀ێن̀ەر̀ە. ❌")
             except Exception as e:
                 return await event.reply(f"**- هەڵەیە:**\n`{e}`")
             try:
@@ -303,7 +303,7 @@ async def handler(event):
                 LOGS.error(str(e))
 
 
-@iqub.bot_cmd(pattern="^/uinfo$", from_users=Config.OWNER_ID)
+@iqub.bot_cmd(pattern="^/info$", from_users=Config.OWNER_ID)
 async def bot_start(event):
     reply_to = await reply_id(event)
     if not reply_to:
