@@ -94,7 +94,7 @@ async def safe_check_text(msg):  # sourcery no-metrics
     msg = str(msg)
     from .session import jepthon
 
-    phone = str((await catub.get_entity(jepthon.uid)).phone)
+    phone = str((await catub.get_entity(iquser.uid)).phone)
     return bool(
         (
             (Config.STRING_SESSION in msg)
