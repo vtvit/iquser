@@ -1,65 +1,66 @@
-import contextlib
 import sys
-
-import iquser
-from iquser import BOTLOG_CHATID, PM_LOGGER_GROUP_ID
-
+import jepthon
+from iquser import BOTLOG_CHATID, HEROKU_APP, PM_LOGGER_GROUP_ID
 from .Config import Config
 from .core.logger import logging
 from .core.session import iqub
-from .utils import mybot
 from .utils import (
     add_bot_to_logger_group,
     install_externalrepo,
+    ipchange,
     load_plugins,
     setup_bot,
+    mybot,
     startupmessage,
     verifyLoggerGroup,
+    saves,
 )
 
-
 LOGS = logging.getLogger("iquser")
-cmdhr = Config.COMMAND_HAND_LER
 
 print(iquser.__copyright__)
-print(f"مۆڵەتی پێدراوە لەژێر مەرجەکانی  {iquser.__license__}")
+print("Licensed under the terms of the " + iquser.__license__)
 
 cmdhr = Config.COMMAND_HAND_LER
 
 try:
-    LOGS.info("⌭ دەست بکە بە دابەزاندنی بۆتی زیرەك ⌭")
+    LOGS.info("دەستی کرد بە دامەزراندن  ✓")
     iqub.loop.run_until_complete(setup_bot())
-    LOGS.info("⌭ دەست بکە بە کارکردنی بۆت👾 ⌭")
+    LOGS.info("دامەزراندنی بۆت تەواو بوو ✓")
 except Exception as e:
-    LOGS.error(f"{e}")
+    LOGS.error(f"{str(e)}")
     sys.exit()
 
-
 try:
-    LOGS.info("⌭ دۆخی سەرهێڵ چالاککراوە👾 ⌭")
+    LOGS.info("دۆخی سەرهێڵ کاردەکات ..")
     iqub.loop.run_until_complete(mybot())
-    LOGS.info("✓ بە سەرکەوتوویی دۆخی سەرهێڵ چالاکرا👾 ✓")
-except Exception as e:
-    LOGS.error(f"- {e}")
+    LOGS.info("دۆخی سەرهێڵ بە سەرکەوتوویی کاردەکات ✓")
+except Exception as iq:
+    LOGS.error(f"- {iq}")
+    sys.exit()    
 
 
-try:
-    LOGS.info("⌭ ئێکسسواراتەکان دادەبەزن .. 👾⌭")
-    iqub.loop.create_task(saves())
-    LOGS.info("✓ بە سەرکەوتوویی .. دابەزێنرا ✓")
-except Exception as e:
-    LOGS.error(f"- {e}")
+class CatCheck:
+    def __init__(self):
+        self.sucess = True
+
+
+Catcheck = CatCheck()
 
 
 async def startup_process():
+    check = await ipchange()
+    if check is not None:
+        Catcheck.sucess = False
+        return
     await verifyLoggerGroup()
     await load_plugins("plugins")
     await load_plugins("assistant")
     print("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖")
-    print("᯽︙ بە سەرکەوتوویی بـۆتـی زیـرەك کاردەکات  ")
+    print("᯽︙بۆتی زیرەك کاردەکات بە سەرکەوتوویی ")
     print(
-        f"کارکردنی خودکاری سەرهێڵ {cmdhr}فەرمانەکان بۆ بینینی فەرمانی سەرچاوەکە.\
-        \nبۆ یارمەتیدان نامە بنێرە  https://t.me/GrouIQuser"
+        f"کارکردنی ئۆتۆماتیکی دۆخی سەرهێڵ بنێرە {cmdhr}فەرمانەکان بۆ بینینی فەرمانی سەرچاوە\
+        \nبۆ یارمەتیدان بنێرە  https://t.me/VTVIT"
     )
     print("➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖➖")
     await verifyLoggerGroup()
@@ -71,11 +72,20 @@ async def startup_process():
     Catcheck.sucess = True
     return
 
+async def externalrepo():
+    if Config.VCMODE:
+        await install_externalrepo("https://github.com/vtvit/iqmusic", "iqmusic", "iquservc")
 
+iqub.loop.run_until_complete(externalrepo())
 iqub.loop.run_until_complete(startup_process())
 
-if len(sys.argv) in {1, 3, 4}:
-    with contextlib.suppress(ConnectionError):
-        iqub.run_until_disconnected()
-else:
+if len(sys.argv) not in (1, 3, 4):
     iqub.disconnect()
+elif not Catcheck.sucess:
+    if HEROKU_APP is not None:
+        HEROKU_APP.restart()
+else:
+    try:
+        iqub.run_until_disconnected()
+    except ConnectionError:
+        pass
