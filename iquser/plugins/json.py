@@ -6,7 +6,7 @@ from ..helpers.utils import _format
 plugin_category = "ئامێرەکان"
 
 # yaml_format is ported from uniborg
-@iqub.zed_cmd(
+@iqub.iq_cmd(
     pattern="json$",
     command=("json", plugin_category),
     info={
@@ -21,7 +21,7 @@ async def _(event):
     await edit_or_reply(event, the_real_message, parse_mode=_format.parse_pre)
 
 
-@iqub.zed_cmd(
+@iqub.iq_cmd(
     pattern="yaml$",
     command=("yaml", plugin_category),
     info={
