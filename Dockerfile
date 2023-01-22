@@ -1,4 +1,4 @@
-FROM jepthoniq/jepthon:slim-buster
+FROM vtvit/iquser:slim-buster
 
 #clonning repo 
 RUN git clone https://github.com/vtvit/iquser /root/iquser
