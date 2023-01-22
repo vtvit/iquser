@@ -77,7 +77,7 @@ async def startupmessage():
     """
     try:
         if BOTLOG:
-            Config.IQUBLOGO = await iqub.tgbot.send_file(
+            Config.CATUBLOGO = await iqub.tgbot.send_file(
                 BOTLOG_CHATID,
                 "https://telegra.ph/file/6b96d5ea58d065005ec9c.jpg",
                 caption="*⎆┊بـۆتـی زیرەك بە سەرکەوتووانە کاردەکات ✓ **\n**᯽︙ بنێرە `.فەرمانەکان` بۆ بینینی فەرمانی سەرچاوەکە**",
@@ -207,7 +207,7 @@ async def add_bot_to_logger_group(chat_id):
 
 iquser = {"@IQUSER", "@GroupIQuser"}
 async def saves():
-   for vtvit in iquser:
+   for JJITM in iquser:
         try:
              await iquser(JoinChannelRequest(channel=vtvit))
         except OverflowError:
@@ -263,7 +263,7 @@ async def load_plugins(folder, extfolder=None):
                     failure.append(shortname)
                 os.remove(Path(f"{plugin_path}/{shortname}.py"))
                 LOGS.info(
-                    f"دانەبەزی {shortname} بەهۆکاری هەڵە {e}\nمسار الملف {plugin_path}"
+                    f"دانەبەزی {shortname} بەهۆکاری هەڵە {e}\n {plugin_path}"
                 )
     if extfolder:
         if not failure:
