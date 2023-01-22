@@ -31,11 +31,8 @@ from .logger import logging
 LOGS = logging.getLogger(__name__)
 
 BTN_URL_REGEX = re.compile(r"(\[([^\[]+?)\]\<buttonurl:(?:/{0,2})(.+?)(:same)?\>)")
-MEDIA_PATH_REGEX = re.compile(r"(:?\<\bmedia:(:?(?:.*?)+)\>)")
-IQLOGO = "https://telegra.ph/file/3851323764f1629e16ce8.jpg"
-RAZAN_PIC = "https://telegra.ph/file/3851323764f1629e16ce8.jpg"
+ROZLOGO = "https://telegra.ph/file/5b7361f0bec46b646b877.mp4"
 tr = Config.COMMAND_HAND_LER
-
 
 def getkey(val):
     for key, value in GRP_INFO.items():
@@ -56,7 +53,7 @@ def ibuild_keyboard(buttons):
 
 
 def main_menu():
-    malathy = f"**🧑🏻‍💻┊بەخێربێی ئەزیزم {mention}**\n**🛂┊بۆ لیستی فەرمانەکانی یارمەتیدەر \n**⋆─┄─┄─┄─ ɪǫᴜsᴇʀ ─┄─┄─┄─⋆**\n[ᯓ 𝙄𝙌𝙐𝙎𝙀𝙍 メ 🦾♥️](https://t.me/IQUSER0)\n\n"
+    text = f"**🧑🏻‍💻┊بەخێربێی ئەزیزم {mention}**\n**🛂┊بۆ لیستی فەرمانەکانی یارمەتیدەر \n**⋆─┄─┄─┄─ ɪǫᴜsᴇʀ ─┄─┄─┄─⋆**\n[ᯓ 𝙄𝙌𝙐𝙎𝙀𝙍 メ 🦾♥️](https://t.me/IQUSER0)\n\n"
     if Config.iqub:
         buttons = [
             (Button.inline("ℹ️ زانیاری فایلەکان", data="check"),),
@@ -247,46 +244,46 @@ async def inline_handler(event):  # sourcery no-metrics
     query_user_id = event.query.user_id
     if query_user_id == Config.OWNER_ID or query_user_id in Config.SUDO_USERS:
         hmm = re.compile("troll (.*) (.*)")
-        match = re.findall(hmm, query)
-        inf = re.compile("secret (.*) (.*)")
+        match = re.findall(هم, query)
+        inf = re.compile("نهێنی (.*) (.*)")
         match2 = re.findall(inf, query)
-        hid = re.compile("hide (.*)")
+        hid = re.compile("شاردنەوە (.*)")
         match3 = re.findall(hid, query)
-        if query.startswith("**iquser"):
+        if query.startswith("*iqub*"):
             buttons = [
                 (
                     Button.inline("Stats", data="stats"),
                     Button.url("𝗜𝗤𝗨𝗦𝗘𝗥 𓅛", "https://t.me/IQUSER0"),
                 )
             ]
-            ALIVE_PIC = gvarstatus("ALIVE_PIC") or "https://telegra.ph/file/3851323764f1629e16ce8.jpg"
-            IALIVE_PIC = gvarstatus("IALIVE_PIC") or "https://telegra.ph/file/3851323764f1629e16ce8.jpg"
+            ALIVE_PIC = gvarstatus("ALIVE_PIC")
+            IALIVE_PIC = gvarstatus("IALIVE_PIC")
             if IALIVE_PIC:
-                IQ = [x for x in IALIVE_PIC.split()]
-                PIC = list(IQ)
+                ROZE = [x for x in IALIVE_PIC.split()]
+                PIC = list(ROZE)
                 I_IMG = random.choice(PIC)
             if not IALIVE_PIC and ALIVE_PIC:
-                IQ = [x for x in ALIVE_PIC.split()]
-                PIC = list(IQ)
-                I_IMG = random.choice(PIC)
+                ROZE = [x for x in ALIVE_PIC.split()]
+                PIC = list(ROZE)
+                ROZE_IMG = random.choice(PIC)
             elif not IALIVE_PIC:
-                I_IMG = None
-            if I_IMG and I_IMG.endswith((".jpg", ".png", ".mp4")):
+                ROZE_IMG = None
+            if ROZE_IMG and I_IMG.endswith((".jpg", ".png")):
                 result = builder.photo(
-                    I_IMG,
+                    ROZE_IMG,
                     text=query,
                     buttons=buttons,
                 )
             elif I_IMG:
                 result = builder.document(
                     I_IMG,
-                    title="Alive iquser",
+                    title="Alive BOT",
                     text=query,
                     buttons=buttons,
                 )
             else:
                 result = builder.article(
-                    title="Alive iquser",
+                    title="Alive BOT",
                     text=query,
                     buttons=buttons,
                 )
@@ -296,11 +293,6 @@ async def inline_handler(event):  # sourcery no-metrics
             prev = 0
             note_data = ""
             buttons = []
-            media = None
-            iqmedia = MEDIA_PATH_REGEX.search(markdown_note)
-            if iqmedia:
-                media = iqmedia.group(2)
-                markdown_note = markdown_note.replace(zedmedia.group(0), "")
             for match in BTN_URL_REGEX.finditer(markdown_note):
                 n_escapes = 0
                 to_check = match.start(1) - 1
@@ -322,26 +314,12 @@ async def inline_handler(event):  # sourcery no-metrics
                 note_data += markdown_note[prev:]
             message_text = note_data.strip()
             tl_ib_buttons = ibuild_keyboard(buttons)
-            if media and media.endswith((".jpg", ".png", ".mp4")):
-                result = builder.photo(
-                    media,
-                    text=message_text,
-                    buttons=tl_ib_buttons,
-                )
-            elif media:
-                result = builder.document(
-                    media,
-                    title="Inline creator",
-                    text=message_text,
-                    buttons=tl_ib_buttons,
-                )
-            else:
-                result = builder.article(
-                    title="Inline creator",
-                    text=message_text,
-                    buttons=tl_ib_buttons,
-                    link_preview=False,
-                )
+            result = builder.article(
+                title="Inline creator",
+                text=message_text,
+                buttons=tl_ib_buttons,
+                link_preview=False,
+            )
             await event.answer([result] if result else None)
         elif match:
             query = query[7:]
@@ -576,29 +554,29 @@ async def inline_handler(event):  # sourcery no-metrics
             ]
             PM_PIC = gvarstatus("pmpermit_pic")
             if PM_PIC:
-                IQ = [x for x in PM_PIC.split()]
-                PIC = list(IQ)
-                IQ_IMG = random.choice(PIC)
+                ROZE = [x for x in PM_PIC.split()]
+                PIC = list(ROZE)
+                ROZE_IMG = random.choice(PIC)
             else:
-                IQ_IMG = None
+                ROZE_IMG = None
             query = gvarstatus("pmpermit_text")
-            if IQ_IMG and IQ_IMG.endswith((".jpg", ".jpeg", ".png")):
+            if ROZE_IMG and ROZE_IMG.endswith((".jpg", ".jpeg", ".png")):
                 result = builder.photo(
-                    IQ_IMG,
-                    # title="Alive iquser",
+                    ROZE_IMG,
+                    # title="Alive Bot",
                     text=query,
                     buttons=buttons,
                 )
-            elif IQ_IMG:
+            elif ROZE_IMG:
                 result = builder.document(
-                    IQ_IMG,
-                    title="Alive iquser",
+                    ROZE_IMG,
+                    title="Alive Bot",
                     text=query,
                     buttons=buttons,
                 )
             else:
                 result = builder.article(
-                    title="Alive iquser",
+                    title="Alive Bot",
                     text=query,
                     buttons=buttons,
                 )
@@ -615,7 +593,7 @@ async def inline_handler(event):  # sourcery no-metrics
         ]
         markup = event.client.build_reply_markup(buttons)
         photo = types.InputWebDocument(
-            url=IQLOGO, size=0, mime_type="image/jpeg", attributes=[]
+            url=ROZELOGO, size=0, mime_type="image/jpeg", attributes=[]
         )
         text, msg_entities = await event.client._parse_message_text(
             "- بۆ دامەزراندنی سەرچاوەی بۆتی زیرەك 𝗜𝗤𝗨𝗦𝗘𝗥", "md"
