@@ -5,7 +5,7 @@ from telethon.tl.types import ChatBannedRights
 
 class Config(object):
     LOGGER = True
-    PORT = os.environ.get("PORT", None)
+    PORT = os.environ.get("PORT", "8080")
     A_PIC = os.environ.get("A_PIC", None)
     ALIVE_PIC = os.environ.get("ALIVE_PIC", None)
     SC_TEXT = os.environ.get("SCPIC_TEXT", None)
@@ -29,7 +29,7 @@ class Config(object):
     TZ = os.environ.get("TZ", "Asia/Baghdad")
     # set this with required cat repo link
     UPSTREAM_REPO = os.environ.get(
-        "UPSTREAM_REPO", "https://github.com/vtvit/iquser.git"
+        "UPSTREAM_REPO", "https://github.com/vtvit/iquser"
     )
 
     # BASIC and MAIN CONFIG VARS
@@ -98,7 +98,7 @@ class Config(object):
     TELEGRAPH_SHORT_NAME = os.environ.get("TELEGRAPH_SHORT_NAME", "catuserbot")
     # for custom thumb image set this with your required thumb telegraoh link
     THUMB_IMAGE = os.environ.get(
-        "THUMB_IMAGE", "https://telegra.ph/file/235481c524f1f15b7895b.mp4"
+        "THUMB_IMAGE", "https://telegra.ph/file/480b110495d8fc09a87e9.jpg"
     )
     # specify NO_LOAD with plugin names for not loading in iquser
     NO_LOAD = [x for x in os.environ.get("NO_LOAD", "").split()]
