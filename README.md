@@ -9,7 +9,7 @@
 
 ## لەسەر Heroku بڵاوی بکەرەوه
 
-[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/vtvit/JJITM)
+[![Deploy](https://www.herokucdn.com/deploy/button.svg)](https://heroku.com/deploy?template=https://github.com/vtvit/iquser)
 
 ## کۆدی تێرموکس لێره دەربێنه
 
