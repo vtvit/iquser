@@ -1,1 +1,1 @@
-worker: python3 -m iquser
+web: bash start.sh
