@@ -22,9 +22,8 @@ from fontTools.ttLib import TTFont
 from PIL import Image, ImageDraw, ImageFont, ImageOps
 from telethon.tl import types
 
-from .utils import _iqutils
+from .utils import _catutils
 
-# //Random colors for name
 COLORS = [
     "#F07975",
     "#F49F69",
@@ -36,62 +35,40 @@ COLORS = [
     "#E181AC",
 ]
 
-
 logger = logging.getLogger(__name__)
 logger.setLevel(logging.DEBUG)
 
 
-def file_check():
-    regular = "./temp/Roboto-Regular.ttf"
-    medium = "./temp/Roboto-Medium.ttf"
-    mono = "./temp/DroidSansMono.ttf"
-    italic = "./temp/Roboto-Italic.ttf"
-    fallback = "./temp/Quivira.otf"
-    special = "./temp/ArialUnicodeMS.ttf"
+async def process(msg, user, client, reply, event, replied=None):  # sourcery no-metrics
     if not os.path.isdir("./temp/"):
         os.mkdir("./temp/", 0o755)
-    if not os.path.exists(regular):
-        urllib.request.urlretrieve(
-            "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Regular.ttf",
-            regular,
-        )
-    if not os.path.exists(medium):
-        urllib.request.urlretrieve(
-            "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Medium.ttf",
-            medium,
-        )
-    if not os.path.exists(mono):
-        urllib.request.urlretrieve(
-            "https://github.com/erenmetesar/modules-repo/raw/master/DroidSansMono.ttf",
-            mono,
-        )
-    if not os.path.exists(italic):
-        urllib.request.urlretrieve(
-            "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Italic.ttf",
-            italic,
-        )
-    if not os.path.exists(fallback):
-        urllib.request.urlretrieve(
-            "https://github.com/erenmetesar/modules-repo/raw/master/Quivira.otf",
-            fallback,
-        )
-    if not os.path.exists(special):
-        urllib.request.urlretrieve(
-            "https://github.com/TgCatUB/CatUserbot-Resources/blob/master/Resources/Spotify/ArialUnicodeMS.ttf?raw=true",
-            special,
-        )
+    urllib.request.urlretrieve(
+        "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Regular.ttf",
+        "./temp/Roboto-Regular.ttf",
+    )
+    urllib.request.urlretrieve(
+        "https://github.com/erenmetesar/modules-repo/raw/master/Quivira.otf",
+        "./temp/Quivira.otf",
+    )
+    urllib.request.urlretrieve(
+        "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Medium.ttf",
+        "./temp/Roboto-Medium.ttf",
+    )
+    urllib.request.urlretrieve(
+        "https://github.com/erenmetesar/modules-repo/raw/master/DroidSansMono.ttf",
+        "./temp/DroidSansMono.ttf",
+    )
+    urllib.request.urlretrieve(
+        "https://github.com/erenmetesar/modules-repo/raw/master/Roboto-Italic.ttf",
+        "./temp/Roboto-Italic.ttf",
+    )
 
-
-async def process(msg, user, client, reply, event, replied=None):  # sourcery no-metrics
-    file_check()
     # Importıng fonts and gettings the size of text
-    font = ImageFont.truetype("./temp/Roboto-Medium.ttf", 41, encoding="utf-16")
+    font = ImageFont.truetype("./temp/Roboto-Medium.ttf", 43, encoding="utf-16")
     font2 = ImageFont.truetype("./temp/Roboto-Regular.ttf", 33, encoding="utf-16")
     mono = ImageFont.truetype("./temp/DroidSansMono.ttf", 30, encoding="utf-16")
     italic = ImageFont.truetype("./temp/Roboto-Italic.ttf", 33, encoding="utf-16")
-    fallback = ImageFont.truetype("./temp/Quivira.otf", 41, encoding="utf-16")
-    sepcialn = ImageFont.truetype("./temp/ArialUnicodeMS.ttf", 41, encoding="utf-16")
-    sepcialt = ImageFont.truetype("./temp/ArialUnicodeMS.ttf", 35, encoding="utf-16")
+    fallback = ImageFont.truetype("./temp/Quivira.otf", 43, encoding="utf-16")
 
     # Splitting text
     maxlength = 0
@@ -147,23 +124,25 @@ async def process(msg, user, client, reply, event, replied=None):  # sourcery no
     # Draw Template
     top, middle, bottom = await drawer(width, height)
     # Profile Photo Check and Fetch
+    yes = False
     color = random.choice(COLORS)
-    if user.photo:
-        async for photo in client.iter_profile_photos(user, limit=1):
-            pfp = await client.download_profile_photo(user)
-            paste = Image.open(pfp)
-            os.remove(pfp)
-            paste.thumbnail((90, 90))
+    async for photo in client.iter_profile_photos(user, limit=1):
+        yes = True
+    if yes:
+        pfp = await client.download_profile_photo(user)
+        paste = Image.open(pfp)
+        os.remove(pfp)
+        paste.thumbnail((105, 105))
 
-            # Mask
-            mask_im = Image.new("L", paste.size, 0)
-            draw = ImageDraw.Draw(mask_im)
-            draw.ellipse((0, 0, 90, 90), fill=255)
+        # Mask
+        mask_im = Image.new("L", paste.size, 0)
+        draw = ImageDraw.Draw(mask_im)
+        draw.ellipse((0, 0, 105, 105), fill=255)
 
-            # Apply Mask
-            pfpbg.paste(paste, (0, 0), mask_im)
+        # Apply Mask
+        pfpbg.paste(paste, (0, 0), mask_im)
     else:
-        paste, color = await no_photo(tot)
+        paste, color = await no_photo(user, tot)
         pfpbg.paste(paste, (0, 0))
 
     # Creating a big canvas to gather all the elements
@@ -186,7 +165,7 @@ async def process(msg, user, client, reply, event, replied=None):  # sourcery no
                 cmd = (
                     f"lottie_convert.py --frame 0 -if lottie -of png {sticker} {file_1}"
                 )
-                stdout, stderr = (await _iqutils.runcmd(cmd))[:2]
+                stdout, stderr = (await _catutils.runcmd(cmd))[:2]
                 stimg = Image.open("./temp/q.png")
             else:
                 stimg = Image.open(sticker)
@@ -227,7 +206,7 @@ async def process(msg, user, client, reply, event, replied=None):  # sourcery no
         file_1 = os.path.join("./temp/", "q.png")
         if sticker.endswith(("tgs")):
             cmd = f"lottie_convert.py --frame 0 -if lottie -of png {sticker} {file_1}"
-            stdout, stderr = (await _iqutils.runcmd(cmd))[:2]
+            stdout, stderr = (await _catutils.runcmd(cmd))[:2]
             stimg = Image.open("./temp/q.png")
         else:
             stimg = Image.open(sticker)
@@ -260,7 +239,7 @@ async def process(msg, user, client, reply, event, replied=None):  # sourcery no
         canvas.paste(top, (pfpbg.width, 0))
         canvas.paste(middle, (pfpbg.width, top.height))
         canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
-        canvas = await zeddoctype(docname, docsize, doctype, canvas)
+        canvas = await catdoctype(docname, docsize, doctype, canvas)
         y = 80 if text else 0
     else:
         canvas.paste(pfpbg, (0, 0))
@@ -268,6 +247,7 @@ async def process(msg, user, client, reply, event, replied=None):  # sourcery no
         canvas.paste(middle, (pfpbg.width, top.height))
         canvas.paste(bottom, (pfpbg.width, top.height + middle.height))
         y = 85
+
     # Writing User's Name
     space = pfpbg.width + 30
     namefallback = ImageFont.truetype("./temp/Quivira.otf", 43, encoding="utf-16")
@@ -281,8 +261,8 @@ async def process(msg, user, client, reply, event, replied=None):  # sourcery no
                 draw.text((space, 20), letter, font=namefallback, fill=color)
                 space += namefallback.getsize(letter)[0]
             else:
-                draw.text((space, 20), letter, font=sepcialn, fill=color)
-                space += sepcialn.getsize(letter)[0]
+                draw.text((space, 20), letter, font=font, fill=color)
+                space += font.getsize(letter)[0]
 
     if title:
         draw.text(
@@ -294,9 +274,9 @@ async def process(msg, user, client, reply, event, replied=None):  # sourcery no
     bold, mono, italic, link = await get_entity(reply)
     index = 0
     emojicount = 0
-    textfallback = ImageFont.truetype("./temp/Quivira.otf", 38, encoding="utf-16")
+    textfallback = ImageFont.truetype("./temp/Quivira.otf", 33, encoding="utf-16")
+    textcolor = "white"
     for line in text:
-        textcolor = "white"
         for letter in line:
             index = (
                 msg.find(letter) if emojicount == 0 else msg.find(letter) + emojicount
@@ -304,27 +284,27 @@ async def process(msg, user, client, reply, event, replied=None):  # sourcery no
             for offset, length in bold.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "./temp/Roboto-Medium.ttf", 38, encoding="utf-16"
+                        "./temp/Roboto-Medium.ttf", 33, encoding="utf-16"
                     )
                     textcolor = "white"
             for offset, length in italic.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "./temp/Roboto-Italic.ttf", 38, encoding="utf-16"
+                        "./temp/Roboto-Italic.ttf", 33, encoding="utf-16"
                     )
                     textcolor = "white"
             for offset, length in mono.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "./temp/DroidSansMono.ttf", 35, encoding="utf-16"
+                        "./temp/DroidSansMono.ttf", 30, encoding="utf-16"
                     )
-                    textcolor = "teal"
+                    textcolor = "white"
             for offset, length in link.items():
                 if index in range(offset, length):
                     font2 = ImageFont.truetype(
-                        "./temp/Roboto-Regular.ttf", 35, encoding="utf-16"
+                        "./temp/Roboto-Regular.ttf", 30, encoding="utf-16"
                     )
-                    textcolor = "#59a7f6"
+                    textcolor = "#898989"
             if letter in emoji.UNICODE_EMOJI["en"]:
                 newemoji, mask = await emoji_fetch(letter)
                 canvas.paste(newemoji, (x, y - 2), mask)
@@ -335,8 +315,8 @@ async def process(msg, user, client, reply, event, replied=None):  # sourcery no
                     draw.text((x, y), letter, font=textfallback, fill=textcolor)
                     x += textfallback.getsize(letter)[0]
                 else:
-                    draw.text((x, y), letter, font=sepcialt, fill=textcolor)
-                    x += sepcialt.getsize(letter)[0]
+                    draw.text((x, y), letter, font=font2, fill=textcolor)
+                    x += font2.getsize(letter)[0]
             msg = msg.replace(letter, "¶", 1)
         y += 40
         x = pfpbg.width + 30
@@ -347,22 +327,21 @@ async def drawer(width, height):
     # Top part
     top = Image.new("RGBA", (width, 20), (0, 0, 0, 0))
     draw = ImageDraw.Draw(top)
-    draw.line((10, 0, top.width - 20, 0), fill=(27, 20, 41, 255), width=50)
-    draw.pieslice((0, 0, 30, 50), 180, 270, fill=(27, 20, 41, 255))
-    draw.pieslice((top.width - 75, 0, top.width, 50), 270, 360, fill=(27, 20, 41, 255))
+    draw.line((10, 0, top.width - 20, 0), fill=(29, 29, 29, 255), width=50)
+    draw.pieslice((0, 0, 30, 50), 180, 270, fill=(29, 29, 29, 255))
+    draw.pieslice((top.width - 75, 0, top.width, 50), 270, 360, fill=(29, 29, 29, 255))
 
     # Middle part
-    middle = Image.new("RGBA", (top.width, height + 75), (27, 20, 41, 255))
+    middle = Image.new("RGBA", (top.width, height + 75), (29, 29, 29, 255))
 
     # Bottom part
-    fliptop = ImageOps.flip(top)
-    bottom = Image.new("RGBA", (top.width, 145), 255)
-    bottom.paste(fliptop)
+    bottom = ImageOps.flip(top)
+
     return top, middle, bottom
 
 
 async def fontTest(letter):
-    test = TTFont("./temp/ArialUnicodeMS.ttf")
+    test = TTFont("./temp/Roboto-Medium.ttf")
     for table in test["cmap"].tables:
         if ord(letter) in table.cmap.keys():
             return True
@@ -392,7 +371,7 @@ async def get_entity(msg):
     return bold, mono, italic, link
 
 
-async def iqdoctype(name, size, htype, canvas):
+async def catdoctype(name, size, htype, canvas):
     font = ImageFont.truetype("./temp/Roboto-Medium.ttf", 38)
     doc = Image.new("RGBA", (130, 130), (29, 29, 29, 255))
     draw = ImageDraw.Draw(doc)
@@ -407,11 +386,11 @@ async def iqdoctype(name, size, htype, canvas):
     return canvas
 
 
-async def no_photo(tot):
-    pfp = Image.new("RGBA", (90, 90), (0, 0, 0, 0))
+async def no_photo(reply, tot):
+    pfp = Image.new("RGBA", (105, 105), (0, 0, 0, 0))
     pen = ImageDraw.Draw(pfp)
     color = random.choice(COLORS)
-    pen.ellipse((0, 0, 90, 90), fill=color)
+    pen.ellipse((0, 0, 105, 105), fill=color)
     letter = "" if not tot else tot[0]
     font = ImageFont.truetype("./temp/Roboto-Regular.ttf", 60)
     pen.text((32, 17), letter, font=font, fill="white")
@@ -445,7 +424,7 @@ async def transparent(emoji):
 
 
 async def replied_user(draw, tot, text, maxlength, title):
-    namefont = ImageFont.truetype("./temp/ArialUnicodeMS.ttf", 38)
+    namefont = ImageFont.truetype("./temp/Roboto-Medium.ttf", 38)
     namefallback = ImageFont.truetype("./temp/Quivira.otf", 38)
     textfont = ImageFont.truetype("./temp/Roboto-Regular.ttf", 32)
     textfallback = ImageFont.truetype("./temp/Roboto-Medium.ttf", 38)
