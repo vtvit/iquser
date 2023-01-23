@@ -8,7 +8,7 @@ from telethon.errors import UserIsBlockedError
 from telethon.events import CallbackQuery, StopPropagation
 from telethon.utils import get_display_name
 
-from jepthon import Config, jepiq
+from iquser import Config, iqub
 
 from ..core import check_owner, pool
 from ..core.logger import logging
@@ -47,14 +47,14 @@ async def check_bot_started_users(user, event):
     check = get_starter_details(user.id)
     if check is None:
         start_date = str(datetime.now().strftime("%B %d, %Y"))
-        notification = f"👤 {_format.mentionuser(user.first_name , user.id)} قام بتشغيل البوت .\
-                \n**الايدي : **`{user.id}`\
-                \n**الاسم : **{get_display_name(user)}"
+        notification = f"👤 {_format.mentionuser(user.first_name , user.id)} ئەو بۆتەکەی کارپێکرد .\
+                \n**ناسنامە : **`{user.id}`\
+                \n**ناو : **{get_display_name(user)}"
     else:
         start_date = check.date
-        notification = f"👤 {_format.mentionuser(user.first_name , user.id)} قام باعادة تشغيل البوت.\
-                \n**الايدي: **`{user.id}`\
-                \n**الاسم: **{get_display_name(user)}"
+        notification = f"👤 {_format.mentionuser(user.first_name , user.id)} ئەو بۆتەکەی دەستپێکردەوە.\
+                \n**ناسنامە: **`{user.id}`\
+                \n**ناو: **{get_display_name(user)}"
     try:
         add_starter_to_db(user.id, get_display_name(user), start_date, user.username)
     except Exception as e:
@@ -67,7 +67,7 @@ async def check_bot_started_users(user, event):
 
 
 
-@jepiq.bot_cmd(incoming=True, func=lambda e: e.is_private)
+@iqub.bot_cmd(incoming=True, func=lambda e: e.is_private)
 async def bot_pms(event): 
     chat = await event.get_chat()
     if check_is_black_list(chat.id):
@@ -81,7 +81,7 @@ async def bot_pms(event):
             if BOTLOG:
                 await event.client.send_message(
                     BOTLOG_CHATID,
-                    f"**خـطأ**\nأثناء تخزين تفاصيل الرسائل في قاعدة البيانات\n`{str(e)}`",
+                    f"**هەڵەیە**\nلە هەمان کاتدا زانیاری نامەکان لە گرووپی سەیڤ زانیاریەکە کۆبکەوە\n`{str(e)}`",
                 )
     else:
         if event.text.startswith("/"):
@@ -108,9 +108,9 @@ async def bot_pms(event):
                         user_id, event.text, reply_to=reply_msg, link_preview=False
                     )
             except UserIsBlockedError:
-                return await event.reply("هـذا البـوت تم حـظره بواسـطه المستخدم ")
+                return await event.reply("بۆتەکە لەلایەن بەکارهێنەرەوە بلۆک کراوە ")
             except Exception as e:
-                return await event.reply(f"**خطـأ:**\n`{str(e)}`")
+                return await event.reply(f"**هەڵەیە:**\n`{str(e)}`")
             try:
                 add_user_to_db(
                     reply_to, user_name, user_id, reply_msg, event.id, msg.id
@@ -120,11 +120,11 @@ async def bot_pms(event):
                 if BOTLOG:
                     await event.client.send_message(
                         BOTLOG_CHATID,
-                        f"**خـطأ**\nأثناء تخزين تفاصيل الرسائل في قاعدة البيانات\n`{str(e)}`",
+                        f"**هەڵەیە**\n لە هەمان کاتدا زانیاری نامەکان لە گرووپی سەیڤ زانیاریەکە کۆبکەوە\n`{str(e)}`",
                     )
 
 
-@jepiq.bot_cmd(edited=True)
+@iqub.bot_cmd(edited=True)
 async def bot_pms_edit(event):  # sourcery no-metrics
     chat = await event.get_chat()
     if check_is_black_list(chat.id):
@@ -141,7 +141,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
         if reply_msg:
             await event.client.send_message(
                 Config.OWNER_ID,
-                f"⬆️ **تـم تعديـل رسـالة** \n الـمستخدم العـدلها:{_format.mentionuser(get_display_name(chat) , chat.id)} \n كـ :",
+                f"⬆️ **نامە گۆڕا** \n ئەو بەکارهێنەرەی گۆڕی:{_format.mentionuser(get_display_name(chat) , chat.id)} \n..:",
                 reply_to=reply_msg,
             )
             msg = await event.forward_to(Config.OWNER_ID)
@@ -152,7 +152,7 @@ async def bot_pms_edit(event):  # sourcery no-metrics
                 if BOTLOG:
                     await event.client.send_message(
                         BOTLOG_CHATID,
-                        f"**خـطأ**\nأثناء تخزين تفاصيل الرسائل في قاعدة البيانات\n`{str(e)}`",
+                        f"**هەڵەیە**\nلە هەمان کاتدا زانیاری نامەکان لە گرووپی سەیڤ زانیاریەکە کۆبکەوە\n`{str(e)}`",
                     )
     else:
         reply_to = await reply_id(event)
@@ -210,30 +210,30 @@ async def handler(event):
                         return
                     await event.client.send_message(
                         Config.OWNER_ID,
-                        f"⬆️ **تـم حذف الرسالة بواسطه المستخدم** {_format.mentionuser(user_name , user_id)}.",
+                        f"⬆️ **نامەکە سڕایەوە لە لایەن بەکارهێنەرەوە** {_format.mentionuser(user_name , user_id)}.",
                         reply_to=reply_msg,
                     )
             except Exception as e:
                 LOGS.error(str(e))
 
 
-@jepiq.bot_cmd(
+@iqub.bot_cmd(
     pattern=f"^/info$",
     from_users=Config.OWNER_ID,
 )
 async def bot_start(event):
     reply_to = await reply_id(event)
     if not reply_to:
-        return await event.reply("قم بالرد على الرسالة للحصول على المعلومات")
+        return await event.reply("بە وەڵامدانەوەی نامەی کەسێك بۆ پیشاندانی زانیاریەکانی")
     info_msg = await event.client.send_message(
         event.chat_id,
-        "**يتم البحث عن هذا المستخدم  ...",
+        "**گەڕان لەسەر ئەم بەکارهێنەرە ...",
         reply_to=reply_to,
     )
     users = get_user_id(reply_to)
     if users is None:
         return await info_msg.edit(
-            "**خطأ:** \nعذرا لم أستطع ايجاد معلومات عن هذا الشخص :("
+            "**هەڵەیە:** \nببوورە، نەمتوانی زانیاری دەربارەی ئەم کەسە بدۆزمەوە :("
         )
     for usr in users:
         user_id = int(usr.chat_id)
@@ -241,11 +241,11 @@ async def bot_start(event):
         break
     if user_id is None:
         return await info_msg.edit(
-            "**خطأ:** \nعذرا لم أستطع ايجاد معلومات عن هذا الشخص :("
+            "**هەڵەیە:** \nببوورە، نەمتوانی زانیاری دەربارەی ئەم کەسە بدۆزمەوە:("
         )
-    uinfo = f"تـم ارسال هذه الرسالة بواسطه {_format.mentionuser(user_name , user_id)}\
-            \n**الاسم الاول:** {user_name}\
-            \n**الايدي:** `{user_id}`"
+    uinfo = f"ئەم نامەیە نێردراوە لەلایەن {_format.mentionuser(user_name , user_id)}\
+            \n**ناوی بەکارهێنەر :** {user_name}\
+            \n**ناسنامە:** `{user_id}`"
     await info_msg.edit(uinfo)
 
 
@@ -270,8 +270,8 @@ async def send_flood_alert(user_) -> None:
             FloodConfig.ALERT[user_.id]["count"] = 1
         except Exception as e:
             if BOTLOG:
-                await jepiq.tgbot.send_message(
-                    BOTLOG_CHATID, f"**Error:**\nWhile updating flood count\n`{str(e)}`"
+                await iqub.tgbot.send_message(
+                    BOTLOG_CHATID, f"**هەڵەیە:**\nWhile updating flood count\n`{str(e)}`"
                 )
         flood_count = FloodConfig.ALERT[user_.id]["count"]
     else:
@@ -280,10 +280,10 @@ async def send_flood_alert(user_) -> None:
     flood_msg = (
         r"⚠️ **#Flood_Warning**"
         "\n\n"
-        f"  ID: `{user_.id}`\n"
-        f"  Name: {get_display_name(user_)}\n"
-        f"  👤 User: {_format.mentionuser(get_display_name(user_), user_.id)}"
-        f"\n\n**Is spamming your bot !** ->  [ Flood rate ({flood_count}) ]\n"
+        f"  ناسنامە: `{user_.id}`\n"
+        f"  ناو: {get_display_name(user_)}\n"
+        f" ناوی بەکارهێنەر: {_format.mentionuser(get_display_name(user_), user_.id)}"
+        f"\n\n**بۆتەکەتی سپام کرد** ->  [ Flood rate ({flood_count}) ]\n"
         "__Quick Action__: Ignored from bot for a while."
     )
 
@@ -291,11 +291,11 @@ async def send_flood_alert(user_) -> None:
         if flood_count >= FloodConfig.AUTOBAN:
             if user_.id in Config.SUDO_USERS:
                 sudo_spam = (
-                    f"**Sudo User** {_format.mentionuser(user_.first_name , user_.id)}:\n  ID: {user_.id}\n\n"
+                    f"**گەشەپێدەر** {_format.mentionuser(user_.first_name , user_.id)}:\n  ID: {user_.id}\n\n"
                     "Is Flooding your bot !, Check `.help delsudo` to remove the user from Sudo."
                 )
                 if BOTLOG:
-                    await jepiq.tgbot.send_message(BOTLOG_CHATID, sudo_spam)
+                    await iqub.tgbot.send_message(BOTLOG_CHATID, sudo_spam)
             else:
                 await ban_user_from_bot(
                     user_,
@@ -309,7 +309,7 @@ async def send_flood_alert(user_) -> None:
         if not fa_id:
             return
         try:
-            msg_ = await jepiq.tgbot.get_messages(BOTLOG_CHATID, fa_id)
+            msg_ = await iqub.tgbot.get_messages(BOTLOG_CHATID, fa_id)
             if msg_.text != flood_msg:
                 await msg_.edit(flood_msg, buttons=buttons)
         except Exception as fa_id_err:
@@ -317,30 +317,30 @@ async def send_flood_alert(user_) -> None:
             return
     else:
         if BOTLOG:
-            fa_msg = await jepiq.tgbot.send_message(
+            fa_msg = await iqub.tgbot.send_message(
                 BOTLOG_CHATID,
                 flood_msg,
                 buttons=buttons,
             )
         try:
-            chat = await jepiq.tgbot.get_entity(BOTLOG_CHATID)
-            await jepiq.tgbot.send_message(
+            chat = await iqub.tgbot.get_entity(BOTLOG_CHATID)
+            await iqub.tgbot.send_message(
                 Config.OWNER_ID,
                 f"⚠️  **[Bot Flood Warning !](https://t.me/c/{chat.id}/{fa_msg.id})**",
             )
         except UserIsBlockedError:
             if BOTLOG:
-                await jepiq.tgbot.send_message(BOTLOG_CHATID, "**Unblock your bot !**")
+                await iqub.tgbot.send_message(BOTLOG_CHATID, "**لادانی بلۆکی بۆتت!**")
     if FloodConfig.ALERT[user_.id].get("fa_id") is None and fa_msg:
         FloodConfig.ALERT[user_.id]["fa_id"] = fa_msg.id
 
 
-@jepiq.tgbot.on(CallbackQuery(data=re.compile(b"bot_pm_ban_([0-9]+)")))
+@iqub.tgbot.on(CallbackQuery(data=re.compile(b"bot_pm_ban_([0-9]+)")))
 @check_owner
 async def bot_pm_ban_cb(c_q: CallbackQuery):
     user_id = int(c_q.pattern_match.group(1))
     try:
-        user = await jepiq.get_entity(user_id)
+        user = await iqub.get_entity(user_id)
     except Exception as e:
         await c_q.answer(f"Error:\n{str(e)}")
     else:
@@ -377,18 +377,18 @@ def is_flood(uid: int) -> Optional[bool]:
         return True
 
 
-@jepiq.tgbot.on(CallbackQuery(data=re.compile(b"toggle_bot-antiflood_off$")))
+@iqub.tgbot.on(CallbackQuery(data=re.compile(b"toggle_bot-antiflood_off$")))
 @check_owner
 async def settings_toggle(c_q: CallbackQuery):
     if gvarstatus("bot_antif") is None:
-        return await c_q.answer(f"بوت قفل التكرار بالفعل معطل.", alert=False)
+        return await c_q.answer(f"بۆتی قفڵی دووبارەکردنەوە ناچلاککراوە", alert=False)
     delgvar("bot_antif")
     await c_q.answer(f"Bot Antiflood disabled.", alert=False)
-    await c_q.edit("قفل التكرار تم تعطيله الان !")
+    await c_q.edit("قفڵی دووبارەکردنەوە ناچالاککرا")
 
 
-@jepiq.bot_cmd(incoming=True, func=lambda e: e.is_private)
-@jepiq.bot_cmd(edited=True, func=lambda e: e.is_private)
+@iqub.bot_cmd(incoming=True, func=lambda e: e.is_private)
+@iqub.bot_cmd(edited=True, func=lambda e: e.is_private)
 async def antif_on_msg(event):
     if gvarstatus("bot_antif") is None:
         return
