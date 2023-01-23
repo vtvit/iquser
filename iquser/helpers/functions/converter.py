@@ -44,12 +44,12 @@ class CatConverter:
         )
         catfile, catmedia = await self._media_check(reply, dirct, file, memetype)
         if memetype == "Photo":
-            im = Image.open(iqmedia)
+            im = Image.open(catmedia)
             im.save(catfile)
         elif memetype in ["Audio", "Voice"]:
-            await runcmd(f"ffmpeg -i '{iqmedia}' -an -c:v copy '{catfile}' -y")
+            await runcmd(f"ffmpeg -i '{catmedia}' -an -c:v copy '{catfile}' -y")
         elif memetype in ["Round Video", "Video", "Gif"]:
-            await take_screen_shot(iqmedia, "00.00", catfile)
+            await take_screen_shot(catmedia, "00.00", catfile)
         if mediatype == "Sticker":
             if memetype == "Animated Sticker":
                 catcmd = f"lottie_convert.py --frame 0 -if lottie -of png '{catmedia}' '{catfile}'"
@@ -59,10 +59,10 @@ class CatConverter:
             elif memetype == "Video Sticker":
                 await take_screen_shot(catmedia, "00.00", catfile)
             elif memetype == "Static Sticker":
-                im = Image.open(iqmedia)
+                im = Image.open(catmedia)
                 im.save(catfile)
-        if catmedia and os.path.exists(iqmedia):
-            os.remove(iqmedia)
+        if catmedia and os.path.exists(catmedia):
+            os.remove(catmedia)
         if os.path.exists(catfile):
             if rgb:
                 img = Image.open(catfile)
@@ -87,7 +87,7 @@ class CatConverter:
     async def to_webm(
         self, event, reply, dirct="./temp", file="animate.webm", noedits=False
     ):
-        # //Hope u dunt kang :/ @VTVIT
+        # //Hope u dunt kang :/ @Jisan7509
         memetype = await meme_type(reply)
         if memetype not in [
             "Round Video",
@@ -102,15 +102,15 @@ class CatConverter:
             else await edit_or_reply(event, "__🎞Converting into Animated sticker..__")
         )
         catfile, catmedia = await self._media_check(reply, dirct, file, memetype)
-        media = await fileinfo(iqmedia)
+        media = await fileinfo(catmedia)
         h = media["height"]
         w = media["width"]
         w, h = (-1, 512) if h > w else (512, -1)
         await runcmd(
-            f"ffmpeg -to 00:00:02.900 -i '{iqmedia}' -vf scale={w}:{h} -c:v libvpx-vp9 -crf 30 -b:v 560k -maxrate 560k -bufsize 256k -an '{catfile}'"
+            f"ffmpeg -to 00:00:02.900 -i '{catmedia}' -vf scale={w}:{h} -c:v libvpx-vp9 -crf 30 -b:v 560k -maxrate 560k -bufsize 256k -an '{catfile}'"
         )  # pain
-        if os.path.exists(iqmedia):
-            os.remove(iqmedia)
+        if os.path.exists(catmedia):
+            os.remove(catmedia)
         if os.path.exists(catfile):
             return catevent, catfile
         return catevent, None
@@ -135,20 +135,20 @@ class CatConverter:
                 event, "`Transfiguration Time! Converting to ....`"
             )
         )
-        catfile, iqmedia = await self._media_check(reply, dirct, file, memetype)
+        catfile, catmedia = await self._media_check(reply, dirct, file, memetype)
         if mediatype == "Sticker":
             if memetype == "Video Sticker":
-                await runcmd(f"ffmpeg -i '{iqmedia}' -c copy '{catfile}'")
+                await runcmd(f"ffmpeg -i '{catmedia}' -c copy '{catfile}'")
             elif memetype == "Animated Sticker":
                 await runcmd(f"lottie_convert.py '{catmedia}' '{catfile}'")
         if catmedia.endswith(".gif"):
-            await runcmd(f"ffmpeg -f gif -i '{iqmedia}' -fs {maxsize} -an '{catfile}'")
+            await runcmd(f"ffmpeg -f gif -i '{catmedia}' -fs {maxsize} -an '{catfile}'")
         else:
             await runcmd(
-                f"ffmpeg -i '{iqmedia}' -c:v libx264 -fs {maxsize} -an '{catfile}'"
+                f"ffmpeg -i '{catmedia}' -c:v libx264 -fs {maxsize} -an '{catfile}'"
             )
-        if iqmedia and os.path.exists(iqmedia):
-            os.remove(iqmedia)
+        if catmedia and os.path.exists(catmedia):
+            os.remove(catmedia)
         if os.path.exists(catfile):
             return catevent, catfile
         return catevent, None
