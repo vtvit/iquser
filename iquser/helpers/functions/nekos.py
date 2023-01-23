@@ -11,8 +11,8 @@ async def fakegs(search, result):
     drawing = ImageDraw.Draw(img)
     blue = (0, 0, 255)
     black = (0, 0, 0)
-    font1 = ImageFont.truetype("iquser/helpers/styles/ProductSans-BoldItalic.ttf", 20)
-    font2 = ImageFont.truetype("iquser/helpers/styles/ProductSans-Light.ttf", 23)
+    font1 = ImageFont.truetype("jepthon/helpers/styles/ProductSans-BoldItalic.ttf", 20)
+    font2 = ImageFont.truetype("jepthon/helpers/styles/ProductSans-Light.ttf", 23)
     drawing.text((450, 258), result, fill=blue, font=font1)
     drawing.text((270, 37), search, fill=black, font=font2)
     img.save("./temp/temp.jpg")
@@ -24,8 +24,8 @@ async def trumptweet(text):
         f"https://nekobot.xyz/api/imagegen?type=trumptweet&text={text}"
     ).json()
     jasme = r.get("message")
-    iqurl = url(jasme)
-    if not iqurl:
+    caturl = url(jasme)
+    if not caturl:
         return "check syntax once more"
     with open("temp.png", "wb") as f:
         f.write(requests.get(jasme).content)
@@ -39,8 +39,8 @@ async def changemymind(text):
         f"https://nekobot.xyz/api/imagegen?type=changemymind&text={text}"
     ).json()
     jasme = r.get("message")
-    iqurl = url(jasme)
-    if not iqurl:
+    caturl = url(jasme)
+    if not caturl:
         return "check syntax once more"
     with open("temp.png", "wb") as f:
         f.write(requests.get(jasme).content)
@@ -54,8 +54,8 @@ async def kannagen(text):
         f"https://nekobot.xyz/api/imagegen?type=kannagen&text={text}"
     ).json()
     jasme = r.get("message")
-    iqurl = url(jasme)
-    if not iqurl:
+    caturl = url(jasme)
+    if not caturl:
         return "check syntax once more"
     with open("temp.png", "wb") as f:
         f.write(requests.get(jasme).content)
@@ -69,8 +69,8 @@ async def moditweet(text):
         f"https://nekobot.xyz/api/imagegen?type=tweet&text={text}&username=narendramodi"
     ).json()
     jasme = r.get("message")
-    iqurl = url(jasme)
-    if not iqurl:
+    caturl = url(jasme)
+    if not caturl:
         return "check syntax once more"
     with open("temp.png", "wb") as f:
         f.write(requests.get(jasme).content)
@@ -84,8 +84,8 @@ async def tweets(text1, text2):
         f"https://nekobot.xyz/api/imagegen?type=tweet&text={text1}&username={text2}"
     ).json()
     jasme = r.get("message")
-    iqurl = url(jasme)
-    if not iqurl:
+    caturl = url(jasme)
+    if not caturl:
         return "check syntax once more"
     with open("temp.png", "wb") as f:
         f.write(requests.get(jasme).content)
@@ -97,8 +97,8 @@ async def tweets(text1, text2):
 async def iphonex(text):
     r = requests.get(f"https://nekobot.xyz/api/imagegen?type=iphonex&url={text}").json()
     jasme = r.get("message")
-    iqurl = url(jasme)
-    if not iqurl:
+    caturl = url(jasme)
+    if not caturl:
         return "check syntax once more"
     with open("temp.png", "wb") as f:
         f.write(requests.get(jasme).content)
@@ -112,8 +112,8 @@ async def baguette(text):
         f"https://nekobot.xyz/api/imagegen?type=baguette&url={text}"
     ).json()
     jasme = r.get("message")
-    iqurl = url(jasme)
-    if not iqurl:
+    caturl = url(jasme)
+    if not caturl:
         return "check syntax once more"
     with open("temp.png", "wb") as f:
         f.write(requests.get(jasme).content)
@@ -125,8 +125,8 @@ async def baguette(text):
 async def threats(text):
     r = requests.get(f"https://nekobot.xyz/api/imagegen?type=threats&url={text}").json()
     jasme = r.get("message")
-    iqurl = url(jasme)
-    if not iqurl:
+    caturl = url(jasme)
+    if not caturl:
         return "check syntax once more"
     with open("temp.png", "wb") as f:
         f.write(requests.get(jasme).content)
@@ -140,8 +140,8 @@ async def threats(text):
 async def lolice(text):
     r = requests.get(f"https://nekobot.xyz/api/imagegen?type=lolice&url={text}").json()
     jasme = r.get("message")
-    iqurl = url(jasme)
-    if not iqurl:
+    caturl = url(jasme)
+    if not caturl:
         return "check syntax once more"
     with open("temp.png", "wb") as f:
         f.write(requests.get(jasme).content)
@@ -155,8 +155,8 @@ async def lolice(text):
 async def trash(text):
     r = requests.get(f"https://nekobot.xyz/api/imagegen?type=trash&url={text}").json()
     jasme = r.get("message")
-    iqurl = url(jasme)
-    if not iqurl:
+    caturl = url(jasme)
+    if not caturl:
         return "check syntax once more"
     with open("temp.png", "wb") as f:
         f.write(requests.get(jasme).content)
@@ -170,8 +170,8 @@ async def trash(text):
 async def awooify(text):
     r = requests.get(f"https://nekobot.xyz/api/imagegen?type=awooify&url={text}").json()
     jasme = r.get("message")
-    iqurl = url(jasme)
-    if not iqurl:
+    caturl = url(jasme)
+    if not caturl:
         return "check syntax once more"
     with open("temp.png", "wb") as f:
         f.write(requests.get(jasme).content)
@@ -187,8 +187,8 @@ async def trap(text1, text2, text3):
         f"https://nekobot.xyz/api/imagegen?type=trap&name={text1}&author={text2}&image={text3}"
     ).json()
     jasme = r.get("message")
-    iqurl = url(jasme)
-    if not iqurl:
+    caturl = url(jasme)
+    if not caturl:
         return "check syntax once more"
     with open("temp.png", "wb") as f:
         f.write(requests.get(jasme).content)
@@ -204,8 +204,8 @@ async def phcomment(text1, text2, text3):
         f"https://nekobot.xyz/api/imagegen?type=phcomment&image={text1}&text={text2}&username={text3}"
     ).json()
     jasme = r.get("message")
-    iqurl = url(jasme)
-    if not iqurl:
+    caturl = url(jasme)
+    if not caturl:
         return "check syntax once more"
     with open("temp.png", "wb") as f:
         f.write(requests.get(jasme).content)
