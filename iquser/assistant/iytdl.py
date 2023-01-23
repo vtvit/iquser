@@ -65,7 +65,7 @@ async def iytdl_inline(event):
         input_url = (reply.text).strip()
     if not input_url:
         return await edit_delete(event, "**- بە وەڵامدانەوەی بەستەرەکە یان نوسینی ناوی گۆرانی لەگەڵ فەرمانەکە**")
-    iqevent = await edit_or_reply(event, f"**⌔╎گەڕان لە یوتوب بۆ:** `'{input_url}'`")
+    catevent = await edit_or_reply(event, f"**⌔╎گەڕان لە یوتوب بۆ:** `'{input_url}'`")
     flag = True
     cout = 0
     results = None
@@ -81,10 +81,10 @@ async def iytdl_inline(event):
         if cout > 5:
             flag = False
     if results:
-        await iqevent.delete()
+        await catevent.delete()
         await results[0].click(event.chat_id, reply_to=reply_to_id, hide_via=True)
     else:
-        await iqevent.edit("**⌔╎ببوورە ..هیچ ئەنجامێك نەدۆزرایەوە**")
+        await catevent.edit("**⌔╎ببوورە ..هیچ ئەنجامێك نەدۆزرایەوە**")
 
 
 @iqub.tgbot.on(
