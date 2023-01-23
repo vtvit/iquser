@@ -81,7 +81,7 @@ async def users(event):
         for starked in total_users:
             users_list += ("==> {} \n").format(int(starked.chat_id))
         with io.BytesIO(str.encode(users_list)) as tedt_file:
-            tedt_file.name = "jepthon.txt"
+            tedt_file.name = "iquser.txt"
             await tgbot.send_file(
                 event.chat_id,
                 tedt_file,
@@ -96,13 +96,13 @@ async def users(event):
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"gibcmd")))
 async def users(event):
     await event.delete()
-    rorza = "**لـیـسـتـی فـەرمـانـەکانی بـۆتی تـایـبـەت بـەتۆ🕷️🖤.**:\n- **هەموو ئەم فەرمانانە بەکاردێن دوای زیادکردنی بۆتەکە لە گروپێکدا و بەرزکردنەوەی بۆ بەڕێوبەر بە هەندێك هێزەوە‌🕷️🖤. **\n• /start \n (بۆ دڵنیابوون لە دۆخی بۆت🕷️🖤.) \n• /ping \n (فەرمانی پینگ🕷️🖤.)  \n• /broadcast \n (بۆ دروستکردنی ڕادیۆیەك بۆ هەموو بەکارهێنەران لە بۆتێکدا🕷️🖤.)  \n• /id \n  (بۆ بینینی ناسنامەی کەسێك🕷️🖤.) \n• /alive \n- (بۆ بینینی زانیاری بۆتەکە🕷️🖤.) \n• /bun \n-  (بۆ دەرکردنی کەسێك لە گرووپ بەکاردێت🕷️🖤.)\n• /unbun  \n-  (بۆ لادانی دەرکردن لە گرووپ بەکاردێت🕷️🖤.)  \n• /prumote  \n-  (بۆ بەرزکردنەوەی کەسەکە لە پلەی بەڕێوبەری🕷️🖤.)\n• /demute  \n-  (بۆ دابەزاندنی کەسەکە لە پلەی بەڕێوبەری🕷️🖤.) \n• /pin  \n-  (بۆ هەڵواسینی نامە لە گرووپ🕷️🖤.)  \n• /stats  \n-  (بۆ بینینی بەکارهێنەرانی بۆت🕷️🖤.)  \n• /purge \n- (بە وەڵامدانەوەی نامەیەك بۆ سڕینەوەی نامەکانی خوارەوەی🕷️🖤.) \n• /del  \n-  (بە وەڵامدانەوەی نامەکە بۆ سڕینەوەی🕷️🖤.)"
+    rorza = "**لـیـسـتـی فـەرمـانـەکانی بـۆتی تـایـبـەت بـەتۆ🕷️🖤.**:\n- **هەموو ئەم فەرمانانە بەکاردێن دوای زیادکردنی بۆتەکە لە گروپێکدا و بەرزکردنەوەی بۆ بەڕێوبەر بە هەندێك هێزەوە‌🕷️🖤. **\n• /start \n (بۆ دڵنیابوون لە دۆخی بۆت🕷️🖤.) \n• /ping \n (فەرمانی پینگ🕷️🖤.)  \n• /broadcast \n (بۆ دروستکردنی پەخشکردن بۆ هەموو بەکارهێنەران لە بۆتێکدا🕷️🖤.)  \n• /id \n  (بۆ بینینی ناسنامەی کەسێك🕷️🖤.) \n• /alive \n- (بۆ بینینی زانیاری بۆتەکە🕷️🖤.) \n• /ban \n-  (بۆ دەرکردنی کەسێك لە گرووپ بەکاردێت🕷️🖤.)\n• /unban  \n-  (بۆ لادانی دەرکردن لە گرووپ بەکاردێت🕷️🖤.)  \n• /prumote  \n-  (بۆ بەرزکردنەوەی کەسەکە لە پلەی بەڕێوبەری🕷️🖤.)\n• /demute  \n-  (بۆ دابەزاندنی کەسەکە لە پلەی بەڕێوبەری🕷️🖤.) \n• /pin  \n-  (بۆ هەڵواسینی نامە لە گرووپ🕷️🖤.)  \n• /stats  \n-  (بۆ بینینی بەکارهێنەرانی بۆت🕷️🖤.)  \n• /purge \n- (بە وەڵامدانەوەی نامەیەك بۆ سڕینەوەی نامەکانی خوارەوەی🕷️🖤.) \n• /del  \n-  (بە وەڵامدانەوەی نامەکە بۆ سڕینەوەی🕷️🖤.)"
     await tgbot.send_message(event.chat_id, rorza)
 
 
 @tgbot.on(events.NewMessage(pattern="^/help", func=lambda e: e.sender_id == bot.uid))
 async def starkislub(event):
-    rorza = "**لـیـسـتی فـەرمـانـەکـانی بـۆتی تـایـبـەت بـە تۆ🕷️🖤.**:\n- ** هەموو ئەم فەرمانانە بەکاردێن دوای زیادکردنی بۆتەکە لە گروپێکدا و بەرزکردنەوەی بۆ بەڕێوبەر بە هەندێك هێزەوە‌🕷️🖤. **\n• /start \n (بۆ دڵنیابوون لە دۆخی بۆت🕷️🖤.) \n• /ping \n (فەرمانی پینگ🕷️🖤.)  \n• /broadcast \n ( \n• /broadcast \n (بۆ دروستکردنی ڕادیۆیەك بۆ هەموو بەکارهێنەران لە بۆتێکدا🕷️🖤.)  \n• /id \n  (بۆ بینینی ناسنامەی کەسێك🕷️🖤.) \n• /alive \n- (بۆ بینینی زانیاری بۆتەکە🕷️🖤.) \n• /bun \n-  (ۆ دەرکردنی کەسێك لە گرووپ بەکاردێت🕷️🖤.)\n• /unbun  \n-  (بۆ لادانی دەرکردن لە گرووپ بەکاردێت🕷️🖤.)  \n• /prumote  \n-  (بۆ بەرزکردنەوەی کەسەکە لە پلەی بەڕێوبەری🕷️🖤.)\n• /demute  \n-  (بۆ دابەزاندنی کەسەکە لە پلەی بەڕێوبەری🕷️🖤.) \n• /pin  \n-  (بۆ هەڵواسینی نامە لە گرووپ🕷️🖤.)  \n• /stats  \n-  (بۆ بینینی بەکارهێنەرانی بۆت🕷️🖤.)  \n• /purge  \n-  (بە وەڵامدانەوەی نامەیەك بۆ سڕینەوەی نامەکانی خوارەوەی🕷️🖤.) \n• /del  \n-  (بە وەڵامدانەوەی نامەکە بۆ سڕینەوەی🕷️🖤.)"
+    rorza = "**لـیـسـتی فـەرمـانـەکـانی بـۆتی تـایـبـەت بـە تۆ🕷️🖤.**:\n- ** هەموو ئەم فەرمانانە بەکاردێن دوای زیادکردنی بۆتەکە لە گروپێکدا و بەرزکردنەوەی بۆ بەڕێوبەر بە هەندێك هێزەوە‌🕷️🖤. **\n• /start \n (بۆ دڵنیابوون لە دۆخی بۆت🕷️🖤.) \n• /ping \n (فەرمانی پینگ🕷️🖤.)  \n• /broadcast \n ( \n• /broadcast \n (بۆ دروستکردنی پەخشکردن بۆ هەموو بەکارهێنەران لە بۆتێکدا🕷️🖤.)  \n• /id \n  (بۆ بینینی ناسنامەی کەسێك🕷️🖤.) \n• /alive \n- (بۆ بینینی زانیاری بۆتەکە🕷️🖤.) \n• /ban \n-  (بۆ دەرکردنی کەسێك لە گرووپ بەکاردێت🕷️🖤.)\n• /unban  \n-  (بۆ لادانی دەرکردن لە گرووپ بەکاردێت🕷️🖤.)  \n• /prumote  \n-  (بۆ بەرزکردنەوەی کەسەکە لە پلەی بەڕێوبەری🕷️🖤.)\n• /demute  \n-  (بۆ دابەزاندنی کەسەکە لە پلەی بەڕێوبەری🕷️🖤.) \n• /pin  \n-  (بۆ هەڵواسینی نامە لە گرووپ🕷️🖤.)  \n• /stats  \n-  (بۆ بینینی بەکارهێنەرانی بۆت🕷️🖤.)  \n• /purge  \n-  (بە وەڵامدانەوەی نامەیەك بۆ سڕینەوەی نامەکانی خوارەوەی🕷️🖤.) \n• /del  \n-  (بە وەڵامدانەوەی نامەکە بۆ سڕینەوەی🕷️🖤.)"
     await event.reply(rorza)
 
 @tgbot.on(events.NewMessage(pattern="^/alive", func=lambda e: e.sender_id == bot.uid))
@@ -186,7 +186,7 @@ async def settings(event): #    بـەشـی زەخـرەفـەی نـاوی ک�
                                  buttons=[[Button.inline("║ گەڕانەوە🕷️ ║", data="razan")]
                                  ])
     else:
-        await event.answer("تۆ ناتوانیت ئەم بۆتە بەکاربهێنیت🌿.", alert=True)
+        await event.answer("تۆ ناتوانیت ئەم بۆتە بەکاربهێنیت🌿....@VTVIT", alert=True)
 
 
 # Boys zag list2 - لـیـستـی دووەمـی نـاوی کوڕان
@@ -199,7 +199,7 @@ async def settings(event):  #    بـەشـی زەخـرەفـەی نـاوی ک
                                  buttons=[[Button.inline("║ گەڕانەوە🕷️ ║", data="razan")]
                                  ])
     else:
-        await event.answer("تۆ ناتوانیت ئەم بۆتە بەکاربهێنیت🌿.", alert=True)
+        await event.answer("تۆ ناتوانیت ئەم بۆتە بەکاربهێنیت🌿....@VTVIT", alert=True)
 
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"RR7PP")))
@@ -217,7 +217,7 @@ async def settings(event): #    بـەشـی زەخـرەفـەی نـاوی ک�
                                          "║ گەڕانەوە🕷️ ║", data="rozname")]
                                  ])
     else:
-        await event.answer(" تۆ ناتوانیت بۆت بەکاربهێنیت🌿. @xv7amo", alert=True)
+        await event.answer(" تۆ ناتوانیت بۆت بەکاربهێنیت🖤...@IQ7amo", alert=True)
 
 # شنو تـدور  :)
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"RR7PP1")))
@@ -229,7 +229,7 @@ async def settings(event): #    بـەشـی زەخـرەفـەی نـاوی ک�
                                  buttons=[[Button.inline("║ گەڕانەوە🕷️ ║", data="RR7PP")]
                                  ])
     else:
-        await event.answer("تۆ ناتوانیت ئەم بۆتە بەکاربهێنیت🌿.", alert=True)
+        await event.answer("تۆ ناتوانیت ئەم بۆتە بەکاربهێنیت🌿....@VTVIT", alert=True)
 
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"RR7PP2")))
@@ -276,7 +276,7 @@ async def settings(event): #    بـەشـی بـایـۆ 2
                                          "⫷دواتر ", data="rozpio3")]
                                  ])
     else:
-        await event.answer("تۆ ناتوانیت بۆت بەکاربهێنیت🌿. @xv7amo", alert=True)
+        await event.answer("تۆ ناتوانیت بۆت بەکاربهێنیت🌿....@IQUSER", alert=True)
 
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"rozpio3"))) 
@@ -294,7 +294,7 @@ async def settings(event): #    بـەشـی بـایـۆ 3
                                          "⫷ دواتر", data="rozpio4")]
                                  ])
     else:
-        await event.answer("تۆ ناتوانیت بۆت بەکاربهێنیت🌿. @xv7amo", alert=True)
+        await event.answer("تۆ ناتوانیت بۆت بەکاربهێنیت🌿....@IQMUC", alert=True)
 
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"rozpio4"))) 
@@ -312,7 +312,7 @@ async def settings(event): #    بـەشـی بـایـۆ 4
                                          "⫷ دواتر", data="rozpio5")]
                                  ])
     else:
-        await event.answer("تۆ ناتوانیت بۆت بەکاربهێنیت🌿. @xv7amo", alert=True)
+        await event.answer("تۆ ناتوانیت بۆت بەکاربهێنیت🌿. @IQQUR", alert=True)
 
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"rozpio5"))) 
@@ -330,7 +330,7 @@ async def settings(event):#    بـەشـی بـایـۆ 5
                                          "⫷ دواتر", data="rozpio1")]
                                  ])
     else:
-        await event.answer(" تۆ ناتوانیت بۆت بەکاربهێنیت🌿. @xv7amo", alert=True)
+        await event.answer(" تۆ ناتوانیت بۆت بەکاربهێنیت🌿...@VTVIT", alert=True)
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"rozmonth")))  
 async def settings(event): #    بـەشـی لە دایـکـبـوون و مـانگـەکـان
@@ -347,7 +347,7 @@ async def settings(event): #    بـەشـی لە دایـکـبـوون و مـ
                                          "║ گەڕانەوە🕷️ ║", data="rozzag")]
                                  ])
     else:
-        await event.answer("تۆ ناتوانیت بۆت بەکاربهێنیت @xv7amo", alert=True)
+        await event.answer("تۆ ناتوانیت بۆت بەکاربهێنیت...@VTVIT🖤", alert=True)
 
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"months")))  
@@ -359,7 +359,7 @@ async def settings(event):#   بەشی مانگەکان🍀🤍.
                                  buttons=[[Button.inline("║ گەڕانەوە🕷️ ║", data="rozzag")]
                                  ])
     else:
-        await event.answer("تۆ ناتوانیت ئەم بۆتە بەکاربهێنیت🌿.", alert=True)
+        await event.answer("تۆ ناتوانیت ئەم بۆتە بەکاربهێنیت🌿....@VTVIT", alert=True)
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"rozyear")))  
 async def settings(event):#    بەشی ساڵەکان🤍.  :)
@@ -370,7 +370,7 @@ async def settings(event):#    بەشی ساڵەکان🤍.  :)
                                  buttons=[[Button.inline("║ گەڕانەوە🕷️ ║", data="rozmonth")]
                                  ])
     else:
-        await event.answer("تۆ ناتوانیت ئەم بۆتە بەکاربهێنیت🌿.", alert=True)
+        await event.answer("تۆ ناتوانیت ئەم بۆتە بەکاربهێنیت🌿....@VTVIT", alert=True)
 
 
 @tgbot.on(events.callbackquery.CallbackQuery(data=re.compile(b"chanlan")))  
@@ -382,4 +382,4 @@ async def settings(event):  # # تـەواو بـوو :) ئەگەر تێکچوو
                                  buttons=[[Button.inline("║ 🕷️گەڕانەوە ║", data="rozzag")]
                                  ])
     else:
-        await event.answer("تۆ ناتوانیت ئەم بۆتە بەکاربهێنیت🌿.", alert=True)
+        await event.answer("تۆ ناتوانیت ئەم بۆتە بەکاربهێنیت🌿....@VTVIT", alert=True)
