@@ -36,7 +36,7 @@ async def yt_search(iquser):
     try:
         iquser = urllib.parse.quote(iquser)
         html = urllib.request.urlopen(
-            f"https://www.youtube.com/results?search_query={zed}"
+            f"https://www.youtube.com/results?search_query={iquser}"
         )
 
         user_data = re.findall(r"watch\?v=(\S{11})", html.read().decode())
@@ -90,7 +90,7 @@ ytsearch_data = YT_Search_X()
 
 """
 async def yt_data(iquser):
-    params = {"format": "json", "url": zed}
+    params = {"format": "json", "url": iquser}
     url = "https://www.youtube.com/oembed"  # https://stackoverflow.com/questions/29069444/returning-the-urls-as-a-list-from-a-youtube-search-query
     query_string = urllib.parse.urlencode(params)
     url = f"{url}?{query_string}"
