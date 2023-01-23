@@ -45,8 +45,8 @@ async def get_readable_time(seconds: int) -> str:
 # gban
 
 
-async def admin_groups(iqub):
-    iqgroups = []
+async def admin_groups(catub):
+    catgroups = []
     async for dialog in iquser.iter_dialogs():
         entity = dialog.entity
         if (
@@ -54,8 +54,8 @@ async def admin_groups(iqub):
             and entity.megagroup
             and (entity.creator or entity.admin_rights)
         ):
-            iqgroups.append(entity.id)
-    return iqgroups
+            catgroups.append(entity.id)
+    return catgroups
 
 
 # https://github.com/pokurt/LyndaRobot/blob/7556ca0efafd357008131fa88401a8bb8057006f/lynda/modules/helper_funcs/string_handling.py#L238
@@ -80,12 +80,12 @@ async def extract_time(cat, time_val):
             bantime = int(time.time() + int(time_num) * 7 * 24 * 60 * 60)
         else:
             # how even...?
-            await iq.edit(
+            await cat.edit(
                 f"هەڵەیە لە دیاریکردنی کاتەکە، لە خوارەوە بنووسە:\n s,  m , h , d یان w : {time_val[-1]}"
             )
             return None
         return bantime
-    await iq.edit(
+    await cat.edit(
         f"هەڵەیە لە دیاریکردنی کاتەکە، لە خوارەوە بنووسە:\n s,  m , h , d یان w بەڵام باشترین: {time_val[-1]}"
     )
     return None
