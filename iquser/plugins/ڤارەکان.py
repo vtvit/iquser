@@ -89,19 +89,19 @@ iquserVP_cmd = (
 )
 
 
-# Copyright (C) 2022 Zed-Thon . All Rights Reserved
-@zedub.zed_cmd(pattern=r"زیادکردنی (.*)")
+# Copyright (C) 2022 vtvit . All Rights Reserved
+@iqub.iq_cmd(pattern=r"زیادکردنی (.*)")
 async def variable(event):
     input_str = event.pattern_match.group(1)
     reply = await event.get_reply_message()
     vinfo = reply.text
-    zed = await edit_or_reply(event, "**✾╎جـاري اضـافة الفـار الـى بـوتك ...**")
-    # All Rights Reserved for "Zed-Thon" "زلـزال الهيبـه"
-    if input_str == "كليشة الفحص" or input_str == "كليشه الفحص":
+    i = await edit_or_reply(event, "**✾╎ ڤارەکە زیاد دەکرێت بۆ بۆتەکەت ...**")
+    # All Rights Reserved for "vtvit" "﮼ﺣّ͠ــەمــە "
+    if input_str == "کلایشی پشکنین" or input_str == "کلایشی پشکنین":
         variable = "ALIVE_TEMPLATE"
         await asyncio.sleep(1.5)
         if gvarstatus("ALIVE_TEMPLATE") is None:
-            await zed.edit("**✾╎تم تغييـر {} بنجـاح ☑️**\n**✾╎الكليشـة الجـديده** \n {} \n\n**✾╎الان قـم بـ ارسـال الامـر ↶** `.فحص` **لـ التحقـق مـن الكليشـة . .**".format(input_str, vinfo))
+            await iq.edit("**✾╎ گۆڕدرا {} بە سەرکەوتوویی ☑️**\n**✾╎کلایشی نوێ** \n {} \n\n**✾╎ ئێستا فەرمان بنێرە  ↶** `.پشکنین` ** بۆ سەلماندنی کلایش . .**".format(input_str, vinfo))
         else:
             await zed.edit("**✾╎تم اضـافـة {} بنجـاح ☑️**\n**✾╎الكليشـة المضـافه** \n {} \n\n**✾╎الان قـم بـ ارسـال الامـر ↶** `.فحص` **لـ التحقـق مـن الكليشـة . .**".format(input_str, vinfo))
         addgvar("ALIVE_TEMPLATE", vinfo)
